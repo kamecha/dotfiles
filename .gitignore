@@ -1,0 +1,12 @@
+# 最初にすべての階層のファイルを無視
+### all ignore ###
+/*
+/.**
+
+### not ignore ###
+!/.vimrc
+
+!/README.md
+!/LICENSE
+!.gitignore
+!.gitkeep

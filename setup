@@ -31,3 +31,12 @@ if [ ! -d ~/dotfiles ]
 	else
 		echo "dotfiles already cloned."
 fi
+
+echo "シンボリックリンクを貼る"
+echo "Symlinking dotfiles..."
+cd dotfiles
+IGNORE_PATTERN="^\.(git|gitignore|config)"
+for dotfile in .??*; do
+    [[ $dotfile =~ $IGNORE_PATTERN ]] && continue
+    ln -snfv "$(pwd)/$dotfile" "$HOME/$dotfile"
+done

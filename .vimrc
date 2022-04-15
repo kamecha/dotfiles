@@ -48,16 +48,6 @@ endif
 " }}}
 
 
-" ddc. settings
-call ddc#custom#patch_global('sources', ['around', 'vim-lsp'])
-call ddc#custom#patch_global('sourceOptions', {
-      \ '_': {
-      \   'matchers': ['matcher_head'],
-      \   'sorters': ['sorter_rank']
-	  \ },
-	  \ })
-call ddc#enable()
-
 " status line settings
 " 0: never 1: only split 2: always
 set laststatus=2

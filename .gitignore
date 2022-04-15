@@ -4,6 +4,7 @@
 /.**
 
 ### not ignore ###
+!/setup
 !/.vimrc
 
 !/README.md

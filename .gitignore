@@ -6,6 +6,7 @@
 ### not ignore ###
 !/setup.sh
 !/.vimrc
+!/.vim
 
 !/README.md
 !/LICENSE

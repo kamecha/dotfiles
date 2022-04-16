@@ -1,0 +1,44 @@
+## lsp
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
+# 補完plugin
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+
+# 補完source
+[[plugins]]
+repo = 'Shougo/ddc-around'
+
+[[plugins]]
+repo = 'shun/ddc-vim-lsp'
+
+# 補完filter
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+
+# help日本語
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+hook_source = 'set helplang=ja,en'
+
+# gccでコメントアウト
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+
+# ステータスライン
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+# カッコ補完
+[[plugins]]
+repo = 'cohama/lexima.vim'

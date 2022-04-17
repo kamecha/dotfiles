@@ -7,6 +7,7 @@
 !/setup.sh
 !/.vimrc
 !/.vim/*
+!/.tmux.conf
 
 !/README.md
 !/LICENSE

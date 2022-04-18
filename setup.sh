@@ -3,6 +3,7 @@ set -e
 
 cd ~
 
+# OSごとに異なる設定
 case $(uname) in
 	"Linux" ) echo "Linux";;
 	"Darwin" ) echo "Mac"
@@ -23,9 +24,14 @@ for dotfile in .??*; do
 	case $dotfile in
 		".git" ) ;;
 		".gitignore" ) ;;
-		".swp" ) ;;
 		".config" ) ;;
 		".vim" ) ;;
+		".bashrc" | ".zshrc" )
+			echo "set for each shell"
+			shell=$(echo $SHELL | rev | cut -d "/" -f 1 | rev)
+			shellrc=".${shell}rc"
+			ln -snfv "$(pwd)/${shellrc}" "$HOME/${shellrc}"
+			;;
 		*)
 		ln -snfv "$(pwd)/$dotfile" "$HOME/$dotfile"
 	esac

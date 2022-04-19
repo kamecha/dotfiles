@@ -6,6 +6,7 @@
 ### not ignore ###
 !/setup.sh
 !/.vimrc
+!/.zshrc
 !/.vim/*
 !/.tmux.conf
 !/.bashrc

@@ -25,12 +25,13 @@ for dotfile in .??*; do
 		".git" ) ;;
 		".gitignore" ) ;;
 		".config" ) ;;
-		".vim" ) ;;
 		".bashrc" | ".zshrc" )
 			echo "set for each shell"
 			shell=$(echo $SHELL | rev | cut -d "/" -f 1 | rev)
 			shellrc=".${shell}rc"
-			ln -snfv "$(pwd)/${shellrc}" "$HOME/${shellrc}"
+			if [ "$dotfile" = "$shellrc" ]; then
+				ln -snfv "$(pwd)/${shellrc}" "$HOME/${shellrc}"
+			fi
 			;;
 		*)
 		ln -snfv "$(pwd)/$dotfile" "$HOME/$dotfile"

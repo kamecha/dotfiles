@@ -4,9 +4,12 @@
 /.**
 
 ### not ignore ###
-!/setup
+!/setup.sh
 !/.vimrc
 !/.zshrc
+!/.vim/*
+!/.tmux.conf
+!/.bashrc
 
 !/README.md
 !/LICENSE

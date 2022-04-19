@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/kamecha_linux/workspace/traP/Hackathon/21winter18/backend'
+let g:netrw_dirhist_3='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main/java/com/gildedrose'
+let g:netrw_dirhist_2='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main/java/com'
+let g:netrw_dirhist_1='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main/java'
+let g:netrw_dirhist_0='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main'
+let g:netrw_dirhist_9='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src'
+let g:netrw_dirhist_8='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main/java/com/gildedrose'
+let g:netrw_dirhist_7='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main/java/com'
+let g:netrw_dirhist_6='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main/java'
+let g:netrw_dirhist_5='/home/kamecha_linux/workspace/Titech/34Q/ObjectOrientedDesign/Ex/ex-refactoring/src/main'

@@ -46,3 +46,7 @@ repo = 'itchyny/lightline.vim'
 # カッコ補完
 [[plugins]]
 repo = 'cohama/lexima.vim'
+
+# BadApple
+[[plugins]]
+repo = 'ryoppippi/bad-apple.vim'

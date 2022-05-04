@@ -31,6 +31,10 @@ repo = 'Shougo/ddc-sorter_rank'
 repo = 'vim-jp/vimdoc-ja'
 hook_source = 'set helplang=ja,en'
 
+# 翻訳
+[[plugins]]
+repo = 'skanehira/translate.vim'
+
 # gccでコメントアウト
 [[plugins]]
 repo = 'tomtom/tcomment_vim'

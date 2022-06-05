@@ -49,4 +49,4 @@ repo = 'cohama/lexima.vim'
 
 # BadApple
 [[plugins]]
-repo = 'ryoppippi/bad-apple.vim'
+repo = 'skanehira/badapple.vim'

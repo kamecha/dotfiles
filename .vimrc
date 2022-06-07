@@ -47,11 +47,6 @@ if len(s:removed_plugins) > 0
 endif
 " }}}
 
-
-" status line settings
-" 0: never 1: only split 2: always
-set laststatus=2
-
 " indent settings
 " keep current indent
 set autoindent

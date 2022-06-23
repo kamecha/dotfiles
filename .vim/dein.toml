@@ -62,6 +62,10 @@ set laststatus=2
 [[plugins]]
 repo = 'cohama/lexima.vim'
 
+# surround
+[[plugins]]
+repo = 'tpope/vim-surround'
+
 # BadApple
 [[plugins]]
 repo = 'skanehira/badapple.vim'

@@ -49,6 +49,25 @@ endif
 
 " }}}
 
+" ddc settings
+call ddc#custom#patch_global('sources', ['around', 'vim-lsp'])
+call ddc#custom#patch_global('sourceOptions', {
+		\ 'around': {
+		\	'mark': 'A',
+		\},
+		\ 'vim-lsp': {
+		\ 	'mark': 'lsp',
+		\},
+		\ '_': {
+		\	'matchers': ['matcher_head'],
+		\	'sorters': ['sorter_rank'],
+		\},
+		\ })
+call ddc#enable()
+
+" SKK dictionary
+let skk_large_jisyo = '~/SKK-JISYO.S'
+
 
 " status line settings
 " 0: never 1: only split 2: always
@@ -87,4 +106,5 @@ set noswapfile
 noremap <Space><CR> o<ESC>
 "ハイライト消去
 nnoremap <F3> :noh<CR>
+
 

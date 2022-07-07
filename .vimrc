@@ -65,10 +65,6 @@ call ddc#custom#patch_global('sourceOptions', {
 		\ })
 call ddc#enable()
 
-" SKK dictionary
-let skk_large_jisyo = '~/SKK-JISYO.S'
-
-
 " status line settings
 " 0: never 1: only split 2: always
 set laststatus=2

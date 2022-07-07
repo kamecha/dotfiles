@@ -56,6 +56,17 @@ depends = 'fzf'
 repo = 'vim-jp/vimdoc-ja'
 hook_source = 'set helplang=ja,en'
 
+# SKK
+[[plugins]]
+repo = 'vim-skk/eskk.vim'
+hook_add = '''
+let g:eskk#large_dictionary = {
+\ 'path': "~/dotfiles/SKK-JISYO.ML",
+\ 'sorted': 1,
+\ 'encoding': 'euc-jp',
+\ }
+'''
+
 # 翻訳
 [[plugins]]
 repo = 'skanehira/translate.vim'
@@ -67,8 +78,19 @@ repo = 'tomtom/tcomment_vim'
 # ステータスライン
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+hook_add = '''
+" 0: never 1: only split 2: always
+set laststatus=2
+'''
 
 # カッコ補完
 [[plugins]]
 repo = 'cohama/lexima.vim'
 
+# surround
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+# BadApple
+[[plugins]]
+repo = 'skanehira/badapple.vim'

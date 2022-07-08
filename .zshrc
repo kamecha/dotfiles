@@ -32,3 +32,5 @@ alias la='ls -a'
 export PATH=$PATH:/usr/local/bin
 export PATH=/usr/local/bin/git:$PATH
 
+
+. /usr/local/opt/asdf/libexec/asdf.sh

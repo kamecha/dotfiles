@@ -47,6 +47,28 @@ if len(s:removed_plugins) > 0
 endif
 " }}}
 
+" }}}
+
+" ddc settings
+call ddc#custom#patch_global('sources', ['around', 'vim-lsp'])
+call ddc#custom#patch_global('sourceOptions', {
+		\ 'around': {
+		\	'mark': 'A',
+		\},
+		\ 'vim-lsp': {
+		\ 	'mark': 'lsp',
+		\},
+		\ '_': {
+		\	'matchers': ['matcher_head'],
+		\	'sorters': ['sorter_rank'],
+		\},
+		\ })
+call ddc#enable()
+
+" status line settings
+" 0: never 1: only split 2: always
+set laststatus=2
+
 " indent settings
 " keep current indent
 set autoindent
@@ -80,4 +102,5 @@ set noswapfile
 noremap <Space><CR> o<ESC>
 "ハイライト消去
 nnoremap <F3> :noh<CR>
+
 

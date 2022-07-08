@@ -1,6 +1,10 @@
 ## lsp
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_document_code_action_signs_enabled = 0
+'''
 
 [[plugins]]
 repo = 'mattn/vim-lsp-settings'
@@ -11,6 +15,7 @@ repo = 'vim-denops/denops.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc.vim'
+depends = ['denops.vim']
 
 # 補完source
 [[plugins]]
@@ -25,6 +30,26 @@ repo = 'Shougo/ddc-matcher_head'
 
 [[plugins]]
 repo = 'Shougo/ddc-sorter_rank'
+
+
+# SKK
+[[plugins]]
+repo = 'vim-skk/skk.vim'
+hook_add = '''
+let g:skk_large_jisyo = '~/SKK-JISYO.S'
+'''
+
+# あいまい検索
+[[plugins]]
+repo = 'junegunn/fzf'
+build_on = '''
+./install -all
+'''
+merged = '0'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
 
 # help日本語
 [[plugins]]

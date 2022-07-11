@@ -31,14 +31,6 @@ repo = 'Shougo/ddc-matcher_head'
 [[plugins]]
 repo = 'Shougo/ddc-sorter_rank'
 
-
-# SKK
-[[plugins]]
-repo = 'vim-skk/skk.vim'
-hook_add = '''
-let g:skk_large_jisyo = '~/SKK-JISYO.S'
-'''
-
 # あいまい検索
 [[plugins]]
 repo = 'junegunn/fzf'

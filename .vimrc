@@ -50,13 +50,18 @@ endif
 " }}}
 
 " ddc settings
-call ddc#custom#patch_global('sources', ['around', 'vim-lsp'])
+call ddc#custom#patch_global('sources', ['around', 'vim-lsp', 'eskk'])
 call ddc#custom#patch_global('sourceOptions', {
 		\ 'around': {
 		\	'mark': 'A',
 		\},
 		\ 'vim-lsp': {
 		\ 	'mark': 'lsp',
+		\},
+		\ 'eskk': {
+		\ 	'mark': 'eskk',
+		\	'matchers': [],
+		\	'sorters': [],
 		\},
 		\ '_': {
 		\	'matchers': ['matcher_head'],

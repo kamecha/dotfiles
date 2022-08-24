@@ -62,6 +62,7 @@ call ddc#custom#patch_global('sourceOptions', {
 		\ 	'mark': 'eskk',
 		\	'matchers': [],
 		\	'sorters': [],
+		\	'minAutoCompleteLength': 1,
 		\},
 		\ '_': {
 		\	'matchers': ['matcher_head'],
@@ -102,6 +103,8 @@ set hlsearch
 set incsearch
 "swapFileを作成しない
 set noswapfile
+"折り畳みの背景色を変更
+highlight Folded ctermbg=Black
 
 "空行挿入
 noremap <Space><CR> o<ESC>

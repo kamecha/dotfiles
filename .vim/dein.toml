@@ -57,6 +57,13 @@ let g:eskk#large_dictionary = {
 \ 'sorted': 1,
 \ 'encoding': 'euc-jp',
 \ }
+function L_eskk_get_mode()
+	if (mode() == 'i') && eskk#is_enabled()
+		return g:eskk#statusline_mode_strings[eskk#get_mode()]
+	else
+		return ''
+	endif
+endfunction
 '''
 
 # 翻訳
@@ -73,6 +80,14 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
 " 0: never 1: only split 2: always
 set laststatus=2
+let g:lightline = {
+\	'active': {
+\		'left': [ ['mode', 'paste'], ['readonly', 'filename', 'eskk', 'modified'] ]
+\	},
+\	'component_function': {
+\		'eskk': 'L_eskk_get_mode'
+\	},
+\}
 '''
 
 # カッコ補完

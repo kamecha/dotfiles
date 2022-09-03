@@ -100,6 +100,8 @@ set hlsearch
 set incsearch
 "swapFileを作成しない
 set noswapfile
+"マウスを常に有効
+set mouse=a
 "折り畳みの背景色を変更
 highlight Folded ctermbg=Black
 

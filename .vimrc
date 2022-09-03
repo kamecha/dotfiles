@@ -57,6 +57,7 @@ call ddc#custom#patch_global('sourceOptions', {
 		\},
 		\ 'vim-lsp': {
 		\ 	'mark': 'lsp',
+		\ 	'forceCompletionPattern': '\.\w*',
 		\},
 		\ 'eskk': {
 		\ 	'mark': 'eskk',

@@ -31,6 +31,10 @@ repo = 'Shougo/ddc-matcher_head'
 [[plugins]]
 repo = 'Shougo/ddc-sorter_rank'
 
+# AI補完
+[[plugins]]
+repo = 'github/copilot.vim'
+
 # あいまい検索
 [[plugins]]
 repo = 'junegunn/fzf'

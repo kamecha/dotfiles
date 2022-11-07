@@ -37,3 +37,6 @@ for dotfile in .??*; do
 		ln -snfv "$(pwd)/$dotfile" "$HOME/$dotfile"
 	esac
 done
+
+# for nvim config
+ln -snfv "$(pwd)/init.vim" "$HOME/.config/nvim/init.vim"

@@ -10,6 +10,7 @@
 !/.vim/*
 !/.tmux.conf
 !/.bashrc
+!/init.vim
 
 !/README.md
 !/LICENSE

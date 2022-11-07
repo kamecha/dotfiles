@@ -1,3 +1,6 @@
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
 ## lsp
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
@@ -11,11 +14,13 @@ repo = 'mattn/vim-lsp-settings'
 
 # 補完plugin
 [[plugins]]
-repo = 'vim-denops/denops.vim'
-
-[[plugins]]
 repo = 'Shougo/ddc.vim'
 depends = ['denops.vim']
+
+# 補完UI
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+depends = ['denops.vim', 'ddc.vim']
 
 # 補完source
 [[plugins]]
@@ -30,6 +35,41 @@ repo = 'Shougo/ddc-matcher_head'
 
 [[plugins]]
 repo = 'Shougo/ddc-sorter_rank'
+
+# UI設定 ddu
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+depends = ['denops.vim']
+
+# 補完UI
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+depends = ['denops.vim', 'ddu.vim']
+
+# 補完Source
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+depends = ['denops.vim', 'ddu.vim', 'ddu-kind-file']
+
+# 補完Filter
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+depends = ['denops.vim', 'ddu.vim']
+
+# 補完Kind
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+depends = ['denops.vim', 'ddu.vim']
+
+# 補完Columns
+# 今のところこれは省略しておく
+
+# 言語ごとの設定
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+hook_add = '''
+let g:rustfmt_autosave = 1
+'''
 
 # AI補完
 [[plugins]]
@@ -54,25 +94,17 @@ hook_source = 'set helplang=ja,en'
 
 # SKK
 [[plugins]]
-repo = 'vim-skk/eskk.vim'
+repo = 'vim-skk/skkeleton'
+depends = 'denops.vim'
 hook_add = '''
-let g:eskk#large_dictionary = {
-\ 'path': "~/dotfiles/SKK-JISYO.ML",
-\ 'sorted': 1,
-\ 'encoding': 'euc-jp',
-\ }
-function L_eskk_get_mode()
-	if (mode() == 'i') && eskk#is_enabled()
-		return g:eskk#statusline_mode_strings[eskk#get_mode()]
-	else
-		return ''
-	endif
-endfunction
+call skkeleton#config({ 'globalJisyo': '~/dotfiles/SKK-JISYO.L' })
+imap <C-j> <Plug>(skkeleton-enable)
+cmap <C-j> <Plug>(skkeleton-enable)
 '''
 
 # 翻訳
 [[plugins]]
-repo = 'skanehira/translate.vim'
+repo = 'skanehira/denops-translate.vim'
 
 # gccでコメントアウト
 [[plugins]]
@@ -86,13 +118,17 @@ hook_add = '''
 set laststatus=2
 let g:lightline = {
 \	'active': {
-\		'left': [ ['mode', 'paste'], ['readonly', 'filename', 'eskk', 'modified'] ]
+\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'modified'] ]
 \	},
 \	'component_function': {
-\		'eskk': 'L_eskk_get_mode'
+\		'gitbranch': 'gitbranch#name'
 \	},
 \}
 '''
+
+# git branch
+[[plugins]]
+repo = 'itchyny/vim-gitbranch'
 
 # カッコ補完
 [[plugins]]
@@ -105,3 +141,10 @@ repo = 'tpope/vim-surround'
 # BadApple
 [[plugins]]
 repo = 'skanehira/badapple.vim'
+
+# markdownのプレビュー
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+build = 'cd app && yarn install'
+

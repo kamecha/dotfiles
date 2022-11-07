@@ -17,5 +17,6 @@
 !.gitignore
 !.gitkeep
 !SKK-JISYO.ML
+!SKK-JISYO.L
 !Brewfile
 !Iceberg.terminal

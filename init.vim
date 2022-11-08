@@ -79,39 +79,36 @@ call ddc#custom#patch_global('sourceOptions', {
 call ddc#enable()
 
 " ddu settings
-" set the default ui.
-call ddu#custom#patch_global({
-		\ 'ui': 'ff',
-		\ 'uiParams': {
-		\	'ff': {
-		\		'startFilter': v:true,
-		\       	'prompt': '> ',
-		\       	'autoAction': {'name': 'preview'},
-		\       	'previewVertical': v:true,
-		\       	'previewFloating': v:true,
-		\ 	},
-		\ }
-		\})
-" set the default action
-call ddu#custom#patch_global({
-		\ 'kindOptions': {
-		\	'file': {
-		\		'defaultAction': 'open',
-		\	},
-		\ }
-		\})
-" Specify matcher
-call ddu#custom#patch_global({
-		\ 'sourceOptions': {
-		\	'_': {
-		\		'matchers': ['matcher_substring'],
-		\	},
-		\ }
-		\})
-" set default sources
-call ddu#custom#patch_global({
-		\ 'sources' : [{'name': 'file_rec', 'params': {}}],
-		\ })
+
+" json
+let s:ddu_config_json =<< trim MARK
+	{
+		"ui": "ff",
+		"uiParams": {
+			"ff": {
+				"startFilter": true,
+				"prompt": "> ",
+				"autoAction": {"name": "preview"},
+				"previewVertical": true,
+				"previewFloating": true
+			}
+		},
+		"kindOptions": {
+			"file": {
+				"defaultAction": "open"
+			}
+		},
+		"sourceOptions": {
+			"_": {
+				"matchers": ["matcher_substring"]
+			}
+		},
+		"sources" : [{"name": "file_rec", "params": {}}]
+	}
+MARK
+
+let s:ddu_config_json = s:ddu_config_json->join('')->json_decode()
+call ddu#custom#patch_global(s:ddu_config_json)
 
 " ddu keybind
 autocmd FileType ddu-ff call s:ddu_my_settings()
@@ -152,6 +149,6 @@ nmap <silent> ;f <Cmd>call ddu#start({})<CR>
 
 " user settings
 " terminal
-tnoremap <Esc> <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>
 autocmd TermOpen * startinsert

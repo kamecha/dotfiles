@@ -93,11 +93,18 @@ let s:ddu_config_json =<< trim MARK
 		"ui": "ff",
 		"uiParams": {
 			"ff": {
+				"highlights": {
+					"floating": "NormalFloat:DduFloat,CusrsorLine:DduCursorLine"
+				},
 				"startFilter": true,
 				"prompt": "> ",
 				"autoAction": {"name": "preview"},
-				"previewVertical": true,
-				"previewFloating": true
+				"previewVertical": true
+			}
+		},
+		"filterParams": {
+			"matcher_substring": {
+				"highlightMatched": "DduMatch"
 			}
 		},
 		"kindOptions": {
@@ -115,6 +122,33 @@ let s:ddu_config_json =<< trim MARK
 MARK
 
 let s:ddu_config_json = s:ddu_config_json->join('')->json_decode()
+
+let s:ddu_config_json['uiParams']['ff']['floatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
+let s:ddu_config_json['uiParams']['ff']['split'] = has('nvim') ? 'floating' : 'horizontal'
+let s:ddu_config_json['uiParams']['ff']['previewFloating'] = has('nvim')
+let s:ddu_config_json['uiParams']['ff']['previewFloatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
+
+function! s:set_size() abort
+	let winCol = &columns / 8
+	let winWidth = &columns - (&columns / 4)
+	let winRow = &lines / 8
+	let winHeight = &lines - (&lines / 4)
+	let s:ddu_config_json['uiParams']['ff']['winCol'] = winCol
+	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth
+	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
+	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
+	" 参考url:https://github.com/kuuote/dotvim/blob/master/conf/plug/ddu.vim#L85
+	" fzf-previewやtelescopeみたいなpreviewの出し方をする
+	" - winWidthの部分が内部コードに依存してるのでアレ
+	" (previewVerticalの時、絶対位置にwinWidthを足して出しているのでその分を引き去る)
+	" よってpreviewVertical = trueじゃないと動かない
+	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + (winWidth / 2) - winWidth
+	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2
+	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow
+	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight
+endfunction
+
+call s:set_size()
 call ddu#custom#patch_global(s:ddu_config_json)
 
 " ddu keybind
@@ -153,6 +187,11 @@ function! s:ddu_filter_my_settings() abort
 endfunction
 
 nmap <silent> ;f <Cmd>call ddu#start({})<CR>
+
+autocmd ColorScheme * highlight DduFloat guibg=#e0e0ff guifg=#6060ff
+autocmd ColorScheme * highlight DduBorder guibg=#f0f0ff guifg=#6060ff
+autocmd ColorScheme * highlight DduMatch ctermfg=205 ctermbg=225 guifg=#ff60c0 guibg=#ffd0ff cterm=NONE gui=NONE
+autocmd ColorScheme * highlight DduCursorLine ctermfg=205 ctermbg=225 guifg=#ff6060 guibg=#ffe8e8 cterm=NONE gui=NONE
 
 " user settings
 " terminal

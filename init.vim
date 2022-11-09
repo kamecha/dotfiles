@@ -54,64 +54,102 @@ endif
 " }}}
 
 " ddc settings
-call ddc#custom#patch_global('ui', 'native')
-call ddc#custom#patch_global('sources', ['around', 'vim-lsp', 'skkeleton'])
-call ddc#custom#patch_global('sourceOptions', {
-		\ 'around': {
-		\	'mark': 'A',
-		\},
-		\ 'vim-lsp': {
-		\ 	'mark': 'lsp',
-		\ 	'dup': 'force',
-		\ 	'forceCompletionPattern': '\.\w*',
-		\},
-		\ 'skkeleton': {
-		\ 	'mark': 'skkeleton',
-		\	'matchers': ['skkeleton'],
-		\	'sorters': [],
-		\	'minAutoCompleteLength': 2,
-		\},
-		\ '_': {
-		\	'matchers': ['matcher_head'],
-		\	'sorters': ['sorter_rank'],
-		\},
-		\ })
+" json
+let s:ddc_config_json =<< trim MARK
+	{
+		"ui": "native",
+		"sources": ["around", "vim-lsp", "skkeleton"],
+		"sourceOptions": {
+			"around": {
+				"mark": "A"
+			},
+			"vim-lsp": {
+				"mark": "lsp",
+				"dup": "force",
+				"forceCompletionPattern": ".\\w*"
+			},
+			"skkeleton": {
+				"mark": "skkeleton",
+				"matchers": ["skkeleton"],
+				"sorters": [],
+				"minAutoCompleteLength": 2
+			},
+			"_": {
+				"matchers": ["matcher_head"],
+				"sorters": ["sorter_rank"]
+			}
+		}
+	}
+MARK
+let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
+call ddc#custom#patch_global(s:ddc_config_json)
 call ddc#enable()
 
 " ddu settings
-" set the default ui.
-call ddu#custom#patch_global({
-		\ 'ui': 'ff',
-		\ 'uiParams': {
-		\	'ff': {
-		\		'startFilter': v:true,
-		\       	'prompt': '> ',
-		\       	'autoAction': {'name': 'preview'},
-		\       	'previewVertical': v:true,
-		\       	'previewFloating': v:true,
-		\ 	},
-		\ }
-		\})
-" set the default action
-call ddu#custom#patch_global({
-		\ 'kindOptions': {
-		\	'file': {
-		\		'defaultAction': 'open',
-		\	},
-		\ }
-		\})
-" Specify matcher
-call ddu#custom#patch_global({
-		\ 'sourceOptions': {
-		\	'_': {
-		\		'matchers': ['matcher_substring'],
-		\	},
-		\ }
-		\})
-" set default sources
-call ddu#custom#patch_global({
-		\ 'sources' : [{'name': 'file_rec', 'params': {}}],
-		\ })
+
+" json
+let s:ddu_config_json =<< trim MARK
+	{
+		"ui": "ff",
+		"uiParams": {
+			"ff": {
+				"highlights": {
+					"floating": "NormalFloat:DduFloat,CusrsorLine:DduCursorLine"
+				},
+				"startFilter": true,
+				"prompt": "> ",
+				"autoAction": {"name": "preview"},
+				"previewVertical": true
+			}
+		},
+		"filterParams": {
+			"matcher_substring": {
+				"highlightMatched": "DduMatch"
+			}
+		},
+		"kindOptions": {
+			"file": {
+				"defaultAction": "open"
+			}
+		},
+		"sourceOptions": {
+			"_": {
+				"matchers": ["matcher_substring"]
+			}
+		},
+		"sources" : [{"name": "file_rec", "params": {}}]
+	}
+MARK
+
+let s:ddu_config_json = s:ddu_config_json->join('')->json_decode()
+
+let s:ddu_config_json['uiParams']['ff']['floatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
+let s:ddu_config_json['uiParams']['ff']['split'] = has('nvim') ? 'floating' : 'horizontal'
+let s:ddu_config_json['uiParams']['ff']['previewFloating'] = has('nvim')
+let s:ddu_config_json['uiParams']['ff']['previewFloatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
+
+function! s:set_size() abort
+	let winCol = &columns / 8
+	let winWidth = &columns - (&columns / 4)
+	let winRow = &lines / 8
+	let winHeight = &lines - (&lines / 4)
+	let s:ddu_config_json['uiParams']['ff']['winCol'] = winCol
+	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth
+	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
+	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
+	" 参考url:https://github.com/kuuote/dotvim/blob/master/conf/plug/ddu.vim#L85
+	" fzf-previewやtelescopeみたいなpreviewの出し方をする
+	" - winWidthの部分が内部コードに依存してるのでアレ
+	" (previewVerticalの時、絶対位置にwinWidthを足して出しているのでその分を引き去る)
+	" よってpreviewVertical = trueじゃないと動かない
+	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + (winWidth / 2) - winWidth
+	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2
+	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow
+	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight
+endfunction
+
+call s:set_size()
+call ddu#custom#patch_global(s:ddu_config_json)
 
 " ddu keybind
 autocmd FileType ddu-ff call s:ddu_my_settings()
@@ -150,8 +188,13 @@ endfunction
 
 nmap <silent> ;f <Cmd>call ddu#start({})<CR>
 
+autocmd ColorScheme * highlight DduFloat guibg=#e0e0ff guifg=#6060ff
+autocmd ColorScheme * highlight DduBorder guibg=#f0f0ff guifg=#6060ff
+autocmd ColorScheme * highlight DduMatch ctermfg=205 ctermbg=225 guifg=#ff60c0 guibg=#ffd0ff cterm=NONE gui=NONE
+autocmd ColorScheme * highlight DduCursorLine ctermfg=205 ctermbg=225 guifg=#ff6060 guibg=#ffe8e8 cterm=NONE gui=NONE
+
 " user settings
 " terminal
-tnoremap <Esc> <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>
 autocmd TermOpen * startinsert

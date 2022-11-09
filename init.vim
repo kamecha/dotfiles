@@ -54,28 +54,35 @@ endif
 " }}}
 
 " ddc settings
-call ddc#custom#patch_global('ui', 'native')
-call ddc#custom#patch_global('sources', ['around', 'vim-lsp', 'skkeleton'])
-call ddc#custom#patch_global('sourceOptions', {
-		\ 'around': {
-		\	'mark': 'A',
-		\},
-		\ 'vim-lsp': {
-		\ 	'mark': 'lsp',
-		\ 	'dup': 'force',
-		\ 	'forceCompletionPattern': '\.\w*',
-		\},
-		\ 'skkeleton': {
-		\ 	'mark': 'skkeleton',
-		\	'matchers': ['skkeleton'],
-		\	'sorters': [],
-		\	'minAutoCompleteLength': 2,
-		\},
-		\ '_': {
-		\	'matchers': ['matcher_head'],
-		\	'sorters': ['sorter_rank'],
-		\},
-		\ })
+" json
+let s:ddc_config_json =<< trim MARK
+	{
+		"ui": "native",
+		"sources": ["around", "vim-lsp", "skkeleton"],
+		"sourceOptions": {
+			"around": {
+				"mark": "A"
+			},
+			"vim-lsp": {
+				"mark": "lsp",
+				"dup": "force",
+				"forceCompletionPattern": ".\\w*"
+			},
+			"skkeleton": {
+				"mark": "skkeleton",
+				"matchers": ["skkeleton"],
+				"sorters": [],
+				"minAutoCompleteLength": 2
+			},
+			"_": {
+				"matchers": ["matcher_head"],
+				"sorters": ["sorter_rank"]
+			}
+		}
+	}
+MARK
+let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
+call ddc#custom#patch_global(s:ddc_config_json)
 call ddc#enable()
 
 " ddu settings

@@ -148,3 +148,9 @@ repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown', 'pandoc.markdown', 'rmd']
 build = 'cd app && yarn install'
 
+# color scheme
+[[plugins]]
+repo = 'EdenEast/nightfox.nvim'
+hook_add = '''
+colorscheme nightfox
+'''

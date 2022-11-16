@@ -95,6 +95,7 @@ let s:ddu_config_json =<< trim MARK
 				"highlights": {},
 				"startFilter": true,
 				"prompt": "> ",
+				"autoAction" : { "name": "preview" },
 				"previewVertical": true
 			}
 		},
@@ -165,26 +166,8 @@ function! s:reset() abort
 	call ddu#custom#patch_global(s:ddu_config_json)
 endfunction
 
-function! s:preview() abort
-	call ddu#ui#ff#do_action('preview')
-	for l:info in getwininfo()
-		let l:buf = getbufinfo(info.bufnr)[0]
-		if buf.name =~# '^ddu-ff:'
-			call nvim_win_set_option(info.winid, 'winhighlight', g:vimrc#ddu_highlights)
-		endif
-	endfor
-endfunction
-
-function s:autopreview()
-	" ddu-ui-ffが内部で使っているグループ名
-	augroup ddu-ui-auto_action
-		autocmd CursorMoved <buffer> call s:preview()
-	augroup END
-endfunction
-
 call s:reset()
 autocmd ColorScheme,VimResized * call s:reset()
-autocmd FileType ddu-ff call s:autopreview()
 
 " ddu keybind
 autocmd FileType ddu-ff call s:ddu_my_settings()

@@ -1,114 +1,21 @@
+# 全部入り
 [[plugins]]
-repo = 'vim-denops/denops.vim'
-
-## lsp
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-hook_add = '''
-let g:lsp_diagnostics_enabled = 0
-let g:lsp_document_code_action_signs_enabled = 0
-'''
-
-[[plugins]]
-repo = 'mattn/vim-lsp-settings'
-
-# 補完plugin
-[[plugins]]
-repo = 'Shougo/ddc.vim'
-depends = ['denops.vim']
-
-# 補完UI
-[[plugins]]
-repo = 'Shougo/ddc-ui-native'
-depends = ['denops.vim', 'ddc.vim']
-
-# 補完source
-[[plugins]]
-repo = 'Shougo/ddc-around'
-
-[[plugins]]
-repo = 'shun/ddc-vim-lsp'
-
-# 補完filter
-[[plugins]]
-repo = 'Shougo/ddc-matcher_head'
-
-[[plugins]]
-repo = 'Shougo/ddc-sorter_rank'
-
-# UI設定 ddu
-[[plugins]]
-repo = 'Shougo/ddu.vim'
-depends = ['denops.vim']
-
-# 補完UI
-[[plugins]]
-repo = 'Shougo/ddu-ui-ff'
-depends = ['denops.vim', 'ddu.vim']
-
-# 補完Source
-[[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
-depends = ['denops.vim', 'ddu.vim', 'ddu-kind-file']
-
-# 補完Filter
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-depends = ['denops.vim', 'ddu.vim']
-
-# 補完Kind
-[[plugins]]
-repo = 'Shougo/ddu-kind-file'
-depends = ['denops.vim', 'ddu.vim']
-
-# 補完Columns
-# 今のところこれは省略しておく
-
-# 言語ごとの設定
-[[plugins]]
-repo = 'rust-lang/rust.vim'
-hook_add = '''
-let g:rustfmt_autosave = 1
-'''
-
-# AI補完
-[[plugins]]
-repo = 'github/copilot.vim'
-
-# あいまい検索
-[[plugins]]
-repo = 'junegunn/fzf'
-build_on = '''
-./install -all
-'''
+repo = 'neoclide/coc.nvim'
+source = 'release'
 merged = '0'
-
-[[plugins]]
-repo = 'junegunn/fzf.vim'
-depends = 'fzf'
-
-# help日本語
-[[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-hook_source = 'set helplang=ja,en'
-
-# SKK
-[[plugins]]
-repo = 'vim-skk/skkeleton'
-depends = 'denops.vim'
-hook_add = '''
-call skkeleton#config({ 'globalJisyo': '~/dotfiles/SKK-JISYO.L' })
-imap <C-j> <Plug>(skkeleton-enable)
-cmap <C-j> <Plug>(skkeleton-enable)
+build = 'coc#util#install()'
+hook_source = '''
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" 目印とかがなくても余白を開ける
+set signcolumn=yes
 '''
-
-# 翻訳
-[[plugins]]
-repo = 'skanehira/denops-translate.vim'
-
-# gccでコメントアウト
-[[plugins]]
-repo = 'tomtom/tcomment_vim'
 
 # ステータスライン
 [[plugins]]
@@ -118,39 +25,7 @@ hook_add = '''
 set laststatus=2
 let g:lightline = {
 \	'active': {
-\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'modified'] ]
-\	},
-\	'component_function': {
-\		'gitbranch': 'gitbranch#name'
+\		'left': [ ['mode', 'paste'], ['readonly', 'filename', 'modified'] ]
 \	},
 \}
-'''
-
-# git branch
-[[plugins]]
-repo = 'itchyny/vim-gitbranch'
-
-# カッコ補完
-[[plugins]]
-repo = 'cohama/lexima.vim'
-
-# surround
-[[plugins]]
-repo = 'tpope/vim-surround'
-
-# BadApple
-[[plugins]]
-repo = 'skanehira/badapple.vim'
-
-# markdownのプレビュー
-[[plugins]]
-repo = 'iamcco/markdown-preview.nvim'
-on_ft = ['markdown', 'pandoc.markdown', 'rmd']
-build = 'cd app && yarn install'
-
-# color scheme
-[[plugins]]
-repo = 'EdenEast/nightfox.nvim'
-hook_add = '''
-colorscheme nightfox
 '''

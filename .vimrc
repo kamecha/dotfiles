@@ -1,3 +1,86 @@
+
+" OLED表示用のロゴ(A, B, ...)
+" 0x7C, 0x12, 0x11, 0x12, 0x7C, 0x00
+" 0x00, 0x7F, 0x49, 0x49, 0x49, 0x36,
+" 0x00, 0x3E, 0x41, 0x41, 0x41, 0x22,
+" 0x00, 0x7F, 0x41, 0x41, 0x41, 0x3E,
+" 0x00, 0x7F, 0x49, 0x49, 0x49, 0x41,
+
+" 0x02 → 0000 0010
+function! s:hexToBin(hex) abort
+	let l:hex = str2nr(a:hex, 16)
+	let bin = ""
+	for i in range(8)
+		let bin = and(l:hex, 1) . bin
+		let l:hex = l:hex >> 1
+	endfor
+	return bin
+endfunction
+
+" 0000 0010, 0000 0110 ...	→	00
+" 								10
+" 								01
+" 								01
+" 								00
+" 								00
+" 								00
+" 								00 ...
+function! s:binToOled(binList) abort
+	let l:oled = []
+	for i in range(8)
+		let l:oled = add(l:oled, '')
+	endfor
+	for bin in a:binList
+		for i in range(8)
+			let l:oled[i] = l:oled[i] . ( bin[8-(i+1)] ? '■': '□' )
+		endfor
+	endfor
+	return l:oled
+endfunction
+
+" 非空白文字のみを抽出
+function! s:filterNonSpace(str) abort
+	return substitute(a:str, '\s\+', '', 'g')
+endfunction
+
+" 16進数のみを抽出
+function! s:filterHex(str) abort
+	let ret = substitute(a:str, '^.*\(0x[0-9a-fA-F]\{2\}\).*$', '\1', '')
+	return ret
+endfunction
+
+function! Echo() range abort
+  let textList = getline(a:firstline, a:lastline)
+  let startPos = getpos("'<")
+  let endPos = getpos("'>")
+  let tmpPos = { 'lnum': startPos[1], 'col': startPos[2] }
+  let hexList = []
+  for text in textList
+	  " まずは普通のビジュアルモードに対応させる
+	  " let splitText = strpart(text, startPos - 1, endPos - startPos + 1)
+	  " 最終行
+	  if tmpPos['lnum'] == endPos[1]
+		  let splitText = strpart(text, tmpPos['col'] - 1, endPos[2] - tmpPos['col'] + 1)
+	  else
+		  let splitText = strpart(text, tmpPos['col'] - 1, len(text) - tmpPos['col'] + 1)
+		  let tmpPos['lnum'] = str2nr(tmpPos['lnum']) + 1
+		  let tmpPos['col'] = 1
+	  endif
+	  " let binText = s:hexToBin(splitText)
+	  for separatedText in split(splitText, ',')
+		  let hex = s:filterHex(s:filterNonSpace(separatedText))
+		  let hexList = add(hexList, hex)
+	  endfor
+  endfor
+  let binList = []
+  for hex in hexList
+	  let binList = add(binList, s:hexToBin(hex))
+  endfor
+  let oled = s:binToOled(binList)
+  call popup_atcursor(oled, {'pos': 'botleft'})
+endfunction
+command! -range OLEDFromHexList :<line1>,<line2>call Echo()
+
 " dein.vim settings {{{
 " install dir {{{
 let s:dein_dir = expand('~/.cache/dein')
@@ -49,30 +132,6 @@ endif
 
 " }}}
 
-" ddc settings
-call ddc#custom#patch_global('sources', ['around', 'vim-lsp', 'eskk'])
-call ddc#custom#patch_global('sourceOptions', {
-		\ 'around': {
-		\	'mark': 'A',
-		\},
-		\ 'vim-lsp': {
-		\ 	'mark': 'lsp',
-		\ 	'dup': 'force',
-		\ 	'forceCompletionPattern': '\.\w*',
-		\},
-		\ 'eskk': {
-		\ 	'mark': 'eskk',
-		\	'matchers': [],
-		\	'sorters': [],
-		\	'minAutoCompleteLength': 1,
-		\},
-		\ '_': {
-		\	'matchers': ['matcher_head'],
-		\	'sorters': ['sorter_rank'],
-		\},
-		\ })
-call ddc#enable()
-
 " indent settings
 " keep current indent
 set autoindent
@@ -93,6 +152,8 @@ set relativenumber
 set title
 "シンタックスハイライト
 syntax enable
+" ファイルタイプに応じたインデント
+filetype plugin indent on
 "検索の際、大文字ありでsensitive
 set ignorecase smartcase
 "検索パターンのハイライト
@@ -103,8 +164,13 @@ set incsearch
 set noswapfile
 "マウスを常に有効
 set mouse=a
+"クリップボードを共有
+set clipboard&
+set clipboard^=unnamedplus
 "折り畳みの背景色を変更
 highlight Folded ctermbg=Black
+" 目印とかがなくても余白を開ける
+set signcolumn=yes
 
 "空行挿入
 noremap <Space><CR> o<ESC>
@@ -112,3 +178,9 @@ noremap <Space><CR> o<ESC>
 nnoremap <F3> :noh<CR>
 
 
+colorscheme desert
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"

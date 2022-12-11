@@ -17,7 +17,7 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
   " .toml file
-  let s:rc_dir = expand('~/.vim')
+  let s:rc_dir = expand('~/.config/nvim')
   if !isdirectory(s:rc_dir)
     call mkdir(s:rc_dir, 'p')
   endif
@@ -65,7 +65,10 @@ let s:ddc_config_json =<< trim MARK
 			"vim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
-				"forceCompletionPattern": ".\\w*"
+				"matchers": ["matcher_fuzzy"],
+				"sorters": ["sorter_fuzzy"],
+				"converters": ["converter_fuzzy"],
+				"forceCompletionPattern": "\\.\\w*"
 			},
 			"skkeleton": {
 				"mark": "skkeleton",
@@ -209,6 +212,8 @@ endfunction
 nmap <silent> ;f <Cmd>call ddu#start({})<CR>
 
 " user settings
+" plugin
+set signcolumn=yes
 " color
 set termguicolors
 " terminal

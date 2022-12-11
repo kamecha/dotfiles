@@ -122,9 +122,9 @@ PATH="$HOME/.local/bin:$PATH"
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 # libpulse0
-export HOST_IP="$(ip route |awk '/^default/{print $3}')"
-export PULSE_SERVER="tcp:$HOST_IP"
+# export HOST_IP="$(ip route |awk '/^default/{print $3}')"
+# export PULSE_SERVER="tcp:$HOST_IP"
 # export DISPLAY="$HOST_IP:0.0"
 
 # Xserver
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0

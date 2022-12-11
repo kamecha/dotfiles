@@ -1,22 +1,2 @@
-# 最初にすべての階層のファイルを無視
-### all ignore ###
-/*
-/.**
-
-### not ignore ###
-!/setup.sh
-!/.vimrc
-!/.zshrc
-!/.vim/*
-!/.tmux.conf
-!/.bashrc
-!/init.vim
-
-!/README.md
-!/LICENSE
-!.gitignore
-!.gitkeep
-!SKK-JISYO.ML
-!SKK-JISYO.L
-!Brewfile
-!Iceberg.terminal
+/backup/*
+/.tmux/*

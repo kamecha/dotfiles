@@ -22,9 +22,11 @@ if dein#load_state(s:dein_dir)
     call mkdir(s:rc_dir, 'p')
   endif
   let s:toml = s:rc_dir . '/dein.toml'
+  let s:lazy_toml = s:rc_dir . '/dein_lazy.toml'
 
   " read toml and cache
   call dein#load_toml(s:toml, {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
   " end settings
   call dein#end()
@@ -52,12 +54,15 @@ endif
 
 " }}}
 
+" for colorscheme settings
+colorscheme nightfox
+
 " ddc settings
 " json
 let s:ddc_config_json =<< trim MARK
 	{
 		"ui": "native",
-		"sources": ["around", "vim-lsp", "skkeleton"],
+		"sources": ["around", "vim-lsp", "vsnip", "skkeleton"],
 		"sourceOptions": {
 			"around": {
 				"mark": "A"
@@ -65,10 +70,11 @@ let s:ddc_config_json =<< trim MARK
 			"vim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
-				"matchers": ["matcher_fuzzy"],
-				"sorters": ["sorter_fuzzy"],
-				"converters": ["converter_fuzzy"],
-				"forceCompletionPattern": "\\.\\w*"
+				"forceCompletionPattern": "\\.|->|::"
+			},
+			"vsnip": {
+				"mark": "vsnip",
+				"dup": "keep"
 			},
 			"skkeleton": {
 				"mark": "skkeleton",
@@ -210,6 +216,7 @@ function! s:ddu_filter_my_settings() abort
 endfunction
 
 nmap <silent> ;f <Cmd>call ddu#start({})<CR>
+nmap <silent> ;z <Cmd>call ddu#start({'sources': [{'name': 'zenn'}]})<CR>
 
 " user settings
 " plugin
@@ -220,4 +227,6 @@ set termguicolors
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>
 autocmd TermOpen * startinsert
+" filetype
+let g:tex_flavor = 'latex'
 

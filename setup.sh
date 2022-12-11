@@ -39,4 +39,4 @@ for dotfile in .??*; do
 done
 
 # for nvim config
-ln -snfv "$(pwd)/init.vim" "$HOME/.config/nvim/init.vim"
+ln -sfv "$(pwd)/nvim" "$HOME/.config/"

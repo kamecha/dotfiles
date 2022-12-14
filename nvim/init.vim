@@ -220,4 +220,5 @@ set termguicolors
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>
 autocmd TermOpen * startinsert
-
+" clipborad for windows
+set clipboard&

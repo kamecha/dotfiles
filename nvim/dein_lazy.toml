@@ -1,0 +1,26 @@
+[[plugins]]
+repo = 'lervag/vimtex'
+on_ft = ['tex']
+hook_source = '''
+let g:vimtex_view_general_viewer = 'displayline'
+let g:vimtex_view_general_options = '-r @line @pdf @tex'
+let g:vimtex_compiler_latexmk = { 'continuous': 0 }
+let g:vimtex_quickfix_open_on_warning = 0
+call vimtex#init()
+call ddc#custom#patch_filetype(['tex'], 'sourceOptions', #{
+      \   omni: #{
+      \     forceCompletionPattern: g:vimtex#re#deoplete,
+      \   },
+      \ })
+call ddc#custom#patch_filetype(['tex'], 'sourceParams', #{
+      \   omni: #{ omnifunc: 'vimtex#complete#omnifunc' },
+      \ })
+'''
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = ['rust']
+hook_source = '''
+let g:rustfmt_autosave = 1
+'''
+

@@ -42,6 +42,14 @@ repo = 'tani/ddc-fuzzy'
 [[plugins]]
 repo = 'Shougo/ddc-sorter_rank'
 
+# スニペット
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip-integ'
+depends = ['vim-vsnip']
+
 # UI設定 ddu
 [[plugins]]
 repo = 'Shougo/ddu.vim'
@@ -69,13 +77,6 @@ depends = ['denops.vim', 'ddu.vim']
 
 # 補完Columns
 # 今のところこれは省略しておく
-
-# 言語ごとの設定
-[[plugins]]
-repo = 'rust-lang/rust.vim'
-hook_add = '''
-let g:rustfmt_autosave = 1
-'''
 
 # AI補完
 [[plugins]]

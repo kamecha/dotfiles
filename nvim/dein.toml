@@ -117,6 +117,10 @@ repo = 'skanehira/denops-translate.vim'
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
 
+# 部分編集
+[[plugins]]
+repo = 'thinca/vim-partedit'
+
 # ステータスライン
 [[plugins]]
 repo = 'itchyny/lightline.vim'

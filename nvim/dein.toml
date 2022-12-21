@@ -107,6 +107,29 @@ hook_add = '''
 call skkeleton#config({ 'globalJisyo': '~/dotfiles/SKK-JISYO.L' })
 imap <C-j> <Plug>(skkeleton-enable)
 cmap <C-j> <Plug>(skkeleton-enable)
+function L_skkeleton_get_mode()
+	if (mode() == 'i') && skkeleton#is_enabled()
+		let skkeleton_mode = skkeleton#mode()
+		if skkeleton_mode == 'hira'
+			return 'あ'
+		endif
+		if skkeleton_mode == 'kata'
+			return 'ア'
+		endif
+		if skkeleton_mode == 'hankata'
+			return 'ｱ'
+		endif
+		if skkeleton_mode == 'zenkaku'
+			return 'Ａ'
+		endif
+		if skkeleton_mode == 'abbrev'
+			return 'A'
+		endif
+		return ''
+	else
+		return ''
+	endif
+endfunction
 '''
 
 # 翻訳
@@ -129,9 +152,10 @@ hook_add = '''
 set laststatus=2
 let g:lightline = {
 \	'active': {
-\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'modified'] ]
+\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'skkeleton', 'modified'] ]
 \	},
 \	'component_function': {
+\		'skkeleton': 'L_skkeleton_get_mode',
 \		'gitbranch': 'gitbranch#name'
 \	},
 \}

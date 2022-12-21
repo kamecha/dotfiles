@@ -70,7 +70,8 @@ let s:ddc_config_json =<< trim MARK
 			"vim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
-				"forceCompletionPattern": "\\.|->|::"
+				"forceCompletionPattern": "\\.|->|::",
+				"matchers": ["matcher_fuzzy"]
 			},
 			"vsnip": {
 				"mark": "vsnip",

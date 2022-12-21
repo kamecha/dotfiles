@@ -55,7 +55,7 @@ endif
 " }}}
 
 " for colorscheme settings
-colorscheme nightfox
+colorscheme edge
 
 " ddc settings
 " json
@@ -221,8 +221,6 @@ nmap <silent> ;z <Cmd>call ddu#start({'sources': [{'name': 'zenn'}]})<CR>
 " user settings
 " plugin
 set signcolumn=yes
-" color
-set termguicolors
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>

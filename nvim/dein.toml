@@ -60,9 +60,17 @@ depends = ['denops.vim']
 repo = 'Shougo/ddu-ui-ff'
 depends = ['denops.vim', 'ddu.vim']
 
+[[plugins]]
+repo = 'Shougo/ddu-ui-filer'
+depends = ['denops.vim', 'ddu.vim']
+
 # 補完Source
 [[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
+depends = ['denops.vim', 'ddu.vim', 'ddu-kind-file']
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
 depends = ['denops.vim', 'ddu.vim', 'ddu-kind-file']
 
 # 補完Filter

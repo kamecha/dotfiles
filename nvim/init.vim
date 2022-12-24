@@ -99,7 +99,11 @@ call ddc#enable()
 " json
 let s:ddu_config_json =<< trim MARK
 	{
-		"ui": "ff",
+		"uiOptions": {
+			"filer": {
+				"toggle": true
+			}
+		},
 		"uiParams": {
 			"ff": {
 				"highlights": {},
@@ -107,6 +111,11 @@ let s:ddu_config_json =<< trim MARK
 				"prompt": "> ",
 				"autoAction" : { "name": "preview" },
 				"previewVertical": true
+			},
+			"filer": {
+				"split": "vertical",
+				"splitDirection": "topleft",
+				"sortTreesFirst": true
 			}
 		},
 		"filterParams": {
@@ -124,7 +133,7 @@ let s:ddu_config_json =<< trim MARK
 				"matchers": ["matcher_substring"]
 			}
 		},
-		"sources" : [{"name": "file_rec", "params": {}}]
+		"sources" : [{"name": "file", "params": {}}]
 	}
 MARK
 
@@ -216,8 +225,20 @@ function! s:ddu_filter_my_settings() abort
 				\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)")<CR>
 endfunction
 
-nmap <silent> ;f <Cmd>call ddu#start({})<CR>
-nmap <silent> ;z <Cmd>call ddu#start({'sources': [{'name': 'zenn'}]})<CR>
+autocmd FileType ddu-filer call s:ddu_filer_my_settings()
+function! s:ddu_filer_my_settings() abort
+	nnoremap <buffer><expr> <CR>
+				\ ddu#ui#filer#is_tree() ?
+				\ "<Cmd>call ddu#ui#filer#do_action('expandItem', {'mode': 'toggle'})<CR>" :
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+	nnoremap <buffer><silent> <Space>
+				\ <Cmd>call ddu#ui#filer#do_action('toggleSelectItem')<CR>
+	nnoremap <buffer><silent> q
+				\ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
+endfunction
+
+nmap <silent> ;f <Cmd>call ddu#start({'ui': 'ff', 'sources': [{'name': 'file_rec', 'params': {}}]})<CR>
+nmap <silent> ;e <Cmd>call ddu#start({'ui': 'filer', 'uiParams': {'filer': {'winWidth': &columns / 6}}})<CR>
 
 " user settings
 " plugin

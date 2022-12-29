@@ -1,16 +1,36 @@
+# LSP
 [[plugins]]
-repo = 'vim-denops/denops.vim'
+repo = 'neovim/nvim-lspconfig'
 
-## lsp
 [[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-hook_source = '''
-let g:lsp_diagnostics_enabled = 0
-" let g:lsp_document_code_action_signs_enabled = 0
+repo = 'williamboman/mason.nvim'
+hooK_add = '''
+lua require('mason').setup()
 '''
 
 [[plugins]]
-repo = 'mattn/vim-lsp-settings'
+repo = 'williamboman/mason-lspconfig.nvim'
+depends = ['nvim-lspconfig', 'mason.nvim']
+hook_source = '''
+lua << EOF
+local nvim_lsp = require("lspconfig")
+local mason_lspconfig = require('mason-lspconfig')
+mason_lspconfig.setup_handlers({ function(server_name)
+	local opts = {}
+	nvim_lsp[server_name].setup(opts)
+end })
+EOF
+'''
+
+[[plugins]]
+repo = 'folke/neodev.nvim'
+hook_source = '''
+lua require("neodev").setup({})
+'''
+
+# deno
+[[plugins]]
+repo = 'vim-denops/denops.vim'
 
 # 補完plugin
 [[plugins]]
@@ -27,7 +47,8 @@ depends = ['denops.vim', 'ddc.vim']
 repo = 'Shougo/ddc-around'
 
 [[plugins]]
-repo = 'shun/ddc-vim-lsp'
+repo = 'Shougo/ddc-nvim-lsp'
+depends = ['denops.vim', 'ddc.vim']
 
 # 補完filter
 [[plugins]]

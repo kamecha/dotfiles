@@ -62,12 +62,12 @@ colorscheme edge
 let s:ddc_config_json =<< trim MARK
 	{
 		"ui": "native",
-		"sources": ["around", "vim-lsp", "vsnip", "skkeleton"],
+		"sources": ["around", "nvim-lsp", "vsnip", "skkeleton"],
 		"sourceOptions": {
 			"around": {
 				"mark": "A"
 			},
-			"vim-lsp": {
+			"nvim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
 				"forceCompletionPattern": "\\.|->|::",
@@ -251,3 +251,6 @@ autocmd TermOpen * startinsert
 let g:tex_flavor = 'latex'
 " clipborad for windows
 set clipboard&
+
+" lua settings
+luafile ~/dotfiles/nvim/plugin_settings.lua

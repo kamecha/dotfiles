@@ -23,9 +23,10 @@ if dein#load_state(s:dein_dir)
   endif
   let s:toml = s:rc_dir . '/dein.toml'
   let s:lazy_toml = s:rc_dir . '/dein_lazy.toml'
+  let s:nyao_toml = s:rc_dir . '/dein_nyao.toml'
 
   " read toml and cache
-  call dein#load_toml(s:toml, {'lazy': 0})
+  call dein#load_toml(s:toml)
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
   " end settings
@@ -80,8 +81,7 @@ let s:ddc_config_json =<< trim MARK
 			"skkeleton": {
 				"mark": "skkeleton",
 				"matchers": ["skkeleton"],
-				"sorters": [],
-				"minAutoCompleteLength": 2
+				"sorters": []
 			},
 			"_": {
 				"matchers": ["matcher_head"],
@@ -119,9 +119,6 @@ let s:ddu_config_json =<< trim MARK
 			}
 		},
 		"filterParams": {
-			"matcher_substring": {
-				"highlightMatched": "DduMatch"
-			}
 		},
 		"kindOptions": {
 			"file": {
@@ -132,18 +129,13 @@ let s:ddu_config_json =<< trim MARK
 			"_": {
 				"matchers": ["matcher_substring"]
 			}
-		},
-		"sources" : [{"name": "file", "params": {}}]
+		}
 	}
 MARK
 
 let s:ddu_config_json = s:ddu_config_json->join('')->json_decode()
 
-let g:vimrc#ddu_highlights = "NormalFloat:DduFloat,CursorLine:DduCursorLine,EndOfBuffer:DduEnd,Search:DduMatch"
-let s:ddu_config_json['uiParams']['ff']['floatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
-let s:ddu_config_json['uiParams']['ff']['split'] = has('nvim') ? 'floating' : 'horizontal'
-let s:ddu_config_json['uiParams']['ff']['previewFloating'] = has('nvim')
-let s:ddu_config_json['uiParams']['ff']['previewFloatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
+call ddu#custom#patch_global(s:ddu_config_json)
 
 function! s:set_size() abort
 	let winCol = &columns / 8
@@ -165,28 +157,17 @@ function! s:set_size() abort
 	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight
 endfunction
 
-function s:color_scheme()
-	" if &background ==# 'light'
-		hi DduEnd guibg=#e0e0ff guifg=#e0e0ff
-		hi DduFloat guibg=#e0e0ff guifg=#6060ff
-		hi DduBorder guibg=#f0f0ff guifg=#6060ff
-		hi DduMatch ctermfg=205 ctermbg=225 guifg=#ff60c0 guibg=#ffd0ff cterm=NONE gui=NONE
-		hi DduCursorLine ctermfg=205 ctermbg=225 guifg=#ff6060 guibg=#ffe8e8 cterm=NONE gui=NONE
-		let g:vimrc#ddu_highlights = "NormalFloat:DduFloat,CursorLine:DduCursorLine,EndOfBuffer:DduEnd,Search:DduMatch"
-	" else
-		" let g:vimrc#ddu_highlights = 'NormalFloat:Normal,DduBorder:Normal,DduMatch:Search'
-	" endif
-	let s:ddu_config_json['uiParams']['ff']['highlights']['floating'] = g:vimrc#ddu_highlights
-endfunction
-
-function! s:reset() abort
+function! s:set_ddu_float() abort
+	let s:ddu_config_json['uiParams']['ff']['floatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
+	let s:ddu_config_json['uiParams']['ff']['split'] = has('nvim') ? 'floating' : 'horizontal'
+	let s:ddu_config_json['uiParams']['ff']['previewFloating'] = has('nvim')
+	let s:ddu_config_json['uiParams']['ff']['previewFloatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
 	call s:set_size()
-	call s:color_scheme()
 	call ddu#custom#patch_global(s:ddu_config_json)
 endfunction
 
-call s:reset()
-autocmd ColorScheme,VimResized * call s:reset()
+call s:set_ddu_float()
+autocmd VimResized * call s:set_ddu_float()
 
 " ddu keybind
 autocmd FileType ddu-ff call s:ddu_my_settings()
@@ -220,9 +201,9 @@ function! s:ddu_filter_my_settings() abort
 	inoremap <buffer> <C-v>
 				\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
 	inoremap <buffer> <C-j>
-				\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)")<CR>
+				\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)<Bar>redraw")<CR>
 	inoremap <buffer> <C-k>
-				\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)")<CR>
+				\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)<Bar>redraw")<CR>
 endfunction
 
 autocmd FileType ddu-filer call s:ddu_filer_my_settings()
@@ -237,12 +218,23 @@ function! s:ddu_filer_my_settings() abort
 				\ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
 endfunction
 
-nmap <silent> ;f <Cmd>call ddu#start({'ui': 'ff', 'sources': [{'name': 'file_rec', 'params': {}}]})<CR>
-nmap <silent> ;e <Cmd>call ddu#start({'ui': 'filer', 'uiParams': {'filer': {'winWidth': &columns / 6}}})<CR>
+nnoremap [ddu] <Nop>
+nmap <Space>u [ddu]
+nmap <silent> [ddu]f <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'sources': [{'name': 'file_rec', 'params': {}}]
+			\ })<CR>
+nmap <silent> [ddu]e <Cmd>call ddu#start({
+			\ 'ui': 'filer',
+			\ 'sources': [{'name': 'file', 'params': {}}],
+			\ 'uiParams': {'filer': {'winWidth': &columns / 6}}
+			\ })<CR>
 
 " user settings
 " plugin
 set signcolumn=yes
+" 補完におけるpreviewの非表示
+set completeopt-=preview
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>
@@ -251,6 +243,22 @@ autocmd TermOpen * startinsert
 let g:tex_flavor = 'latex'
 " clipborad for windows
 set clipboard&
+let g:clipboard = {
+			\ 'name': 'win32yank',
+			\ 'copy': {
+			\   '+': 'win32yank.exe -i',
+			\   '*': 'win32yank.exe -i',
+			\ },
+			\ 'paste': {
+			\   '+': 'win32yank.exe -o',
+			\   '*': 'win32yank.exe -o',
+			\ },
+			\ 'cache_enabled': 0
+			\ }
 
 " lua settings
 luafile ~/dotfiles/nvim/plugin_settings.lua
+
+" lua plugin
+luafile ~/dotfiles/nvim/test.lua
+

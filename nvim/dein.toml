@@ -22,6 +22,22 @@ end })
 EOF
 '''
 
+# インストールのUI
+[[plugins]]
+repo = 'j-hui/fidget.nvim'
+lua_add = '''
+vim.api.nvim_create_autocmd('LspAttach', {
+	once = true,
+	callback = function()
+		require('fidget').setup({
+			text = {
+				spinner = 'moon',
+			},
+		})
+	end,
+})
+'''
+
 [[plugins]]
 repo = 'folke/neodev.nvim'
 hook_source = '''
@@ -107,6 +123,11 @@ depends = ['denops.vim', 'ddu.vim']
 # 補完Columns
 # 今のところこれは省略しておく
 
+# ターミナルを良い感じにする
+[[plugins]]
+repo = 'akinsho/toggleterm.nvim'
+rev = '*'
+
 # AI補完
 [[plugins]]
 repo = 'github/copilot.vim'
@@ -163,11 +184,21 @@ endfunction
 
 # 翻訳
 [[plugins]]
-repo = 'skanehira/denops-translate.vim'
+repo = '~/workspace/Plugin/denops-translate.vim'
 
 # gccでコメントアウト
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
+
+# 概要表示
+[[plugins]]
+repo = 'liuchengxu/vista.vim'
+hook_add = '''
+function! NearestMethodOrFunction() abort
+	return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+let g:vista_default_executive = 'vim_lsp'
+'''
 
 # 部分編集
 [[plugins]]
@@ -180,12 +211,14 @@ hook_add = '''
 " 0: never 1: only split 2: always
 set laststatus=2
 let g:lightline = {
+\	'colorscheme': 'edge',
 \	'active': {
-\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'skkeleton', 'modified'] ]
+\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'skkeleton', 'modified', 'method'] ]
 \	},
 \	'component_function': {
 \		'skkeleton': 'L_skkeleton_get_mode',
-\		'gitbranch': 'gitbranch#name'
+\		'gitbranch': 'gitbranch#name',
+\		'method': 'NearestMethodOrFunction'
 \	},
 \}
 '''
@@ -211,6 +244,25 @@ repo = 'skanehira/badapple.vim'
 repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown', 'pandoc.markdown', 'rmd']
 build = 'cd app && yarn install'
+
+# colorのプレビュー
+[[plugins]]
+repo = 'gko/vim-coloresque'
+
+# # tree-sitter
+# [[plugins]]
+# repo = 'nvim-treesitter/nvim-treesitter'
+# merged = '0'
+# hook_add = '''
+# lua << EOF
+# require'nvim-treesitter.configs'.setup {
+# 	ensure_installed = "maintained",
+# 	highlight = {
+# 		enable = true,
+# 	},
+# }
+# EOF
+# '''
 
 # color scheme
 [[plugins]]

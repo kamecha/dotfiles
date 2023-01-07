@@ -23,3 +23,18 @@ mason_lspconfig.setup_handlers({ function(server_name)
 	}
 	nvim_lsp[server_name].setup(opts)
 end })
+
+require('fidget').setup({})
+
+-- Color Settings
+-- require("nvim-treesitter").setup()
+-- require'nvim-treesitter.configs'.setup {
+-- 	highlight = {
+-- 		enable = true,
+-- 		disable = {
+-- 			"ddu-ff",
+-- 			"ddu-ff-filter"
+-- 		}
+-- 	}
+-- }
+--

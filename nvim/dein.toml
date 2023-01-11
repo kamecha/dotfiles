@@ -154,16 +154,6 @@ repo = '~/workspace/Plugin/denops-translate.vim'
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
 
-# 概要表示
-[[plugins]]
-repo = 'liuchengxu/vista.vim'
-hook_add = '''
-function! NearestMethodOrFunction() abort
-	return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-let g:vista_default_executive = 'vim_lsp'
-'''
-
 # 部分編集
 [[plugins]]
 repo = 'thinca/vim-partedit'
@@ -177,12 +167,11 @@ set laststatus=2
 let g:lightline = {
 \	'colorscheme': 'edge',
 \	'active': {
-\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'skkeleton', 'modified', 'method'] ]
+\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'skkeleton', 'modified'] ]
 \	},
 \	'component_function': {
 \		'skkeleton': 'L_skkeleton_get_mode',
 \		'gitbranch': 'gitbranch#name',
-\		'method': 'NearestMethodOrFunction'
 \	},
 \}
 '''

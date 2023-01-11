@@ -1,3 +1,8 @@
+" Set augroup
+augroup MyAutoCmd
+	autocmd!
+augroup END
+
 " install dir {{{
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
@@ -23,12 +28,14 @@ if dein#load_state(s:dein_dir)
   endif
   let s:toml = s:rc_dir . '/dein.toml'
   let s:ddu_toml = s:rc_dir . '/ddu.toml'
+  let s:ddc_toml = s:rc_dir . '/ddc.toml'
   let s:lazy_toml = s:rc_dir . '/dein_lazy.toml'
   " let s:nyao_toml = s:rc_dir . '/dein_nyao.toml'
 
   " read toml and cache
   call dein#load_toml(s:toml)
   call dein#load_toml(s:ddu_toml, #{ lazy: 1})
+  call dein#load_toml(s:ddc_toml, #{ lazy: 1})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
   " end settings
@@ -59,42 +66,6 @@ endif
 
 " for colorscheme settings
 colorscheme edge
-
-" ddc settings
-" json
-let s:ddc_config_json =<< trim MARK
-	{
-		"ui": "native",
-		"sources": ["around", "nvim-lsp", "vsnip", "skkeleton"],
-		"sourceOptions": {
-			"around": {
-				"mark": "A"
-			},
-			"nvim-lsp": {
-				"mark": "lsp",
-				"dup": "force",
-				"forceCompletionPattern": "\\.|->|::",
-				"matchers": ["matcher_fuzzy"]
-			},
-			"vsnip": {
-				"mark": "vsnip",
-				"dup": "keep"
-			},
-			"skkeleton": {
-				"mark": "skkeleton",
-				"matchers": ["skkeleton"],
-				"sorters": []
-			},
-			"_": {
-				"matchers": ["matcher_head"],
-				"sorters": ["sorter_rank"]
-			}
-		}
-	}
-MARK
-let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
-call ddc#custom#patch_global(s:ddc_config_json)
-call ddc#enable()
 
 " user settings
 " plugin

@@ -48,45 +48,6 @@ lua require("neodev").setup({})
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 
-# 補完plugin
-[[plugins]]
-repo = 'Shougo/ddc.vim'
-depends = ['denops.vim']
-
-# 補完UI
-[[plugins]]
-repo = 'Shougo/ddc-ui-native'
-depends = ['denops.vim', 'ddc.vim']
-
-# 補完source
-[[plugins]]
-repo = 'Shougo/ddc-around'
-
-[[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
-depends = ['denops.vim', 'ddc.vim']
-
-# 補完filter
-[[plugins]]
-repo = 'Shougo/ddc-matcher_head'
-
-[[plugins]]
-repo = '~/.vim/pack/plugins/start/ddc-matcher_lowerCamelCase'
-
-[[plugins]]
-repo = 'tani/ddc-fuzzy'
-
-[[plugins]]
-repo = 'Shougo/ddc-sorter_rank'
-
-# スニペット
-[[plugins]]
-repo = 'hrsh7th/vim-vsnip'
-
-[[plugins]]
-repo = 'hrsh7th/vim-vsnip-integ'
-depends = ['vim-vsnip']
-
 # ターミナルを良い感じにする
 [[plugins]]
 repo = 'akinsho/toggleterm.nvim'
@@ -112,39 +73,6 @@ depends = 'fzf'
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 hook_source = 'set helplang=ja,en'
-
-# SKK
-[[plugins]]
-repo = 'vim-skk/skkeleton'
-depends = 'denops.vim'
-hook_add = '''
-call skkeleton#config({ 'globalJisyo': '~/dotfiles/SKK-JISYO.L' })
-imap <C-j> <Plug>(skkeleton-enable)
-cmap <C-j> <Plug>(skkeleton-enable)
-function L_skkeleton_get_mode()
-	if (mode() == 'i') && skkeleton#is_enabled()
-		let skkeleton_mode = skkeleton#mode()
-		if skkeleton_mode == 'hira'
-			return 'あ'
-		endif
-		if skkeleton_mode == 'kata'
-			return 'ア'
-		endif
-		if skkeleton_mode == 'hankata'
-			return 'ｱ'
-		endif
-		if skkeleton_mode == 'zenkaku'
-			return 'Ａ'
-		endif
-		if skkeleton_mode == 'abbrev'
-			return 'A'
-		endif
-		return ''
-	else
-		return ''
-	endif
-endfunction
-'''
 
 # 翻訳
 [[plugins]]

@@ -1,0 +1,135 @@
+# 補完plugin
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+depends = ['denops.vim']
+on_event = ['InsertEnter', 'CursorHold']
+hook_source = '''
+let s:ddc_config_json =<< trim MARK
+	{
+		"ui": "native",
+		"sources": ["around", "nvim-lsp", "vsnip"],
+		"sourceOptions": {
+			"around": {
+				"mark": "A"
+			},
+			"nvim-lsp": {
+				"mark": "lsp",
+				"dup": "force",
+				"forceCompletionPattern": "\\.|->|::",
+				"matchers": ["matcher_fuzzy"]
+			},
+			"vsnip": {
+				"mark": "vsnip",
+				"dup": "keep"
+			},
+			"skkeleton": {
+				"mark": "skkeleton",
+				"matchers": ["skkeleton"],
+				"sorters": [],
+				"minAutoCompleteLength": 2,
+				"isVolatile": 1
+			},
+			"_": {
+				"matchers": ["matcher_head"],
+				"sorters": ["sorter_rank"]
+			}
+		}
+	}
+MARK
+let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
+call ddc#custom#patch_global(s:ddc_config_json)
+call ddc#enable()
+'''
+
+# 補完UI
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+on_source = 'ddc.vim'
+
+# 補完source
+[[plugins]]
+repo = 'Shougo/ddc-around'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+depends = ['denops.vim', 'ddc.vim']
+on_source = 'ddc.vim'
+
+# 補完filter
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = '~/.vim/pack/plugins/start/ddc-matcher_lowerCamelCase'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+on_source = 'ddc.vim'
+
+# スニペット
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip-integ'
+depends = ['vim-vsnip']
+on_source = 'ddc.vim'
+
+# SKK
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+on_map = { 'ic' = '<Plug>(skkeleton-toggle)'}
+depends = ['ddc.vim']
+hook_add = '''
+imap <C-j> <Plug>(skkeleton-toggle)
+cmap <C-j> <Plug>(skkeleton-toggle)
+'''
+hook_source = '''
+call skkeleton#config({ 'globalJisyo': '~/dotfiles/SKK-JISYO.L' })
+autocmd MyAutoCmd User skkeleton-enable-pre call s:skkeleton_pre()
+function! s:skkeleton_pre() abort
+	let s:prev_buffer_config = ddc#custom#get_buffer()
+	call ddc#custom#patch_buffer('sources', ['skkeleton'])
+endfunction
+autocmd MyAutoCmd User skkeleton-disable-pre call s:skkeleton_post()
+function! s:skkeleton_post() abort
+	" Restore sources
+	call ddc#custom#set_buffer(s:prev_buffer_config)
+endfunction
+function L_skkeleton_get_mode()
+	if (mode() == 'i') && skkeleton#is_enabled()
+		let skkeleton_mode = skkeleton#mode()
+		if skkeleton_mode == 'hira'
+			return 'あ'
+		endif
+		if skkeleton_mode == 'kata'
+			return 'ア'
+		endif
+		if skkeleton_mode == 'hankata'
+			return 'ｱ'
+		endif
+		if skkeleton_mode == 'zenkaku'
+			return 'Ａ'
+		endif
+		if skkeleton_mode == 'abbrev'
+			return 'A'
+		endif
+		return ''
+	else
+		return ''
+	endif
+endfunction
+let g:lightline = { 'component_function': { 'skkeleton' : 'L_skkeleton_get_mode'} }
+" これ何か分ってない
+" :mode is needed to redraw screen
+autocmd MyAutoCmd InsertLeave * mode
+'''
+

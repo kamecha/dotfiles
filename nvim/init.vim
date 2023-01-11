@@ -18,6 +18,9 @@ endif
 " }}}
 
 " begin settings {{{
+" In windows, auto_recache is not disabled. It is too slow.
+let g:dein#auto_recache = !has('win32')
+
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
@@ -64,6 +67,12 @@ endif
 
 " }}}
 
+" for non lazy hook
+call dein#call_hook('source')
+
+" enable plugin setting
+call popup_preview#enable()
+
 " for colorscheme settings
 colorscheme edge
 
@@ -95,7 +104,4 @@ let g:clipboard = {
 
 " lua settings
 luafile ~/dotfiles/nvim/plugin_settings.lua
-
-" lua plugin
-luafile ~/dotfiles/nvim/test.lua
 

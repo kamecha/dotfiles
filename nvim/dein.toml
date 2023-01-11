@@ -87,42 +87,6 @@ repo = 'hrsh7th/vim-vsnip'
 repo = 'hrsh7th/vim-vsnip-integ'
 depends = ['vim-vsnip']
 
-# UI設定 ddu
-[[plugins]]
-repo = 'Shougo/ddu.vim'
-depends = ['denops.vim']
-
-# 補完UI
-[[plugins]]
-repo = 'Shougo/ddu-ui-ff'
-depends = ['denops.vim', 'ddu.vim']
-
-[[plugins]]
-repo = 'Shougo/ddu-ui-filer'
-depends = ['denops.vim', 'ddu.vim']
-
-# 補完Source
-[[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
-depends = ['denops.vim', 'ddu.vim', 'ddu-kind-file']
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file'
-depends = ['denops.vim', 'ddu.vim', 'ddu-kind-file']
-
-# 補完Filter
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-depends = ['denops.vim', 'ddu.vim']
-
-# 補完Kind
-[[plugins]]
-repo = 'Shougo/ddu-kind-file'
-depends = ['denops.vim', 'ddu.vim']
-
-# 補完Columns
-# 今のところこれは省略しておく
-
 # ターミナルを良い感じにする
 [[plugins]]
 repo = 'akinsho/toggleterm.nvim'

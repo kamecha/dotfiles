@@ -187,6 +187,11 @@ let g:lightline = {
 \}
 '''
 
+#  popup等の補助情報の表示
+[[plugins]]
+repo = 'matsui54/denops-popup-preview.vim'
+depends = 'denops.vim'
+
 # git branch
 [[plugins]]
 repo = 'itchyny/vim-gitbranch'

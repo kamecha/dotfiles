@@ -26,7 +26,7 @@ let s:ddc_config_json =<< trim MARK
 				"mark": "skkeleton",
 				"matchers": ["skkeleton"],
 				"sorters": [],
-				"minAutoCompleteLength": 2,
+				"minAutoCompleteLength": 0,
 				"isVolatile": 1
 			},
 			"_": {
@@ -133,3 +133,16 @@ let g:lightline = { 'component_function': { 'skkeleton' : 'L_skkeleton_get_mode'
 autocmd MyAutoCmd InsertLeave * mode
 '''
 
+# skk の表示をリッチにするやつ
+[[plugins]]
+repo = 'delphinus/skkeleton_indicator.nvim'
+on_source = 'skkeleton'
+hook_source = '''
+lua << EOF
+local skkeleton_indicator = require('skkeleton_indicator')
+skkeleton_indicator.setup({
+	alwaysShown = false,
+	fadeOutMs = 0,
+})
+EOF
+'''

@@ -26,6 +26,17 @@ end })
 
 require('fidget').setup({})
 
+-- settting for null-ls to use textlint
+local null_ls = require("null-ls")
+null_ls.setup({
+	sources = {
+		null_ls.builtins.diagnostics.textlint.with({
+			filetypes = { "markdown" },
+			-- command = "npx textlint",
+		})
+	},
+})
+
 -- Color Settings
 -- require("nvim-treesitter").setup()
 -- require'nvim-treesitter.configs'.setup {

@@ -133,7 +133,14 @@ nmap <silent> [ddu]f <Cmd>call ddu#start({
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
 			\ 'sources': [{'name': 'file', 'params': {}}],
-			\ 'uiParams': {'filer': {'winWidth': &columns / 6}}
+			\ 'sourceOptions': {'_': {'columns': ['icon_filename']}},
+			\ 'uiParams': {
+			\	'filer': {
+			\		'split': 'vertical',
+			\		'splitDirectoin': 'topleft',
+			\		'winWidth': &columns / 6,
+			\	}
+			\ },
 			\ })<CR>
 '''
 
@@ -165,3 +172,7 @@ on_source = 'ddu.vim'
 repo = 'Shougo/ddu-kind-file'
 on_source = 'ddu.vim'
 
+# icon
+[[plugins]]
+repo = 'ryota2357/ddu-column-icon_filename'
+on_source = 'ddu.vim'

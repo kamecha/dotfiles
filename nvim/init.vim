@@ -104,4 +104,3 @@ let g:clipboard = {
 
 " lua settings
 luafile ~/dotfiles/nvim/plugin_settings.lua
-

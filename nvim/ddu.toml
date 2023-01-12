@@ -3,7 +3,6 @@ repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
 on_event = 'CursorMoved'
 hook_source = '''
-echo 'ddu.vim is loaded'
 let s:ddu_config_json =<< trim MARK
 	{
 		"uiOptions": {

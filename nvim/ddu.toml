@@ -15,8 +15,7 @@ let s:ddu_config_json =<< trim MARK
 				"highlights": {},
 				"startFilter": true,
 				"prompt": "> ",
-				"autoAction" : { "name": "preview" },
-				"previewVertical": true
+				"autoAction" : { "name": "preview" }
 			},
 			"filer": {
 				"split": "vertical",
@@ -48,26 +47,24 @@ function! s:set_size() abort
 	let winWidth = &columns - (&columns / 4)
 	let winRow = &lines / 8
 	let winHeight = &lines - (&lines / 4)
+	" window自体は左上が始点となる
 	let s:ddu_config_json['uiParams']['ff']['winCol'] = winCol
 	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth
 	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
 	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
-	" 参考url:https://github.com/kuuote/dotvim/blob/master/conf/plug/ddu.vim#L85
-	" fzf-previewやtelescopeみたいなpreviewの出し方をする
-	" - winWidthの部分が内部コードに依存してるのでアレ
-	" (previewVerticalの時、絶対位置にwinWidthを足して出しているのでその分を引き去る)
-	" よってpreviewVertical = trueじゃないと動かない
-	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + (winWidth / 2) - winWidth
+	" previewは本来windowの外側に貼りつくようになっている
+	" そのため、見た目をそろえるためにanchorがSWとなるように始点をずらす
+	" https://github.com/Shougo/ddu-ui-ff/blob/5a00649e3e19ee08284f9f5bd81f678e9a12442f/autoload/ddu/ui/ff.vim#L194
+	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + winWidth / 2
+	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow + winHeight
 	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2
-	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow
 	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight
 endfunction
 
 function! s:set_ddu_float() abort
-	let s:ddu_config_json['uiParams']['ff']['floatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
 	let s:ddu_config_json['uiParams']['ff']['split'] = has('nvim') ? 'floating' : 'horizontal'
+	let s:ddu_config_json['uiParams']['ff']['filterSplitDirection'] = has('nvim') ? 'floating' : 'botright'
 	let s:ddu_config_json['uiParams']['ff']['previewFloating'] = has('nvim')
-	let s:ddu_config_json['uiParams']['ff']['previewFloatingBorder'] = ['.', '.', '.', ':', ':', '.', ':', ':']->map('[v:val, "DduBorder"]')
 	call s:set_size()
 	call ddu#custom#patch_global(s:ddu_config_json)
 endfunction

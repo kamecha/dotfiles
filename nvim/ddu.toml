@@ -1,7 +1,7 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
-on_event = 'CursorMoved'
+on_source = 'denops.vim'
 hook_source = '''
 let s:ddu_config_json =<< trim MARK
 	{

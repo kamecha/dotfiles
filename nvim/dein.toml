@@ -55,6 +55,7 @@ lua require("neodev").setup({})
 # deno
 [[plugins]]
 repo = 'vim-denops/denops.vim'
+on_event = 'CursorHold'
 
 # ターミナルを良い感じにする
 [[plugins]]

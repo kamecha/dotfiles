@@ -25,6 +25,11 @@ mason_lspconfig.setup_handlers({ function(server_name)
 	nvim_lsp[server_name].setup(opts)
 end })
 
+
+-- language serverごとにcapabilitiesを追加する必要があります。
+-- -- on_attachは必要に応じて
+-- require'lspconfig'.clangd.setup{on_attach = on_attach, capabilities = capabilities}
+
 require('fidget').setup({})
 
 vim.notify = require('notify')
@@ -39,6 +44,24 @@ null_ls.setup({
 		})
 	},
 })
+
+-- settting for nocie.vim
+-- require('noice').setup {
+-- 	cmdline = {
+-- 		format = {
+-- 			cmdline = { icon = ">" },
+-- 			search_down = { icon = "🔍⌄" },
+-- 			search_up = { icon = "🔍⌃" },
+-- 			filter = { icon = "$" },
+-- 			lua = { icon = "☾" },
+-- 			help = { icon = "?" },
+-- 		},
+-- 	},
+-- 	popupmenu = {
+-- 		enabled = true,
+-- 		view = "nui",
+-- 	},
+-- }
 
 -- Color Settings
 -- require("nvim-treesitter").setup()

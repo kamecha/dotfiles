@@ -15,7 +15,7 @@ let s:ddc_config_json =<< trim MARK
 			"nvim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
-				"forceCompletionPattern": "\\.|->|::",
+				"forceCompletionPattern": "\\.\\w*|::",
 				"matchers": ["matcher_fuzzy"]
 			},
 			"vsnip": {

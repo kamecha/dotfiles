@@ -1,3 +1,11 @@
+# plugin manager
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+# profile vim startup time
+[[plugins]]
+repo = 'dstein64/vim-startuptime'
+
 # LSP
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'

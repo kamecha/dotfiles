@@ -190,15 +190,13 @@ require('notify').setup({
 # [[plugins]]
 # repo = 'nvim-treesitter/nvim-treesitter'
 # merged = '0'
-# hook_add = '''
-# lua << EOF
-# require'nvim-treesitter.configs'.setup {
-# 	ensure_installed = "maintained",
+# lua_source = '''
+# require('nvim-treesitter.configs').setup {
+# 	ensure_installed = 'maintained',
 # 	highlight = {
 # 		enable = true,
 # 	},
 # }
-# EOF
 # '''
 
 [[plugins]]

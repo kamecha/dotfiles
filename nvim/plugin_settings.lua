@@ -42,7 +42,7 @@ null_ls.setup({
 	sources = {
 		null_ls.builtins.diagnostics.textlint.with({
 			filetypes = { "markdown" },
-			-- command = "npx textlint",
+			command = "textlint",
 		})
 	},
 })

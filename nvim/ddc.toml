@@ -52,7 +52,7 @@ repo = 'Shougo/ddc-around'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
+repo = 'Shougo/ddc-source-nvim-lsp'
 depends = ['denops.vim', 'ddc.vim']
 on_source = 'ddc.vim'
 

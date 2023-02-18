@@ -26,6 +26,8 @@ end })
 
 require('fidget').setup({})
 
+vim.notify = require('notify')
+
 -- settting for null-ls to use textlint
 local null_ls = require("null-ls")
 null_ls.setup({

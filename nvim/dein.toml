@@ -157,6 +157,17 @@ endif
 let g:edge_style = 'aura'
 let g:edge_better_performance = 1
 '''
+# notification manager for Neovim
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+on_lua = 'notify'
+lua_source = '''
+require('notify').setup({
+	render = "minimal",
+	timeout = 1000,
+	})
+'''
+
 # # tree-sitter
 # [[plugins]]
 # repo = 'nvim-treesitter/nvim-treesitter'

@@ -75,15 +75,12 @@ call dein#call_hook('source')
 
 " enable plugin setting
 call popup_preview#enable()
-
-" for colorscheme settings
-colorscheme edge
+" 補完におけるpreviewの非表示
+set completeopt-=preview
 
 " user settings
 " plugin
 set signcolumn=yes
-" 補完におけるpreviewの非表示
-set completeopt-=preview
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>

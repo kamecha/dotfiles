@@ -159,9 +159,8 @@ repo = 'gko/vim-coloresque'
 # EOF
 # '''
 
-# color scheme
 [[plugins]]
-repo = 'EdenEast/nightfox.nvim'
+repo = 'tyru/open-browser.vim'
 
 [[plugins]]
 repo = 'sainnhe/edge'

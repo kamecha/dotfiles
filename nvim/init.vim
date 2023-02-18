@@ -79,6 +79,10 @@ call popup_preview#enable()
 set completeopt-=preview
 
 " user settings
+" tab setting
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 " plugin
 set signcolumn=yes
 " terminal

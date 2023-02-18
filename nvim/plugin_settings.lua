@@ -25,6 +25,8 @@ mason_lspconfig.setup_handlers({ function(server_name)
 	nvim_lsp[server_name].setup(opts)
 end })
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- language serverごとにcapabilitiesを追加する必要があります。
 -- -- on_attachは必要に応じて

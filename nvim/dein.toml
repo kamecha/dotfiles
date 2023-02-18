@@ -62,6 +62,16 @@ on_event = 'CursorHold'
 repo = 'akinsho/toggleterm.nvim'
 rev = '*'
 
+[[plugins]]
+repo = 'voldikss/vim-floaterm'
+hook_add = '''
+let g:floaterm_width = 0.9
+let g:floaterm_height = 0.9
+nnoremap <silent> <F8> :FloatermNew<CR>
+nnoremap <silent> <F9> :FloatermToggle<CR>
+tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle<CR>
+'''
+
 # AI補完
 [[plugins]]
 repo = 'github/copilot.vim'

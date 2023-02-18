@@ -12,10 +12,13 @@ let s:ddu_config_json =<< trim MARK
 		},
 		"uiParams": {
 			"ff": {
-				"highlights": {},
 				"startFilter": true,
 				"prompt": "> ",
-				"autoAction" : { "name": "preview" }
+				"autoAction" : { "name": "preview" },
+				"filterSplitDirection": "floating",
+				"split": "floating",
+				"previewFloating":true,
+				"previewSplit": "vertical"
 			},
 			"filer": {
 				"split": "vertical",
@@ -24,6 +27,9 @@ let s:ddu_config_json =<< trim MARK
 			}
 		},
 		"filterParams": {
+			"matcher_fzf": {
+				"highlightMatched": "Search"
+			}
 		},
 		"kindOptions": {
 			"file": {
@@ -49,28 +55,17 @@ function! s:set_size() abort
 	let winHeight = &lines - (&lines / 4)
 	" window自体は左上が始点となる
 	let s:ddu_config_json['uiParams']['ff']['winCol'] = winCol
-	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth
 	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
+	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth
 	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
-	" previewは本来windowの外側に貼りつくようになっている
-	" そのため、見た目をそろえるためにanchorがSWとなるように始点をずらす
-	" https://github.com/Shougo/ddu-ui-ff/blob/5a00649e3e19ee08284f9f5bd81f678e9a12442f/autoload/ddu/ui/ff.vim#L194
-	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + winWidth / 2
-	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow + winHeight
 	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2
 	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight
-endfunction
-
-function! s:set_ddu_float() abort
-	let s:ddu_config_json['uiParams']['ff']['split'] = has('nvim') ? 'floating' : 'horizontal'
-	let s:ddu_config_json['uiParams']['ff']['filterSplitDirection'] = has('nvim') ? 'floating' : 'botright'
-	let s:ddu_config_json['uiParams']['ff']['previewFloating'] = has('nvim')
-	call s:set_size()
 	call ddu#custom#patch_global(s:ddu_config_json)
 endfunction
 
-call s:set_ddu_float()
-autocmd VimResized * call s:set_ddu_float()
+	call s:set_size()
+
+autocmd VimResized * call s:set_size()
 
 nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
@@ -97,6 +92,7 @@ repo = 'Shougo/ddu-ui-ff'
 on_source = 'ddu.vim'
 [plugins.ftplugin]
 ddu-ff = '''
+setlocal cursorline
 nnoremap <buffer><silent> <CR>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 nnoremap <buffer><silent> <Space>
@@ -115,11 +111,9 @@ nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 inoremap <buffer> <CR>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-inoremap <buffer> <C-q>
-			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 inoremap <buffer> <C-t>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'tabnew'}})<CR>
-inoremap <buffer> <C-s>
+inoremap <buffer> <C-o>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
 inoremap <buffer> <C-v>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
@@ -127,6 +121,10 @@ inoremap <buffer> <C-j>
 			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)<Bar>redraw")<CR>
 inoremap <buffer> <C-k>
 			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)<Bar>redraw")<CR>
+inoremap <buffer> <C-s>
+			\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+inoremap <buffer> <C-q>
+			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 '''
 
 [[plugins]]

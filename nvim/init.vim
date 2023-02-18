@@ -67,6 +67,9 @@ endif
 
 " }}}
 
+" for colorscheme settings
+colorscheme edge
+
 " for non lazy hook
 call dein#call_hook('source')
 

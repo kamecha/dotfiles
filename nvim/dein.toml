@@ -144,6 +144,19 @@ build = 'cd app && yarn install'
 [[plugins]]
 repo = 'gko/vim-coloresque'
 
+# color scheme
+[[plugins]]
+repo = 'EdenEast/nightfox.nvim'
+
+[[plugins]]
+repo = 'sainnhe/edge'
+hook_add = '''
+if has('termguicolors')
+	set termguicolors
+endif
+let g:edge_style = 'aura'
+let g:edge_better_performance = 1
+'''
 # # tree-sitter
 # [[plugins]]
 # repo = 'nvim-treesitter/nvim-treesitter'

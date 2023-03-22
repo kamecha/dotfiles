@@ -78,6 +78,27 @@ nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'sources': [{'name': 'file_rec', 'params': {}}]
 			\ })<CR>
+nmap <silent> [ddu]q <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'filterFloatingPosition': 'top',
+			\			'winHeight': ( &lines - (&lines / 4) ) / 2 - 3,
+			\ 			'previewSplit': 'horizontal',
+			\			'previewRow': &lines / 2 + (&lines - (&lines / 4)) / 2,
+			\			'previewHeight': (&lines - (&lines / 4)) / 2 - 2,
+			\		}
+			\ },
+			\ 'sources': [
+			\	{
+			\		'name': 'qf',
+			\		'params': {
+			\			'isSubset': v:true,
+			\			'format': '%p\|%t',
+			\ 		}
+			\	},
+			\ ],
+			\})<CR>
 " live grep
 nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -189,6 +210,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'flow6852/ddu-source-qf'
 on_source = 'ddu.vim'
 
 [[plugins]]

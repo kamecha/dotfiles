@@ -63,12 +63,14 @@ function! s:set_size() abort
 	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
 	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth
 	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
+	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol
+	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow
 	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2
 	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight
 	call ddu#custom#patch_global(s:ddu_config_json)
 endfunction
 
-	call s:set_size()
+call s:set_size()
 
 autocmd VimResized * call s:set_size()
 

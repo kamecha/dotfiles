@@ -17,8 +17,10 @@ let s:ddu_config_json =<< trim MARK
 				"autoAction" : { "name": "preview" },
 				"filterSplitDirection": "floating",
 				"split": "floating",
+				"floatingBorder": "rounded",
 				"previewFloating":true,
-				"previewSplit": "vertical"
+				"previewSplit": "vertical",
+				"previewFloatingBorder": "rounded"
 			},
 			"filer": {
 				"split": "vertical",

@@ -39,6 +39,9 @@ let s:ddu_config_json =<< trim MARK
 			}
 		},
 		"sourceOptions": {
+			"rg": {
+				"matchers": ["converter_display_word", "matcher_fzf"]
+			},
 			"_": {
 				"matchers": ["matcher_fzf"]
 			}
@@ -75,6 +78,27 @@ nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'sources': [{'name': 'file_rec', 'params': {}}]
 			\ })<CR>
+nmap <silent> [ddu]r <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'startFilter':v:false,
+			\			'filterFloatingPosition': 'top',
+			\			'winHeight': ( &lines - (&lines / 4) ) / 2 - 3,
+			\ 			'previewSplit': 'horizontal',
+			\			'previewRow': &lines / 2 + (&lines - (&lines / 4)) / 2,
+			\			'previewHeight': (&lines - (&lines / 4)) / 2 - 2,
+			\		}
+			\ },
+			\ 'sources': [
+			\	{
+			\		'name': 'rg',
+			\		'params': {
+			\			'input': input('rigrep: '),
+			\ 		},
+			\	},
+			\ ],
+			\})<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
 			\ 'sources': [{'name': 'file', 'params': {}}],
@@ -87,6 +111,24 @@ nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\	}
 			\ },
 			\ })<CR>
+" live grep
+" You need to make "volatile" option v:true.
+" Note: the matchers should be empty for performance
+command! DduRgLive call <SID>ddu_rg_live()
+function! s:ddu_rg_live() abort
+call ddu#start({
+		\	'ui': 'ff',
+		\   'volatile': v:true,
+		\   'sources': [{
+		\     'name': 'rg',
+		\     'options': {'matchers': []},
+		\   }],
+		\   'uiParams': {'ff': {
+		\     'ignoreEmpty': v:false,
+		\     'autoResize': v:false,
+		\   }},
+		\ })
+endfunction
 '''
 
 [[plugins]]
@@ -166,6 +208,10 @@ on_source = 'ddu.vim'
 repo = 'Shougo/ddu-source-file_rec'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'shun/ddu-source-rg'
+on_source = 'ddu.vim'
+
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
@@ -173,6 +219,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-converter_display_word'
 on_source = 'ddu.vim'
 
 # 補完Kind

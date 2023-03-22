@@ -217,3 +217,7 @@ endif
 let g:edge_style = 'aura'
 let g:edge_better_performance = 1
 '''
+
+# git
+[[plugins]]
+repo = 'lambdalisue/gina.vim'

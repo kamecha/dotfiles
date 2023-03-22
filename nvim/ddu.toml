@@ -123,6 +123,10 @@ nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\	},
 			\ ],
 			\})<CR>
+nmap <silent> [ddu]b <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'sources': [{'name': 'buffer'}],
+			\ })<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
 			\ 'sources': [{'name': 'file', 'params': {}}],
@@ -220,6 +224,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'shun/ddu-source-rg'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
 on_source = 'ddu.vim'
 
 # 補完Filter

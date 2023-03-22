@@ -78,11 +78,14 @@ nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'sources': [{'name': 'file_rec', 'params': {}}]
 			\ })<CR>
+" live grep
 nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'volatile': v:true,
 			\ 'uiParams': {
 			\		'ff': {
-			\			'startFilter':v:false,
+			\			'ignoreEmpty': v:false,
+			\			'autoResize': v:false,
 			\			'filterFloatingPosition': 'top',
 			\			'winHeight': ( &lines - (&lines / 4) ) / 2 - 3,
 			\ 			'previewSplit': 'horizontal',
@@ -93,9 +96,7 @@ nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\ 'sources': [
 			\	{
 			\		'name': 'rg',
-			\		'params': {
-			\			'input': input('rigrep: '),
-			\ 		},
+			\ 		'options': {'matchers': []},
 			\	},
 			\ ],
 			\})<CR>
@@ -111,24 +112,6 @@ nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\	}
 			\ },
 			\ })<CR>
-" live grep
-" You need to make "volatile" option v:true.
-" Note: the matchers should be empty for performance
-command! DduRgLive call <SID>ddu_rg_live()
-function! s:ddu_rg_live() abort
-call ddu#start({
-		\	'ui': 'ff',
-		\   'volatile': v:true,
-		\   'sources': [{
-		\     'name': 'rg',
-		\     'options': {'matchers': []},
-		\   }],
-		\   'uiParams': {'ff': {
-		\     'ignoreEmpty': v:false,
-		\     'autoResize': v:false,
-		\   }},
-		\ })
-endfunction
 '''
 
 [[plugins]]

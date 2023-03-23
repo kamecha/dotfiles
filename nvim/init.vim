@@ -93,18 +93,20 @@ autocmd TermOpen * startinsert
 let g:tex_flavor = 'latex'
 " clipborad for windows
 set clipboard&
-let g:clipboard = {
-			\ 'name': 'win32yank',
-			\ 'copy': {
-			\   '+': 'win32yank.exe -i',
-			\   '*': 'win32yank.exe -i',
-			\ },
-			\ 'paste': {
-			\   '+': 'win32yank.exe -o',
-			\   '*': 'win32yank.exe -o',
-			\ },
-			\ 'cache_enabled': 0
-			\ }
+if has('wsl')
+	let g:clipboard = {
+				\ 'name': 'win32yank',
+				\ 'copy': {
+				\   '+': 'win32yank.exe -i',
+				\   '*': 'win32yank.exe -i',
+				\ },
+				\ 'paste': {
+				\   '+': 'win32yank.exe -o',
+				\   '*': 'win32yank.exe -o',
+				\ },
+				\ 'cache_enabled': 0
+				\ }
+endif
 
 " lua settings
 luafile ~/dotfiles/nvim/plugin_settings.lua

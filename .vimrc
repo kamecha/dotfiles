@@ -83,7 +83,7 @@ command! -range OLEDFromHexList :<line1>,<line2>call Echo()
 
 " dein.vim settings {{{
 " install dir {{{
-let s:dein_dir = expand('~/.cache/dein')
+let s:dein_dir = expand('~/.cache/dein/vim')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 " }}}
 

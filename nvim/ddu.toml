@@ -36,6 +36,9 @@ let s:ddu_config_json =<< trim MARK
 		"kindOptions": {
 			"file": {
 				"defaultAction": "open"
+			},
+			"command_history": {
+				"defaultAction": "execute"
 			}
 		},
 		"sourceOptions": {
@@ -126,6 +129,10 @@ nmap <silent> [ddu]r <Cmd>call ddu#start({
 nmap <silent> [ddu]b <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'sources': [{'name': 'buffer'}],
+			\ })<CR>
+nmap <silent> [ddu]c <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'sources': [{'name': 'command_history'}],
 			\ })<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
@@ -228,6 +235,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'shun/ddu-source-buffer'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-command_history'
 on_source = 'ddu.vim'
 
 # 補完Filter

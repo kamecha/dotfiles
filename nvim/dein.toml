@@ -121,6 +121,10 @@ hook_add = '''
 set laststatus=2
 let g:lightline = {
 \	'colorscheme': 'edge',
+\	'enable': {
+\		'statusline': 1,
+\		'tabline': 0,
+\	},
 \	'active': {
 \		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'skkeleton', 'modified'] ]
 \	},
@@ -129,6 +133,22 @@ let g:lightline = {
 \		'gitbranch': 'gitbranch#name',
 \	},
 \}
+'''
+
+# タブライン
+[[plugins]]
+repo = 'nanozuki/tabby.nvim'
+hook_add = '''
+set showtabline=2
+'''
+lua_source = '''
+require('tabby.tabline').use_preset('active_wins_at_tail', {
+	tab_name = {
+		name_fallback = function(tabid)
+			return ""
+		end
+	},
+})
 '''
 
 #  popup等の補助情報の表示

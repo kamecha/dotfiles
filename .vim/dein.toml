@@ -1,7 +1,7 @@
 # 全部入り
 [[plugins]]
 repo = 'neoclide/coc.nvim'
-source = 'release'
+rev = 'release'
 merged = '0'
 build = 'coc#util#install()'
 hook_source = '''

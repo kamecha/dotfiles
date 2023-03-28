@@ -9,6 +9,22 @@ repo = 'dstein64/vim-startuptime'
 # LSP
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
+lua_source = '''
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+	vim.lsp.handlers.hover, {
+	   -- Use a sharp border with `FloatBorder` highlights
+		border = "single",
+	   -- add the title in hover float window
+		title = "hover"
+	}
+)
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+	vim.lsp.handlers.signature_help, {
+	-- Use a sharp border with `FloatBorder` highlights
+	border = "single"
+	}
+)
+'''
 
 [[plugins]]
 repo = 'williamboman/mason.nvim'
@@ -33,6 +49,18 @@ EOF
 # LSPのラッパー
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
+lua_source = '''
+-- settting for null-ls to use textlint
+local null_ls = require("null-ls")
+null_ls.setup({
+	sources = {
+		null_ls.builtins.diagnostics.textlint.with({
+			filetypes = { "markdown" },
+			command = "textlint",
+		})
+	},
+})
+'''
 
 # null-lsで使うらしい
 [[plugins]]
@@ -52,6 +80,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		})
 	end,
 })
+'''
+lua_source = '''
+require('fidget').setup({})
 '''
 
 [[plugins]]
@@ -210,8 +241,8 @@ require('notify').setup({
 	render = "minimal",
 	timeout = 1000,
 	})
+vim.notify = require('notify')
 '''
-
 # # tree-sitter
 # [[plugins]]
 # repo = 'nvim-treesitter/nvim-treesitter'

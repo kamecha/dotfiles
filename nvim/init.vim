@@ -33,10 +33,11 @@ if dein#load_state(s:dein_dir)
   let s:ddu_toml = s:rc_dir . '/ddu.toml'
   let s:ddc_toml = s:rc_dir . '/ddc.toml'
   let s:lazy_toml = s:rc_dir . '/dein_lazy.toml'
-  " let s:nyao_toml = s:rc_dir . '/dein_nyao.toml'
+  let s:nyao_toml = s:rc_dir . '/dein_nyao.toml'
 
   " read toml and cache
   call dein#load_toml(s:toml)
+  call dein#load_toml(s:nyao_toml)
   call dein#load_toml(s:ddu_toml, #{ lazy: 1})
   call dein#load_toml(s:ddc_toml, #{ lazy: 1})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
@@ -85,6 +86,7 @@ set shiftwidth=4
 set softtabstop=4
 " plugin
 set signcolumn=yes
+set number
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>

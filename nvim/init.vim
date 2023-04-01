@@ -6,6 +6,7 @@ augroup END
 " install dir {{{
 let s:dein_dir = expand('~/.cache/dein/nvim')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+let g:github_dir = s:dein_dir . '/repos/github.com'
 " }}}
 
 " dein installation check {{{

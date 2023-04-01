@@ -305,3 +305,7 @@ let g:edge_better_performance = 1
 # git
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
+
+# skkの辞書
+[[plugins]]
+repo = 'skk-dev/dict'

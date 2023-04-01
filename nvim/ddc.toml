@@ -94,7 +94,7 @@ cmap <C-j> <Plug>(skkeleton-toggle)
 '''
 hook_source = '''
 call skkeleton#config({ 
-			\ 'globalJisyo': '~/dotfiles/SKK-JISYO.L',
+			\ 'globalJisyo': g:github_dir . '/skk-dev/dict/SKK-JISYO.L',
 			\ 'registerConvertResult': v:true
 			\})
 autocmd MyAutoCmd User skkeleton-enable-pre call s:skkeleton_pre()

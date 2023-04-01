@@ -88,6 +88,11 @@ set softtabstop=4
 " plugin
 set signcolumn=yes
 set number
+" mapping
+inoremap <Left> <C-G>U<Left>
+inoremap <Right> <C-G>U<Right>
+imap <C-f> <Right>
+imap <C-b> <Left>
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>

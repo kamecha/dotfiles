@@ -136,7 +136,10 @@ repo = '~/workspace/Plugin/denops-translate.vim'
 
 # gccでコメントアウト
 [[plugins]]
-repo = 'tomtom/tcomment_vim'
+repo = 'numToStr/Comment.nvim'
+lua_source = '''
+require('Comment').setup()
+'''
 
 # 部分編集
 [[plugins]]

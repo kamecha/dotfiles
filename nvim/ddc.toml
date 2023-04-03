@@ -38,6 +38,7 @@ let s:ddc_config_json =<< trim MARK
 MARK
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
 call ddc#custom#patch_global(s:ddc_config_json)
+call ddc#custom#patch_filetype('gina-commit', 'specialBufferCompletion', v:true)
 call ddc#enable()
 '''
 

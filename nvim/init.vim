@@ -115,6 +115,3 @@ if has('wsl')
 				\ 'cache_enabled': 0
 				\ }
 endif
-
-" lua settings
-luafile ~/dotfiles/nvim/plugin_settings.lua

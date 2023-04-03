@@ -28,22 +28,20 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 
 [[plugins]]
 repo = 'williamboman/mason.nvim'
-hooK_add = '''
-lua require('mason').setup()
+lua_source = '''
+require('mason').setup()
 '''
 
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
 depends = ['nvim-lspconfig', 'mason.nvim']
-hook_source = '''
-lua << EOF
+lua_source = '''
 local nvim_lsp = require("lspconfig")
 local mason_lspconfig = require('mason-lspconfig')
 mason_lspconfig.setup_handlers({ function(server_name)
 	local opts = {}
 	nvim_lsp[server_name].setup(opts)
 end })
-EOF
 '''
 
 # LSPのラッパー

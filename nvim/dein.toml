@@ -85,8 +85,8 @@ require('fidget').setup({})
 
 [[plugins]]
 repo = 'folke/neodev.nvim'
-hook_source = '''
-lua require("neodev").setup({})
+lua_source = '''
+require("neodev").setup({})
 '''
 
 # deno
@@ -303,6 +303,14 @@ let g:edge_better_performance = 1
 # git
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
+
+# QuickFixを一括置換
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+
+# QuickFixを編集
+[[plugins]]
+repo = 'itchyny/vim-qfedit'
 
 # skkの辞書
 [[plugins]]

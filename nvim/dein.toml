@@ -315,3 +315,7 @@ repo = 'itchyny/vim-qfedit'
 # skkの辞書
 [[plugins]]
 repo = 'skk-dev/dict'
+
+# <C-a> <C-x>を使い易くする
+[[plugins]]
+repo = 'monaqa/dial.nvim'

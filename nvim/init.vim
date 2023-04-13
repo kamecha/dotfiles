@@ -93,6 +93,7 @@ inoremap <Left> <C-G>U<Left>
 inoremap <Right> <C-G>U<Right>
 imap <C-f> <Right>
 imap <C-b> <Left>
+nnoremap <ESC><ESC> :nohlsearch<CR>
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>

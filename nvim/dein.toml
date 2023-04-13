@@ -372,6 +372,18 @@ let g:edge_better_performance = 1
 # git
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
+hook_add = '''
+nnoremap [Gina] <Nop>
+nmap <space>g [Gina]
+nmap <silent> [Gina]s :Gina status<CR>
+nmap <silent> [Gina]c :Gina commit<CR>
+nmap <silent> [Gina]l :Gina log --graph --all<CR>
+nmap <silent> [Gina]b :Gina branch --all<CR>
+'''
+
+# GitHub
+[[plugins]]
+repo = 'skanehira/denops-gh.vim'
 
 # QuickFixを一括置換
 [[plugins]]

@@ -277,6 +277,8 @@ lua_source = '''
 -- settting for nocie.vim
 require('noice').setup {
 	cmdline = {
+		enabled = true,
+		view = "cmdline_popup",
 		format = {
 			cmdline = { icon = ">" },
 			search_down = { icon = "🔍⌄" },
@@ -288,7 +290,7 @@ require('noice').setup {
 	},
 	popupmenu = {
 		enabled = true,
-		view = "nui",
+		view = "pum",
 	},
 }
 '''

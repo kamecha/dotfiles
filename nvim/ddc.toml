@@ -1,12 +1,12 @@
 # 補完plugin
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-depends = ['denops.vim']
+depends = ['denops.vim', 'pum.vim']
 on_event = ['InsertEnter', 'CursorHold']
 hook_source = '''
 let s:ddc_config_json =<< trim MARK
 	{
-		"ui": "native",
+		"ui": "pum",
 		"sources": ["around", "nvim-lsp", "vsnip"],
 		"sourceOptions": {
 			"around": {
@@ -30,7 +30,7 @@ let s:ddc_config_json =<< trim MARK
 				"isVolatile": 1
 			},
 			"_": {
-				"matchers": ["matcher_head"],
+				"matchers": ["matcher_fuzzy"],
 				"sorters": ["sorter_rank"]
 			}
 		}
@@ -38,13 +38,101 @@ let s:ddc_config_json =<< trim MARK
 MARK
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
 call ddc#custom#patch_global(s:ddc_config_json)
+call ddc#custom#patch_global('cmdlineSources', {
+      \   ':': ['cmdline-history', 'cmdline'],
+      \   '@': ['cmdline-history', 'input', 'file', 'around'],
+      \   '>': ['cmdline-history', 'input', 'file', 'around'],
+      \   '/': ['around', 'line'],
+      \   '?': ['around', 'line'],
+      \   '-': ['around', 'line'],
+      \   '=': ['input'],
+      \ })
 call ddc#custom#patch_filetype('gina-commit', 'specialBufferCompletion', v:true)
 call ddc#enable()
+
+" use pum.vim
+call ddc#custom#patch_global('autoCompleteEvents', [
+      \   'InsertEnter', 'TextChangedI', 'TextChangedP',
+      \   'CmdlineEnter', 'CmdlineChanged', 'TextChangedT',
+      \ ])
+
+autocmd CmdlineEnter * call ddc#enable_cmdline_completion()
+
+"nnoremap : <Cmd>call CommandlinePre()<CR>:
+"function! CommandlinePre() abort
+"	call ddc#enable_cmdline_completion()
+"endfunction
+
+"function! CommandlinePre() abort
+"  cnoremap <expr> <Tab>
+"  \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+"  \ ddc#map#manual_complete()
+"  cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+"  cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+"  cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+"  "call ddc#enable_cmdline_completion()
+"endfunction
 '''
 
 # 補完UI
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
+on_source = 'ddc.vim'
+
+# 独自ポップアップwindow
+[[plugins]]
+repo = 'Shougo/pum.vim'
+hook_source = '''
+inoremap <silent><expr> <TAB>
+      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+      \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+      \ '<TAB>' : ddc#manual_complete()
+inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
+inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+cnoremap <expr> <Tab>
+\ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+\ ddc#map#manual_complete()
+cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+cnoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
+cnoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+cnoremap <expr> <CR>
+\ pum#visible() ? '<Cmd>call pum#map#confirm()<CR><CR>' :
+\ '<CR>'
+cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+
+let s:pum_config_json =<< trim MARK
+{
+	"max_height": 10,
+	"padding": true
+}
+MARK
+let s:pum_config_json = s:pum_config_json->join('')->json_decode()
+
+call pum#set_option(s:pum_config_json)
+
+" autocmd InsertEnter * inoremap <CR> <Cmd>call pum#map#confirm()<CR>
+" leximaの影響を受けちゃうので、insertEnterでマッピングを上書きする
+" ↓ここ他人のパンツなので、暇な時に直してみる
+function s:MapPumVim() abort
+	imap <expr> <CR> pum#visible() 
+		\ ? '<Cmd>if !pum#entered()<Bar>call pum#map#select_relative(1)<Bar>endif<Bar>call pum#map#confirm()<CR>' 
+		\ : lexima#expand('<LT>CR>', 'i')
+	imap <expr> <C-n> pum#visible() 
+		\ ? '<Cmd>call pum#map#select_relative(1)<CR>' 
+		\ : '<Cmd>call ddc#map#manual_complete()<CR>'
+	imap <expr> <C-p> pum#visible() 
+		\ ? '<Cmd>call pum#map#select_relative(-1)<CR>' 
+		\ : '<Cmd>call ddc#map#manual_complete()<CR>'
+endfunction
+autocmd InsertEnter * call <SID>MapPumVim()
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
 on_source = 'ddc.vim'
 
 # 補完source
@@ -59,7 +147,11 @@ on_source = 'ddc.vim'
 
 # 補完filter
 [[plugins]]
-repo = 'Shougo/ddc-matcher_head'
+repo = 'Shougo/ddc-source-cmdline'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-cmdline-history'
 on_source = 'ddc.vim'
 
 [[plugins]]
@@ -101,7 +193,7 @@ call skkeleton#config({
 autocmd MyAutoCmd User skkeleton-enable-pre call s:skkeleton_pre()
 function! s:skkeleton_pre() abort
 	let s:prev_buffer_config = ddc#custom#get_buffer()
-	call ddc#custom#patch_buffer({ 'sources': [ 'around', 'skkeleton'], 'keywordPattern': '([ァ-ヮア-ン]|ー)+' })
+	call ddc#custom#patch_buffer({ 'ui': 'native', 'sources': [ 'around', 'skkeleton'], 'keywordPattern': '([ァ-ヮア-ン]|ー)+' })
 endfunction
 autocmd MyAutoCmd User skkeleton-disable-pre call s:skkeleton_post()
 function! s:skkeleton_post() abort

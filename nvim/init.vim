@@ -85,6 +85,9 @@ set completeopt-=preview
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+" list setting(制御文字の表示)
+set list
+set listchars=tab:>-
 " plugin
 set signcolumn=yes
 set number
@@ -93,7 +96,7 @@ inoremap <Left> <C-G>U<Left>
 inoremap <Right> <C-G>U<Right>
 imap <C-f> <Right>
 imap <C-b> <Left>
-nnoremap <ESC><ESC> :nohlsearch<CR>
+nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>

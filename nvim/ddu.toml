@@ -18,9 +18,11 @@ let s:ddu_config_json =<< trim MARK
 				"filterSplitDirection": "floating",
 				"split": "floating",
 				"floatingBorder": "rounded",
+				"floatingTitlePos": "center",
 				"previewFloating":true,
-				"previewSplit": "vertical",
-				"previewFloatingBorder": "rounded"
+				"previewFloatingBorder": "rounded",
+				"previewFloatingTitle": [ ["Preview", "String"] ],
+				"previewFloatingTitlePos": "center"
 			},
 			"filer": {
 				"split": "vertical",
@@ -30,7 +32,10 @@ let s:ddu_config_json =<< trim MARK
 		},
 		"filterParams": {
 			"matcher_fzf": {
-				"highlightMatched": "Search"
+				"highlightMatched": "String"
+			},
+			"matcher_substring": {
+				"highlightMatched": "String"
 			}
 		},
 		"kindOptions": {
@@ -64,12 +69,12 @@ function! s:set_size() abort
 	" window自体は左上が始点となる
 	let s:ddu_config_json['uiParams']['ff']['winCol'] = winCol
 	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
-	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth
+	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth / 2
 	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
-	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol
-	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow
+	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + winWidth / 2 + 2
+	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow + winHeight + 5
 	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2
-	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight
+	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight + 3
 	call ddu#custom#patch_global(s:ddu_config_json)
 endfunction
 
@@ -81,17 +86,19 @@ nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
 nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Files', 'FloatBorder']],
+			\		}
+			\ },
 			\ 'sources': [{'name': 'file_rec', 'params': {}}]
 			\ })<CR>
 nmap <silent> [ddu]q <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'uiParams': {
 			\		'ff': {
-			\			'filterFloatingPosition': 'top',
-			\			'winHeight': ( &lines - (&lines / 4) ) / 2 - 3,
-			\ 			'previewSplit': 'horizontal',
-			\			'previewRow': &lines / 2 + (&lines - (&lines / 4)) / 2,
-			\			'previewHeight': (&lines - (&lines / 4)) / 2 - 2,
+			\			'prompt': 'qf',
+			\			'floatingTitle': [['QuickFix', 'String']],
 			\		}
 			\ },
 			\ 'sources': [
@@ -107,27 +114,27 @@ nmap <silent> [ddu]q <Cmd>call ddu#start({
 " live grep
 nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\ 'ui': 'ff',
-			\ 'volatile': v:true,
 			\ 'uiParams': {
 			\		'ff': {
 			\			'ignoreEmpty': v:false,
 			\			'autoResize': v:false,
-			\			'filterFloatingPosition': 'top',
-			\			'winHeight': ( &lines - (&lines / 4) ) / 2 - 3,
-			\ 			'previewSplit': 'horizontal',
-			\			'previewRow': &lines / 2 + (&lines - (&lines / 4)) / 2,
-			\			'previewHeight': (&lines - (&lines / 4)) / 2 - 2,
+			\			'floatingTitle': [['Live Grep', 'String']],
 			\		}
 			\ },
 			\ 'sources': [
 			\	{
 			\		'name': 'rg',
-			\ 		'options': {'matchers': []},
+			\ 		'options': {'matchers': [], 'volatile': v:true},
 			\	},
 			\ ],
 			\})<CR>
 nmap <silent> [ddu]b <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Buffer', 'Blue']],
+			\		}
+			\ },
 			\ 'sources': [{'name': 'buffer'}],
 			\ })<CR>
 nmap <silent> [ddu]c <Cmd>call ddu#start({
@@ -136,7 +143,7 @@ nmap <silent> [ddu]c <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
-			\ 'sources': [{'name': 'file', 'params': {}}],
+			\ 'sources': [{'name': 'file'}],
 			\ 'sourceOptions': {'_': {'columns': ['icon_filename']}},
 			\ 'uiParams': {
 			\	'filer': {
@@ -154,6 +161,7 @@ on_source = 'ddu.vim'
 [plugins.ftplugin]
 ddu-ff = '''
 setlocal cursorline
+setlocal signcolumn=yes
 nnoremap <buffer><silent> <CR>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 nnoremap <buffer><silent> <Space>
@@ -162,8 +170,17 @@ nnoremap <buffer><silent> i
 			\ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
 nnoremap <buffer><silent> p
 			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
+nnoremap <buffer><silent> e
+			\ <Cmd>call ddu#ui#ff#do_action('expandItem')<CR>
 nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+autocmd CursorMoved <buffer> call s:update_cursor()
+function! s:update_cursor()
+	sign unplace 100
+	sign define cursor text=>> texthl=Constant
+	execute printf('sign place 100 line=%d name=cursor file=%s',
+		\ '.'->line(), '%:p'->expand())
+endfunction
 '''
 ddu-ff-filter = '''
 nnoremap <buffer> <CR>
@@ -178,9 +195,9 @@ inoremap <buffer> <C-o>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
 inoremap <buffer> <C-v>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
-inoremap <buffer> <C-j>
+inoremap <buffer> <C-n>
 			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)<Bar>redraw")<CR>
-inoremap <buffer> <C-k>
+inoremap <buffer> <C-p>
 			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)<Bar>redraw")<CR>
 inoremap <buffer> <C-s>
 			\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
@@ -194,25 +211,25 @@ on_source = 'ddu.vim'
 [plugins.ftplugin]
 ddu-filer = '''
 nnoremap <buffer><expr> <CR>
-			\ ddu#ui#get_item()['action']['isDirectory'] ?
-			\ "<Cmd>call ddu#ui#filer#do_action('expandItem', {'mode': 'toggle'})<CR>" :
-			\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+			\ ddu#ui#get_item()->get('isTree', v:false) ?
+			\ "<Cmd>call ddu#ui#do_action('expandItem', {'mode': 'toggle'})<CR>" :
+			\ "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'open'})<CR>"
 nnoremap <buffer><silent> <Space>
-			\ <Cmd>call ddu#ui#filer#do_action('toggleSelectItem')<CR>
+			\ <Cmd>call ddu#ui#do_action('toggleSelectItem')<CR>
 nnoremap <buffer><silent> o
-			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open', 'params': {'command': 'split'}})<CR>
+			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open', 'params': {'command': 'split'}})<CR>
 nnoremap <buffer><silent> v
-			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
 nnoremap <buffer><silent> t
-			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open', 'params': {'command': 'tabnew'}})<CR>
+			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open', 'params': {'command': 'tabnew'}})<CR>
 nnoremap <buffer><silent> %
-			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newFile'})<CR>
+			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'newFile'})<CR>
 nnoremap <buffer><silent> d
-			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newDirectory'})<CR>
+			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'newDirectory'})<CR>
 nnoremap <buffer><silent> R
-			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'rename'})<CR>
+			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'rename'})<CR>
 nnoremap <buffer><silent> q
-			\ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
+			\ <Cmd>call ddu#ui#do_action('quit')<CR>
 '''
 
 # 補完Source
@@ -262,4 +279,9 @@ on_source = 'ddu.vim'
 # icon
 [[plugins]]
 repo = 'ryota2357/ddu-column-icon_filename'
+on_source = 'ddu.vim'
+
+# command
+[[plugins]]
+repo = 'Shougo/ddu-commands.vim'
 on_source = 'ddu.vim'

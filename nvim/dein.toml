@@ -74,11 +74,21 @@ depends = ['nvim-lspconfig', 'mason.nvim']
 lua_source = '''
 local nvim_lsp = require("lspconfig")
 local mason_lspconfig = require('mason-lspconfig')
+local navic = require("nvim-navic")
 mason_lspconfig.setup_handlers({ function(server_name)
-	local opts = {}
+	local opts = {
+		on_attach = function(client, bufnr)
+			if client.server_capabilities.documentSymbolProvider then
+				navic.attach(client, bufnr)
+			end
+		end
+	}
 	nvim_lsp[server_name].setup(opts)
 end })
 '''
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
 
 # LSPのラッパー
 [[plugins]]
@@ -181,26 +191,56 @@ require('Comment').setup()
 [[plugins]]
 repo = 'thinca/vim-partedit'
 
-# ステータスライン
+# font周りの設定(nerd fontとか)
 [[plugins]]
-repo = 'itchyny/lightline.vim'
+repo = 'nvim-tree/nvim-web-devicons'
+
+[[plugins]]
+repo = 'utilyre/barbecue.nvim'
+depends = [ 'SmiteshP/nvim-navic', 'nvim-tree/nvim-web-devicons' ]
+lua_source = '''
+require('barbecue').setup({
+	separator = "  ",
+	icons_enabled = true,
+	icons = {
+		default = "",
+		symlink = "",
+		git = "",
+		folder = "",
+		["folder-open"] = "",
+	},
+})
+'''
+
+[[plugins]]
+repo = 'nvim-lualine/lualine.nvim'
 hook_add = '''
-" 0: never 1: only split 2: always
-set laststatus=2
-let g:lightline = {
-\	'colorscheme': 'edge',
-\	'enable': {
-\		'statusline': 1,
-\		'tabline': 0,
-\	},
-\	'active': {
-\		'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'skkeleton', 'modified'] ]
-\	},
-\	'component_function': {
-\		'skkeleton': 'L_skkeleton_get_mode',
-\		'gitbranch': 'gitbranch#name',
-\	},
-\}
+set laststatus=3
+'''
+lua_source = '''
+local navic = require("nvim-navic")
+navic.setup({
+	highlight = true,
+	separator = "  ",
+})
+
+require('lualine').setup({
+	options = {
+		globalstatus = true,
+		disabled_filetypes = {
+			winbar = {
+				"netrw",
+			}
+		}
+	},
+	sections = {
+		lualine_c = {
+			{
+				"filename",
+			}
+		}
+	},
+})
 '''
 
 # タブライン

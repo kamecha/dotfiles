@@ -332,6 +332,11 @@ require('noice').setup {
 		enabled = true,
 		view = "pum",
 	},
+	lsp = {
+		progress = {
+			enabled = false
+		}
+	}
 }
 '''
 

@@ -159,17 +159,13 @@ tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle<CR>
 [[plugins]]
 repo = 'github/copilot.vim'
 
-# あいまい検索
 [[plugins]]
-repo = 'junegunn/fzf'
-build_on = '''
-./install -all
-'''
+repo = 'nvim-telescope/telescope.nvim'
+rev = '0.1.1'
 merged = '0'
-
-[[plugins]]
-repo = 'junegunn/fzf.vim'
-depends = 'fzf'
+lua_source = '''
+require('telescope').setup({})
+'''
 
 # help日本語
 [[plugins]]
@@ -303,11 +299,6 @@ endif
 let g:edge_style = 'aura'
 let g:edge_better_performance = 1
 '''
-
-# ソースコードを画像化する
-[[plugins]]
-repo = 'skanehira/denops-silicon.vim'
-depends = 'denops.vim'
 
 # UI
 [[plugins]]

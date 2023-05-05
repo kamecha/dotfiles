@@ -44,11 +44,18 @@ let s:ddu_config_json =<< trim MARK
 			},
 			"command_history": {
 				"defaultAction": "execute"
+			},
+			"tab": {
+				"defaultAction": "open"
 			}
 		},
 		"sourceOptions": {
 			"rg": {
 				"matchers": ["converter_display_word", "matcher_fzf"]
+			},
+			"file_rec": {
+				"matchers": ["matcher_substring"],
+				"converters": ["converter_file_icon"]
 			},
 			"_": {
 				"matchers": ["matcher_fzf"]
@@ -92,6 +99,24 @@ nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\		}
 			\ },
 			\ 'sources': [{'name': 'file_rec', 'params': {}}]
+			\ })<CR>
+nmap <silent> [ddu]t <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Tab', 'FloatBorder']],
+			\		}
+			\ },
+			\ 'sources': [{'name': 'tab', 'params': {}}]
+			\ })<CR>
+nmap <silent> [ddu]l <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Line', 'String']],
+			\		}
+			\ },
+			\ 'sources': [{'name': 'line', 'params': {}}],
 			\ })<CR>
 nmap <silent> [ddu]q <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -258,6 +283,14 @@ on_source = 'ddu.vim'
 repo = 'matsui54/ddu-source-command_history'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'kamecha/ddu-source-jumplist'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-source-tab'
+on_source = 'ddu.vim'
+
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
@@ -269,6 +302,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'Shougo/ddu-filter-converter_display_word'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-filter-converter_file_icon'
 on_source = 'ddu.vim'
 
 # 補完Kind

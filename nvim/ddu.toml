@@ -315,6 +315,8 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-source-jumplist'
+on_source = 'ddu.vim'
+
 [[plugins]]
 repo = 'kamecha/ddu-source-window'
 on_source = 'ddu.vim'

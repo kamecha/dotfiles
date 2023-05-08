@@ -83,6 +83,8 @@ function! s:set_size() abort
 	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
 	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth / 2
 	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
+	" verticalオプションを使わないのもあって、previewの始点は左下になってる
+	" あまりキレイじゃないのだ...
 	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + winWidth / 2 + 2
 	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow + winHeight + 5
 	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2

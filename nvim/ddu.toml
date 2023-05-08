@@ -5,6 +5,7 @@ on_source = 'denops.vim'
 hook_source = '''
 let s:ddu_config_json =<< trim MARK
 	{
+		"ui": "ff",
 		"uiOptions": {
 			"filer": {
 				"toggle": true
@@ -22,7 +23,8 @@ let s:ddu_config_json =<< trim MARK
 				"previewFloating":true,
 				"previewFloatingBorder": "rounded",
 				"previewFloatingTitle": [ ["Preview", "String"] ],
-				"previewFloatingTitlePos": "center"
+				"previewFloatingTitlePos": "center",
+				"previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0] ]
 			},
 			"filer": {
 				"split": "vertical",
@@ -44,6 +46,9 @@ let s:ddu_config_json =<< trim MARK
 			},
 			"command_history": {
 				"defaultAction": "execute"
+			},
+			"window": {
+				"defaultAction": "open"
 			},
 			"tab": {
 				"defaultAction": "open"
@@ -105,9 +110,25 @@ nmap <silent> [ddu]t <Cmd>call ddu#start({
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Tab', 'FloatBorder']],
+			\			'autoAction': { 
+			\				'name': 'preview',
+			\				'params': { 'border': ['+', '-', '+', '\|'] }
+			\			},
 			\		}
 			\ },
-			\ 'sources': [{'name': 'tab', 'params': {}}]
+			\ 'sources': [{'name': 'tab', 'params': { 'format': 'tab\|%n:%T:%w' }}]
+			\ })<CR>
+nmap <silent> [ddu]w <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Window', 'FloatBorder']],
+			\			'autoAction': { 
+			\				'name': 'preview',
+			\			},
+			\		}
+			\ },
+			\ 'sources': [{'name': 'window'}]
 			\ })<CR>
 nmap <silent> [ddu]l <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -294,6 +315,8 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-source-jumplist'
+[[plugins]]
+repo = 'kamecha/ddu-source-window'
 on_source = 'ddu.vim'
 
 [[plugins]]

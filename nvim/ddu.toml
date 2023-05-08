@@ -330,6 +330,10 @@ repo = 'matsui54/ddu-source-command_history'
 on_source = 'ddu.vim'
 
 [[plugins]]
+repo = 'Shougo/ddu-source-line'
+on_source = 'ddu.vim'
+
+[[plugins]]
 repo = 'kamecha/ddu-source-jumplist'
 on_source = 'ddu.vim'
 
@@ -339,6 +343,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-source-tab'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-dummy'
 on_source = 'ddu.vim'
 
 # 補完Filter

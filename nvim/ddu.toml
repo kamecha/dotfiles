@@ -141,6 +141,20 @@ nmap <silent> [ddu]l <Cmd>call ddu#start({
 			\ },
 			\ 'sources': [{'name': 'line', 'params': {}}],
 			\ })<CR>
+nmap <silent> [ddu]d <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Dein', 'Black']],
+			\			'autoAction': {},
+			\			'winCol' : &columns / 8,
+			\			'winWidth' : &columns - (&columns / 4),
+			\			'winRow' : &lines / 8,
+			\			'winHeight' : &lines - (&lines / 4),
+			\		}
+			\ },
+			\ 'sources': [{'name': 'dein'}],
+			\ })<CR>
 nmap <silent> [ddu]j <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'uiParams': {

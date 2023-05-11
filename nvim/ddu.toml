@@ -47,6 +47,9 @@ let s:ddu_config_json =<< trim MARK
 			"command_history": {
 				"defaultAction": "execute"
 			},
+			"help": {
+				"defaultAction": "open"
+			},
 			"window": {
 				"defaultAction": "open"
 			},
@@ -163,6 +166,15 @@ nmap <silent> [ddu]j <Cmd>call ddu#start({
 			\		}
 			\ },
 			\ 'sources': [{'name': 'jumplist', 'params': {}}],
+			\ })<CR>
+nmap <silent> [ddu]h <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Help', 'FloatBorder']],
+			\		}
+			\ },
+			\ 'sources': [{'name': 'help', 'params': {}}],
 			\ })<CR>
 nmap <silent> [ddu]q <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -347,6 +359,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-dummy'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-help'
 on_source = 'ddu.vim'
 
 # 補完Filter

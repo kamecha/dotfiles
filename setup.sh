@@ -73,3 +73,4 @@ ln -sfv "$(pwd)/.vim" "$HOME/"
 # for each shell
 ln -sfv "$(pwd)/.bashrc" "$HOME/.bashrc"
 ln -sfv "$(pwd)/.zshrc" "$HOME/.zshrc"
+ln -sfv "$(pwd)/starship.toml" "$HOME/.config/starship.toml"

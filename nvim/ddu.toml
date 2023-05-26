@@ -44,6 +44,9 @@ let s:ddu_config_json =<< trim MARK
 			"file": {
 				"defaultAction": "open"
 			},
+			"floaterm": {
+				"defaultAction": "open"
+			},
 			"command_history": {
 				"defaultAction": "execute"
 			},
@@ -62,7 +65,11 @@ let s:ddu_config_json =<< trim MARK
 				"matchers": ["converter_display_word", "matcher_fzf"]
 			},
 			"file_rec": {
-				"matchers": ["matcher_substring"],
+				"matchers": ["matcher_fzf"],
+				"converters": ["converter_file_icon"]
+			},
+			"file_external": {
+				"matchers": ["matcher_fzf"],
 				"converters": ["converter_file_icon"]
 			},
 			"_": {
@@ -110,6 +117,18 @@ nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ },
 			\ 'sources': [{'name': 'file_rec', 'params': {}}]
 			\ })<CR>
+nmap <silent> [ddu]g <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Files', 'FloatBorder'], ['Git', 'FloatBorder']],
+			\		}
+			\ },
+			\ 'sources': [{
+			\	'name': 'file_external',
+			\	'params': { 'cmd': ['git', 'ls-files'] }
+			\ }]
+			\ })<CR>
 nmap <silent> [ddu]t <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'uiParams': {
@@ -122,6 +141,24 @@ nmap <silent> [ddu]t <Cmd>call ddu#start({
 			\		}
 			\ },
 			\ 'sources': [{'name': 'tab', 'params': { 'format': 'tab\|%n:%T:%w' }}]
+			\ })<CR>
+nmap <silent> [ddu]T <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Floaterm', 'FloatBorder']],
+			\			'previewSplit': 'horizontal',
+			\			'winCol': &columns / 8,
+			\			'winRow': &lines / 2,
+			\			'winWidth': &columns - (&columns / 4),
+			\			'winHeight': &lines / 2 - 8,
+			\			'previewCol': &columns / 8,
+			\			'previewRow': 0,
+			\			'previewWidth': &columns - (&columns / 4),
+			\			'previewHeight': &lines / 2 - 8,
+			\		}
+			\ },
+			\ 'sources': [{'name': 'floaterm'}]
 			\ })<CR>
 nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -224,6 +261,10 @@ nmap <silent> [ddu]c <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'sources': [{'name': 'command_history'}],
 			\ })<CR>
+nmap <silent> [ddu]lr <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'sources': [{'name': 'nvim_lsp_references'}],
+			\ })<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
 			\ 'sources': [{'name': 'file'}],
@@ -284,6 +325,10 @@ inoremap <buffer> <C-p>
 			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)<Bar>redraw")<CR>
 inoremap <buffer> <C-s>
 			\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+inoremap <buffer> <C-a>
+			\ <Cmd>call ddu#ui#ff#do_action('toggleAllItems')<CR>
+inoremap <buffer> <C-l>
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('leaveFilterWindow')<CR>
 inoremap <buffer> <C-q>
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 '''
@@ -342,6 +387,10 @@ repo = 'matsui54/ddu-source-command_history'
 on_source = 'ddu.vim'
 
 [[plugins]]
+repo = 'gamoutatsumi/ddu-source-nvim-lsp'
+on_source = 'ddu.vim'
+
+[[plugins]]
 repo = 'Shougo/ddu-source-line'
 on_source = 'ddu.vim'
 
@@ -350,11 +399,19 @@ repo = 'kamecha/ddu-source-jumplist'
 on_source = 'ddu.vim'
 
 [[plugins]]
+repo = 'kamecha/ddu-source-tab'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-source-floaterm'
+on_source = 'ddu.vim'
+
+[[plugins]]
 repo = 'kamecha/ddu-source-window'
 on_source = 'ddu.vim'
 
 [[plugins]]
-repo = 'kamecha/ddu-source-tab'
+repo = 'kamecha/ddu-source-treesitter'
 on_source = 'ddu.vim'
 
 [[plugins]]

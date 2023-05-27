@@ -161,7 +161,7 @@ repo = 'github/copilot.vim'
 
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
-rev = '0.1.1'
+depends = ['plenary.nvim']
 merged = '0'
 lua_source = '''
 require('telescope').setup({})
@@ -220,6 +220,26 @@ navic.setup({
 	separator = "  ",
 })
 
+local lsp_names = function()
+	local clients = {}
+	for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
+		if client.name == 'null-ls' then
+			local sources = {}
+			for _, source in ipairs(require('null-ls.sources').get_available(vim.bo.filetype)) do
+				table.insert(sources, source.name)
+			end
+			table.insert(clients, 'null-ls(' .. table.concat(sources, ', ') .. ')')
+		else
+			table.insert(clients, client.name)
+		end
+	end
+	local denops_status = vim.fn['denops#server#status']()
+	if denops_status ~= '' then
+		table.insert(clients, "D:" .. denops_status)
+	end
+	return ' ' .. table.concat(clients, ', ')
+end
+
 require('lualine').setup({
 	options = {
 		globalstatus = true,
@@ -234,6 +254,9 @@ require('lualine').setup({
 			{
 				"filename",
 			}
+		},
+		lualine_x = {
+			lsp_names
 		}
 	},
 })

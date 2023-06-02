@@ -270,6 +270,30 @@ nmap <silent> [ddu]lr <Cmd>call ddu#start({
 			\	{'name': 'nvim_lsp', 'params': { 'method': 'textDocument/references' }}
 			\ ],
 			\ })<CR>
+nmap <silent> [ddu]ld <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'sources': [
+			\	{'name': 'nvim_lsp', 'params': { 'method': 'textDocument/definition' }}
+			\ ],
+			\ })<CR>
+nmap <silent> [ddu]ls <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'sources': [
+			\	{'name': 'nvim_lsp', 'params': { 'method': 'workspace/symbol' }}
+			\ ],
+			\ })<CR>
+nmap <silent> [ddu]lc <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'fuiParams': {
+			\	'ff': {
+			\		'displayTree': v:true,
+			\		'startFilter': v:false,
+			\	}
+			\ },
+			\ 'sources': [
+			\	{'name': 'nvim_lsp', 'params': { 'method': 'callHierarchy/incomingCalls' }}
+			\ ],
+			\ })<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
 			\ 'sources': [{'name': 'file'}],

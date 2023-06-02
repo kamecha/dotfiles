@@ -47,6 +47,9 @@ let s:ddu_config_json =<< trim MARK
 			"floaterm": {
 				"defaultAction": "open"
 			},
+			"nvim_lsp": {
+				"defaultAction": "open"
+			},
 			"command_history": {
 				"defaultAction": "execute"
 			},
@@ -263,7 +266,9 @@ nmap <silent> [ddu]c <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]lr <Cmd>call ddu#start({
 			\ 'ui': 'ff',
-			\ 'sources': [{'name': 'nvim_lsp_references'}],
+			\ 'sources': [
+			\	{'name': 'nvim_lsp', 'params': { 'method': 'textDocument/references' }}
+			\ ],
 			\ })<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
@@ -387,7 +392,7 @@ repo = 'matsui54/ddu-source-command_history'
 on_source = 'ddu.vim'
 
 [[plugins]]
-repo = 'gamoutatsumi/ddu-source-nvim-lsp'
+repo = 'uga-rosa/ddu-source-nvim_lsp'
 on_source = 'ddu.vim'
 
 [[plugins]]

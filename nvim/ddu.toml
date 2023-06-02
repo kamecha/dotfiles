@@ -451,6 +451,10 @@ on_source = 'ddu.vim'
 repo = 'matsui54/ddu-source-help'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'matsui54/ddu-source-file_external'
+on_source = 'ddu.vim'
+
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'

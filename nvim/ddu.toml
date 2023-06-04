@@ -385,14 +385,22 @@ setlocal cursorline
 setlocal signcolumn=yes
 nnoremap <buffer><silent> <CR>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-nnoremap <buffer><silent> <Space>
+nnoremap <buffer><silent> t
+			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'tabnew'}})<CR>
+nnoremap <buffer><silent> o
+			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
+nnoremap <buffer><silent> v
+			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
+nnoremap <buffer><silent> s
 			\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
 nnoremap <buffer><silent> i
 			\ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+nnoremap <buffer><silent> c
+			\ <Cmd>call ddu#ui#ff#do_action('closeFilterWindow')<CR>
 nnoremap <buffer><silent> p
 			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
 nnoremap <buffer><silent> e
-			\ <Cmd>call ddu#ui#ff#do_action('expandItem')<CR>
+			\ <Cmd>call ddu#ui#ff#do_action('expandItem', {'mode': 'toggle'})<CR>
 nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 autocmd CursorMoved <buffer> call s:update_cursor()
@@ -408,6 +416,8 @@ nnoremap <buffer> <CR>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+inoremap <buffer> <C-p>
+			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
 inoremap <buffer> <CR>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 inoremap <buffer> <C-t>

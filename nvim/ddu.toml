@@ -171,6 +171,9 @@ call ddu#custom#patch_local('ui_preview_layout', {
 
 nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
+
+" telescopeのREADMEの順っぽく設定していく
+" File
 nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
@@ -194,81 +197,35 @@ nmap <silent> [ddu]g <Cmd>call ddu#start({
 			\	'params': { 'cmd': ['git', 'ls-files'] }
 			\ }]
 			\ })<CR>
-nmap <silent> [ddu]t <Cmd>call ddu#start({
+" live grep
+nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
-			\			'floatingTitle': [['Tab', 'FloatBorder']],
-			\			'autoAction': { 
-			\				'name': 'preview',
-			\				'params': { 'border': ['+', '-', '+', '\|'] }
-			\			},
+			\			'ignoreEmpty': v:false,
+			\			'autoResize': v:false,
+			\			'floatingTitle': [['Live Grep', 'String']],
 			\		}
 			\ },
-			\ 'sources': [{'name': 'tab', 'params': { 'format': 'tab\|%n:%T:%w' }}]
-			\ })<CR>
-nmap <silent> [ddu]T <Cmd>call ddu#start({
-			\ 'ui': 'ff',
-			\ 'uiParams': {
-			\		'ff': {
-			\			'floatingTitle': [['Floaterm', 'FloatBorder']],
-			\			'previewSplit': 'horizontal',
-			\			'winCol': s:winCol,
-			\			'winRow': &lines / 2,
-			\			'winWidth': s:winWidth,
-			\			'winHeight': &lines / 2 - 8,
-			\			'previewCol': s:winCol,
-			\			'previewRow': 0,
-			\			'previewWidth': s:winWidth,
-			\			'previewHeight': &lines / 2 - 8,
-			\		}
-			\ },
-			\ 'sources': [{'name': 'floaterm'}]
-			\ })<CR>
-nmap <silent> [ddu]w <Cmd>call ddu#start({
+			\ 'sources': [
+			\	{
+			\		'name': 'rg',
+			\ 		'options': {'matchers': [], 'volatile': v:true},
+			\	},
+			\ ],
+			\})<CR>
+
+" Vim 関連
+nmap <silent> [ddu]b <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
-			\			'floatingTitle': [['Window', 'FloatBorder']],
-			\			'autoAction': { 
-			\				'name': 'preview',
-			\			},
+			\			'floatingTitle': [['Buffer', 'Blue']],
 			\		}
 			\ },
-			\ 'sources': [{'name': 'window', 'params': { 'format': 'tab\:%tn:%T:%w:%wi' }}]
-			\ })<CR>
-nmap <silent> [ddu]L <Cmd>call ddu#start({
-			\ 'ui': 'ff',
-			\ 'name': 'ui_filter_preview_layout',
-			\ 'uiParams': {
-			\		'ff': {
-			\			'floatingTitle': [['Line', 'String']],
-			\		}
-			\ },
-			\ 'sources': [{'name': 'line', 'params': {}}],
-			\ })<CR>
-nmap <silent> [ddu]d <Cmd>call ddu#start({
-			\ 'ui': 'ff',
-			\ 'name': 'ui_filter_layout',
-			\ 'uiParams': {
-			\		'ff': {
-			\			'floatingTitle': [['Dein', 'Black']],
-			\			'autoAction': {},
-			\		}
-			\ },
-			\ 'sources': [{'name': 'dein'}],
-			\ })<CR>
-nmap <silent> [ddu]j <Cmd>call ddu#start({
-			\ 'ui': 'ff',
-			\ 'name': 'ui_filter_preview_layout',
-			\ 'uiParams': {
-			\		'ff': {
-			\			'floatingTitle': [['JumpList', 'String']],
-			\		}
-			\ },
-			\ 'sources': [{'name': 'jumplist', 'params': {}}],
+			\ 'sources': [{'name': 'buffer'}],
 			\ })<CR>
 nmap <silent> [ddu]h <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -300,45 +257,55 @@ nmap <silent> [ddu]q <Cmd>call ddu#start({
 			\	},
 			\ ],
 			\})<CR>
-" live grep
-nmap <silent> [ddu]r <Cmd>call ddu#start({
+nmap <silent> [ddu]j <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
-			\			'ignoreEmpty': v:false,
-			\			'autoResize': v:false,
-			\			'floatingTitle': [['Live Grep', 'String']],
+			\			'floatingTitle': [['JumpList', 'String']],
 			\		}
 			\ },
-			\ 'sources': [
-			\	{
-			\		'name': 'rg',
-			\ 		'options': {'matchers': [], 'volatile': v:true},
-			\	},
-			\ ],
-			\})<CR>
-nmap <silent> [ddu]b <Cmd>call ddu#start({
+			\ 'sources': [{'name': 'jumplist', 'params': {}}],
+			\ })<CR>
+nmap <silent> [ddu]t <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
-			\			'floatingTitle': [['Buffer', 'Blue']],
+			\			'floatingTitle': [['Tab', 'FloatBorder']],
+			\			'autoAction': { 
+			\				'name': 'preview',
+			\				'params': { 'border': ['+', '-', '+', '\|'] }
+			\			},
 			\		}
 			\ },
-			\ 'sources': [{'name': 'buffer'}],
+			\ 'sources': [{'name': 'tab', 'params': { 'format': 'tab\|%n:%T:%w' }}]
 			\ })<CR>
-nmap <silent> [ddu]c <Cmd>call ddu#start({
+nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\ 'ui': 'ff',
-			\ 'name': 'ui_filter_layout',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
-			\			'floatingTitle': [['Command History', 'FloatBorder']],
-			\			'autoAction': {},
+			\			'floatingTitle': [['Window', 'FloatBorder']],
+			\			'autoAction': { 
+			\				'name': 'preview',
+			\			},
 			\		}
 			\ },
-			\ 'sources': [{'name': 'command_history'}],
+			\ 'sources': [{'name': 'window', 'params': { 'format': 'tab\:%tn:%T:%w:%wi' }}]
 			\ })<CR>
+nmap <silent> [ddu]L <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Line', 'String']],
+			\		}
+			\ },
+			\ 'sources': [{'name': 'line', 'params': {}}],
+			\ })<CR>
+
+" Neovim LSP 関連
 " lsp
 nmap <silent> [ddu]lr <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -393,7 +360,39 @@ nmap <silent> [ddu]lh <Cmd>call ddu#start({
 			\	{'name': 'lsp_hierarchy', 'params': { 'method': 'callHierarchy/outgoingCalls' }}
 			\ ],
 			\ })<CR>
-" filer
+
+" 他のプラグインとの連携
+nmap <silent> [ddu]T <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Floaterm', 'FloatBorder']],
+			\			'previewSplit': 'horizontal',
+			\			'winCol': s:winCol,
+			\			'winRow': &lines / 2,
+			\			'winWidth': s:winWidth,
+			\			'winHeight': &lines / 2 - 8,
+			\			'previewCol': s:winCol,
+			\			'previewRow': 0,
+			\			'previewWidth': s:winWidth,
+			\			'previewHeight': &lines / 2 - 8,
+			\		}
+			\ },
+			\ 'sources': [{'name': 'floaterm'}]
+			\ })<CR>
+nmap <silent> [ddu]d <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_layout',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Dein', 'Black']],
+			\			'autoAction': {},
+			\		}
+			\ },
+			\ 'sources': [{'name': 'dein'}],
+			\ })<CR>
+
+" filer 表示
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
 			\ 'sources': [{'name': 'file'}],

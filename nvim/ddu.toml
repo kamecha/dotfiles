@@ -109,6 +109,47 @@ call s:set_size()
 
 autocmd VimResized * call s:set_size()
 
+call ddu#custom#patch_local('ui_filter_preview_layout', {
+			\ 'uiParams': {
+			\	'ff': {
+			\		'winCol': &columns / 8,
+			\		'winRow': &lines / 8,
+			\		'winWidth': ( &columns - (&columns / 4) ) / 2,
+			\		'winHeight': &lines - (&lines / 4),
+			\		'previewCol': &columns / 8 + ( &columns - (&columns / 4) ) / 2 + 2,
+			\		'previewRow': &lines / 8 + &lines - (&lines / 4) + 5,
+			\		'previewWidth': ( &columns - (&columns / 4) ) / 2,
+			\		'previewHeight': &lines - (&lines / 4) + 3,
+			\	}
+			\}
+			\})
+
+call ddu#custom#patch_local('ui_filter_layout', {
+			\ 'uiParams': {
+			\	'ff': {
+			\		'winCol' : &columns / 8,
+			\		'winWidth' : &columns - (&columns / 4),
+			\		'winRow' : &lines / 8,
+			\		'winHeight' : &lines - (&lines / 4),
+			\	}
+			\}
+			\})
+
+call ddu#custom#patch_local('ui_preview_layout', {
+			\ 'uiParams': {
+			\	'ff': {
+			\		'winCol' : &columns / 8,
+			\		'winWidth' : ( &columns - (&columns / 4) ) / 2,
+			\		'winRow' : &lines / 8,
+			\		'winHeight' : &lines - (&lines / 4),
+			\		'previewCol' : &columns / 8 + 2,
+			\		'previewWidth' : ( &columns - (&columns / 4) ) / 2,
+			\		'previewRow' : &lines / 8,
+			\		'previewHeight' : &lines - (&lines / 4),
+			\	}
+			\}
+			\})
+
 nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
 nmap <silent> [ddu]f <Cmd>call ddu#start({
@@ -186,14 +227,11 @@ nmap <silent> [ddu]l <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]d <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Dein', 'Black']],
 			\			'autoAction': {},
-			\			'winCol' : &columns / 8,
-			\			'winWidth' : &columns - (&columns / 4),
-			\			'winRow' : &lines / 8,
-			\			'winHeight' : &lines - (&lines / 4),
 			\		}
 			\ },
 			\ 'sources': [{'name': 'dein'}],
@@ -262,6 +300,13 @@ nmap <silent> [ddu]b <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]c <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_layout',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Command History', 'FloatBorder']],
+			\			'autoAction': {},
+			\		}
+			\ },
 			\ 'sources': [{'name': 'command_history'}],
 			\ })<CR>
 nmap <silent> [ddu]lr <Cmd>call ddu#start({

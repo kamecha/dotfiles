@@ -48,6 +48,9 @@ let s:ddu_config_json =<< trim MARK
 			"nvim_lsp": {
 				"defaultAction": "open"
 			},
+			"ui_select": {
+				"defaultAction": "select"
+			},
 			"command_history": {
 				"defaultAction": "execute"
 			},
@@ -516,6 +519,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'shun/ddu-source-buffer'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-vim-ui-select'
 on_source = 'ddu.vim'
 
 [[plugins]]

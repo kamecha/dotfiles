@@ -121,6 +121,21 @@ call s:set_size()
 
 " verticalオプションを使わないのもあって、previewの始点は左下になってる
 " あまりキレイじゃないのだ...
+
+" ┌────────────────┐┌────────────────┐
+" │                ││                │
+" │                ││                │
+" │                ││                │
+" │  source        ││                │
+" │                ││                │
+" │                ││   preview      │
+" │                ││                │
+" │                ││                │
+" │                ││                │
+" └────────────────┘│                │
+" ┌────────────────┐│                │
+" │   filter       ││                │
+" └────────────────┘└────────────────┘
 call ddu#custom#patch_local('ui_filter_preview_layout', {
 			\ 'uiParams': {
 			\	'ff': {
@@ -138,6 +153,18 @@ call ddu#custom#patch_local('ui_filter_preview_layout', {
 			\}
 			\})
 
+" ┌────────────────┐
+" │                │
+" │   preview      │
+" │                │
+" └────────────────┘
+" ┌────────────────┐
+" │   source       │
+" │                │
+" └────────────────┘
+" ┌────────────────┐
+" │   filter       │
+" └────────────────┘
 call ddu#custom#patch_local('ui_filter_preview_horizontal_layout', {
 			\ 'uiParams': {
 			\	'ff': {
@@ -156,6 +183,14 @@ call ddu#custom#patch_local('ui_filter_preview_horizontal_layout', {
 			\}
 			\})
 
+" ┌────────────────┐
+" │                │
+" │   source       │
+" │                │
+" └────────────────┘
+" ┌────────────────┐
+" │   filter       │
+" └────────────────┘
 call ddu#custom#patch_local('ui_filter_layout', {
 			\ 'uiParams': {
 			\	'ff': {
@@ -168,6 +203,16 @@ call ddu#custom#patch_local('ui_filter_layout', {
 			\}
 			\})
 
+" ┌────────────────┐┌────────────────┐
+" │                ││                │
+" │                ││                │
+" │                ││                │
+" │  source        ││   preview      │
+" │                ││                │
+" │                ││                │
+" │                ││                │
+" │                ││                │
+" └────────────────┘└────────────────┘
 call ddu#custom#patch_local('ui_preview_layout', {
 			\ 'uiParams': {
 			\	'ff': {

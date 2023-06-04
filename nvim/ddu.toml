@@ -75,6 +75,9 @@ let s:ddu_config_json =<< trim MARK
 				"matchers": ["matcher_fzf"],
 				"converters": ["converter_file_icon"]
 			},
+			"dummy": {
+				"matchers": []
+			},
 			"_": {
 				"matchers": ["matcher_fzf"]
 			}

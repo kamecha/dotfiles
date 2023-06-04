@@ -309,34 +309,55 @@ nmap <silent> [ddu]c <Cmd>call ddu#start({
 			\ },
 			\ 'sources': [{'name': 'command_history'}],
 			\ })<CR>
+" lsp
 nmap <silent> [ddu]lr <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\	'ff': {
+			\		'floatingTitle': [['Lsp References', 'FloatBorder']],
+			\	}
+			\ },
 			\ 'sources': [
-			\	{'name': 'nvim_lsp', 'params': { 'method': 'textDocument/references' }}
+			\	{'name': 'lsp_references'}
 			\ ],
 			\ })<CR>
 nmap <silent> [ddu]ld <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'uiParams': {
+			\	'ff': {
+			\		'floatingTitle': [['Lsp Definition', 'FloatBorder']],
+			\	}
+			\ },
 			\ 'sources': [
-			\	{'name': 'nvim_lsp', 'params': { 'method': 'textDocument/definition' }}
+			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/definition' }}
 			\ ],
 			\ })<CR>
 nmap <silent> [ddu]ls <Cmd>call ddu#start({
 			\ 'ui': 'ff',
-			\ 'sources': [
-			\	{'name': 'nvim_lsp', 'params': { 'method': 'workspace/symbol' }}
-			\ ],
-			\ })<CR>
-nmap <silent> [ddu]lc <Cmd>call ddu#start({
-			\ 'ui': 'ff',
-			\ 'fuiParams': {
+			\ 'uiParams': {
 			\	'ff': {
-			\		'displayTree': v:true,
-			\		'startFilter': v:false,
+			\		'floatingTitle': [['Lsp Symbol', 'FloatBorder']],
 			\	}
 			\ },
 			\ 'sources': [
-			\	{'name': 'nvim_lsp', 'params': { 'method': 'callHierarchy/incomingCalls' }}
+			\	{'name': 'lsp_documentSymbol'},
+			\	{'name': 'lsp_workspaceSymbol'}
+			\ ],
+			\ })<CR>
+nmap <silent> [ddu]lh <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'name': 'ui_preview_layout',
+			\ 'uiParams': {
+			\	'ff': {
+			\		'floatingTitle': [['Lsp Hierarchy', 'FloatBorder']],
+			\		'displayTree': v:true,
+			\		'startFilter': v:false,
+			\		'previewSplit': 'vertical',
+			\	}
+			\ },
+			\ 'sources': [
+			\	{'name': 'lsp_hierarchy', 'params': { 'method': 'callHierarchy/incomingCalls' }},
+			\	{'name': 'lsp_hierarchy', 'params': { 'method': 'callHierarchy/outgoingCalls' }}
 			\ ],
 			\ })<CR>
 nmap <silent> [ddu]e <Cmd>call ddu#start({
@@ -461,7 +482,7 @@ repo = 'matsui54/ddu-source-command_history'
 on_source = 'ddu.vim'
 
 [[plugins]]
-repo = 'uga-rosa/ddu-source-nvim_lsp'
+repo = 'uga-rosa/ddu-source-lsp'
 on_source = 'ddu.vim'
 
 [[plugins]]

@@ -108,6 +108,14 @@ let s:winWidth = &columns - (&columns / 4)
 let s:winRow = &lines / 8
 let s:winHeight = &lines - (&lines / 4)
 
+" ┌────────────────────────────────┐
+" │                                │
+" │                                │
+" │        source                  │
+" │                                │
+" │                                │
+" │                                │
+" └────────────────────────────────┘
 function! s:set_size() abort
 	" window自体は左上が始点となる
 	let s:ddu_config_json['uiParams']['ff']['winCol'] = s:winCol

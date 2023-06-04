@@ -13,9 +13,7 @@ let s:ddu_config_json =<< trim MARK
 		},
 		"uiParams": {
 			"ff": {
-				"startFilter": true,
 				"prompt": "> ",
-				"autoAction" : { "name": "preview" },
 				"filterSplitDirection": "floating",
 				"split": "floating",
 				"floatingBorder": "rounded",
@@ -103,40 +101,39 @@ let s:ddu_config_json = s:ddu_config_json->join('')->json_decode()
 
 call ddu#custom#patch_global(s:ddu_config_json)
 
+" jsonだと式が書けないので、レイアウト周りはここで設定する
+
+let s:winCol = &columns / 8
+let s:winWidth = &columns - (&columns / 4)
+let s:winRow = &lines / 8
+let s:winHeight = &lines - (&lines / 4)
+
 function! s:set_size() abort
-	let winCol = &columns / 8
-	let winWidth = &columns - (&columns / 4)
-	let winRow = &lines / 8
-	let winHeight = &lines - (&lines / 4)
 	" window自体は左上が始点となる
-	let s:ddu_config_json['uiParams']['ff']['winCol'] = winCol
-	let s:ddu_config_json['uiParams']['ff']['winRow'] = winRow
-	let s:ddu_config_json['uiParams']['ff']['winWidth'] = winWidth / 2
-	let s:ddu_config_json['uiParams']['ff']['winHeight'] = winHeight
-	" verticalオプションを使わないのもあって、previewの始点は左下になってる
-	" あまりキレイじゃないのだ...
-	let s:ddu_config_json['uiParams']['ff']['previewCol'] = winCol + winWidth / 2 + 2
-	let s:ddu_config_json['uiParams']['ff']['previewRow'] = winRow + winHeight + 5
-	let s:ddu_config_json['uiParams']['ff']['previewWidth'] = winWidth / 2
-	let s:ddu_config_json['uiParams']['ff']['previewHeight'] = winHeight + 3
+	let s:ddu_config_json['uiParams']['ff']['winCol'] = s:winCol
+	let s:ddu_config_json['uiParams']['ff']['winRow'] = s:winRow
+	let s:ddu_config_json['uiParams']['ff']['winWidth'] = s:winWidth
+	let s:ddu_config_json['uiParams']['ff']['winHeight'] = s:winHeight
 	call ddu#custom#patch_global(s:ddu_config_json)
 endfunction
 
 call s:set_size()
 
-autocmd VimResized * call s:set_size()
-
+" verticalオプションを使わないのもあって、previewの始点は左下になってる
+" あまりキレイじゃないのだ...
 call ddu#custom#patch_local('ui_filter_preview_layout', {
 			\ 'uiParams': {
 			\	'ff': {
-			\		'winCol': &columns / 8,
-			\		'winRow': &lines / 8,
-			\		'winWidth': ( &columns - (&columns / 4) ) / 2,
-			\		'winHeight': &lines - (&lines / 4),
-			\		'previewCol': &columns / 8 + ( &columns - (&columns / 4) ) / 2 + 2,
-			\		'previewRow': &lines / 8 + &lines - (&lines / 4) + 5,
-			\		'previewWidth': ( &columns - (&columns / 4) ) / 2,
-			\		'previewHeight': &lines - (&lines / 4) + 3,
+			\		'startFilter': v:true,
+			\		'autoAction': { 'name': 'preview' },
+			\		'winCol': s:winCol,
+			\		'winRow': s:winRow,
+			\		'winWidth': s:winWidth / 2,
+			\		'winHeight': s:winHeight,
+			\		'previewCol': s:winCol + s:winWidth / 2 + 2,
+			\		'previewRow': s:winRow + s:winHeight + 5,
+			\		'previewWidth': s:winWidth / 2,
+			\		'previewHeight': s:winHeight + 3,
 			\	}
 			\}
 			\})
@@ -144,10 +141,11 @@ call ddu#custom#patch_local('ui_filter_preview_layout', {
 call ddu#custom#patch_local('ui_filter_layout', {
 			\ 'uiParams': {
 			\	'ff': {
-			\		'winCol' : &columns / 8,
-			\		'winWidth' : &columns - (&columns / 4),
-			\		'winRow' : &lines / 8,
-			\		'winHeight' : &lines - (&lines / 4),
+			\		'startFilter': v:true,
+			\		'winCol' : s:winCol,
+			\		'winWidth' : s:winWidth,
+			\		'winRow' : s:winRow,
+			\		'winHeight' : s:winHeight,
 			\	}
 			\}
 			\})
@@ -155,14 +153,15 @@ call ddu#custom#patch_local('ui_filter_layout', {
 call ddu#custom#patch_local('ui_preview_layout', {
 			\ 'uiParams': {
 			\	'ff': {
-			\		'winCol' : &columns / 8,
-			\		'winWidth' : ( &columns - (&columns / 4) ) / 2,
-			\		'winRow' : &lines / 8,
-			\		'winHeight' : &lines - (&lines / 4),
-			\		'previewCol' : &columns / 8 + 2,
-			\		'previewWidth' : ( &columns - (&columns / 4) ) / 2,
-			\		'previewRow' : &lines / 8,
-			\		'previewHeight' : &lines - (&lines / 4),
+			\		'autoAction': { 'name': 'preview' },
+			\		'winCol' : s:winCol,
+			\		'winWidth' : s:winWidth / 2,
+			\		'winRow' : s:winRow,
+			\		'winHeight' : s:winHeight,
+			\		'previewCol' : s:winCol + 2,
+			\		'previewWidth' : s:winWidth / 2,
+			\		'previewRow' : s:winRow,
+			\		'previewHeight' : s:winHeight,
 			\	}
 			\}
 			\})
@@ -171,6 +170,7 @@ nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
 nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Files', 'FloatBorder']],
@@ -180,6 +180,7 @@ nmap <silent> [ddu]f <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]g <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Files', 'FloatBorder'], ['Git', 'FloatBorder']],
@@ -192,6 +193,7 @@ nmap <silent> [ddu]g <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]t <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Tab', 'FloatBorder']],
@@ -209,13 +211,13 @@ nmap <silent> [ddu]T <Cmd>call ddu#start({
 			\		'ff': {
 			\			'floatingTitle': [['Floaterm', 'FloatBorder']],
 			\			'previewSplit': 'horizontal',
-			\			'winCol': &columns / 8,
+			\			'winCol': s:winCol,
 			\			'winRow': &lines / 2,
-			\			'winWidth': &columns - (&columns / 4),
+			\			'winWidth': s:winWidth,
 			\			'winHeight': &lines / 2 - 8,
-			\			'previewCol': &columns / 8,
+			\			'previewCol': s:winCol,
 			\			'previewRow': 0,
-			\			'previewWidth': &columns - (&columns / 4),
+			\			'previewWidth': s:winWidth,
 			\			'previewHeight': &lines / 2 - 8,
 			\		}
 			\ },
@@ -223,6 +225,7 @@ nmap <silent> [ddu]T <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Window', 'FloatBorder']],
@@ -235,6 +238,7 @@ nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]L <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Line', 'String']],
@@ -255,6 +259,7 @@ nmap <silent> [ddu]d <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]j <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['JumpList', 'String']],
@@ -264,6 +269,7 @@ nmap <silent> [ddu]j <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]h <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Help', 'FloatBorder']],
@@ -274,6 +280,7 @@ nmap <silent> [ddu]h <Cmd>call ddu#start({
 " QuickFix
 nmap <silent> [ddu]q <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'prompt': 'qf',
@@ -293,6 +300,7 @@ nmap <silent> [ddu]q <Cmd>call ddu#start({
 " live grep
 nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'ignoreEmpty': v:false,
@@ -309,6 +317,7 @@ nmap <silent> [ddu]r <Cmd>call ddu#start({
 			\})<CR>
 nmap <silent> [ddu]b <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Buffer', 'Blue']],
@@ -330,6 +339,7 @@ nmap <silent> [ddu]c <Cmd>call ddu#start({
 " lsp
 nmap <silent> [ddu]lr <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\	'ff': {
 			\		'floatingTitle': [['Lsp References', 'FloatBorder']],
@@ -341,6 +351,7 @@ nmap <silent> [ddu]lr <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]ld <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\	'ff': {
 			\		'floatingTitle': [['Lsp Definition', 'FloatBorder']],
@@ -352,6 +363,7 @@ nmap <silent> [ddu]ld <Cmd>call ddu#start({
 			\ })<CR>
 nmap <silent> [ddu]ls <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
 			\	'ff': {
 			\		'floatingTitle': [['Lsp Symbol', 'FloatBorder']],

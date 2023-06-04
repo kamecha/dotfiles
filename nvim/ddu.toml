@@ -56,11 +56,22 @@ let s:ddu_config_json =<< trim MARK
 			"help": {
 				"defaultAction": "open"
 			},
+			"dein_update": {
+				"defaultAction": "viewDiff"
+			},
 			"window": {
 				"defaultAction": "open"
 			},
 			"tab": {
 				"defaultAction": "open"
+			}
+		},
+		"actionOptions": {
+			"echo": {
+				"quit": false
+			},
+			"echoDiff": {
+				"quit": false
 			}
 		},
 		"sourceOptions": {
@@ -77,6 +88,9 @@ let s:ddu_config_json =<< trim MARK
 			},
 			"dummy": {
 				"matchers": []
+			},
+			"dein_update": {
+				"matchers": ["matcher_dein_update"]
 			},
 			"_": {
 				"matchers": ["matcher_fzf"]
@@ -522,6 +536,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-source-treesitter'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-dein_update'
 on_source = 'ddu.vim'
 
 [[plugins]]

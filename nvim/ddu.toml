@@ -45,9 +45,6 @@ let s:ddu_config_json =<< trim MARK
 			"floaterm": {
 				"defaultAction": "open"
 			},
-			"nvim_lsp": {
-				"defaultAction": "open"
-			},
 			"ui_select": {
 				"defaultAction": "select"
 			},
@@ -137,6 +134,24 @@ call ddu#custom#patch_local('ui_filter_preview_layout', {
 			\		'previewRow': s:winRow + s:winHeight + 5,
 			\		'previewWidth': s:winWidth / 2,
 			\		'previewHeight': s:winHeight + 3,
+			\	}
+			\}
+			\})
+
+call ddu#custom#patch_local('ui_filter_preview_horizontal_layout', {
+			\ 'uiParams': {
+			\	'ff': {
+			\		'startFilter': v:true,
+			\		'autoAction': { 'name': 'preview' },
+			\		'previewSplit': 'horizontal',
+			\		'winCol': s:winCol,
+			\		'winRow': &lines / 2,
+			\		'winWidth': s:winWidth,
+			\		'winHeight': &lines / 2 - 8,
+			\		'previewCol': s:winCol,
+			\		'previewRow': 0,
+			\		'previewWidth': s:winWidth,
+			\		'previewHeight': &lines / 2 - 8,
 			\	}
 			\}
 			\})
@@ -375,18 +390,10 @@ nmap <silent> [ddu]lh <Cmd>call ddu#start({
 " 他のプラグインとの連携
 nmap <silent> [ddu]T <Cmd>call ddu#start({
 			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_horizontal_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Floaterm', 'FloatBorder']],
-			\			'previewSplit': 'horizontal',
-			\			'winCol': s:winCol,
-			\			'winRow': &lines / 2,
-			\			'winWidth': s:winWidth,
-			\			'winHeight': &lines / 2 - 8,
-			\			'previewCol': s:winCol,
-			\			'previewRow': 0,
-			\			'previewWidth': s:winWidth,
-			\			'previewHeight': &lines / 2 - 8,
 			\		}
 			\ },
 			\ 'sources': [{'name': 'floaterm'}]

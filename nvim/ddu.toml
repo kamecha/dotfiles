@@ -216,7 +216,7 @@ nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\ },
 			\ 'sources': [{'name': 'window'}]
 			\ })<CR>
-nmap <silent> [ddu]l <Cmd>call ddu#start({
+nmap <silent> [ddu]L <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'uiParams': {
 			\		'ff': {
@@ -254,6 +254,7 @@ nmap <silent> [ddu]h <Cmd>call ddu#start({
 			\ },
 			\ 'sources': [{'name': 'help', 'params': {}}],
 			\ })<CR>
+" QuickFix
 nmap <silent> [ddu]q <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'uiParams': {
@@ -360,6 +361,7 @@ nmap <silent> [ddu]lh <Cmd>call ddu#start({
 			\	{'name': 'lsp_hierarchy', 'params': { 'method': 'callHierarchy/outgoingCalls' }}
 			\ ],
 			\ })<CR>
+" filer
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
 			\ 'sources': [{'name': 'file'}],

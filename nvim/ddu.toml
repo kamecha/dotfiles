@@ -214,7 +214,7 @@ nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\			},
 			\		}
 			\ },
-			\ 'sources': [{'name': 'window'}]
+			\ 'sources': [{'name': 'window', 'params': { 'format': 'tab\:%tn:%T:%w:%wi' }}]
 			\ })<CR>
 nmap <silent> [ddu]L <Cmd>call ddu#start({
 			\ 'ui': 'ff',

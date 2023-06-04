@@ -558,6 +558,11 @@ on_source = 'ddu.vim'
 repo = 'Shougo/ddu-kind-file'
 on_source = 'ddu.vim'
 
+# カラム
+[[plugins]]
+repo = 'Shougo/ddu-column-filename'
+on_source = 'ddu.vim'
+
 # icon
 [[plugins]]
 repo = 'ryota2357/ddu-column-icon_filename'

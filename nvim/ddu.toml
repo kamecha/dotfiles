@@ -227,6 +227,17 @@ nmap <silent> [ddu]b <Cmd>call ddu#start({
 			\ },
 			\ 'sources': [{'name': 'buffer'}],
 			\ })<CR>
+nmap <silent> [ddu]c <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_layout',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Command History', 'FloatBorder']],
+			\			'autoAction': {},
+			\		}
+			\ },
+			\ 'sources': [{'name': 'command_history'}],
+			\ })<CR>
 nmap <silent> [ddu]h <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',

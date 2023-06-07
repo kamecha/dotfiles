@@ -99,8 +99,16 @@ local null_ls = require("null-ls")
 null_ls.setup({
 	sources = {
 		null_ls.builtins.diagnostics.textlint.with({
-			filetypes = { "markdown" },
-			command = "textlint",
+			filetypes = { "markdown", "text", "tex" },
+			condition = function(utils)
+				return utils.root_has_file({
+					".textlintrc",
+					".textlintrc.json",
+					".textlintrc.yaml",
+					".textlintrc.yml",
+					".textlintrc.js",
+				})
+			end,
 		})
 	},
 })

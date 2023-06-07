@@ -103,139 +103,155 @@ call ddu#custom#patch_global(s:ddu_config_json)
 
 " jsonだと式が書けないので、レイアウト周りはここで設定する
 
-let s:winCol = &columns / 8
-let s:winWidth = &columns - (&columns / 4)
-let s:winRow = &lines / 8
-let s:winHeight = &lines - (&lines / 4)
+let s:winCol = 1
+let s:winWidth = &columns
+let s:winRow = 1
+let s:winHeight = &lines
 
-" ┌────────────────────────────────┐
-" │                                │
-" │                                │
-" │        source                  │
-" │                                │
-" │                                │
-" │                                │
-" └────────────────────────────────┘
 function! s:set_size() abort
 	" window自体は左上が始点となる
-	let s:ddu_config_json['uiParams']['ff']['winCol'] = s:winCol
-	let s:ddu_config_json['uiParams']['ff']['winRow'] = s:winRow
-	let s:ddu_config_json['uiParams']['ff']['winWidth'] = s:winWidth
-	let s:ddu_config_json['uiParams']['ff']['winHeight'] = s:winHeight
-	call ddu#custom#patch_global(s:ddu_config_json)
+	let s:winCol = &columns / 8
+	let s:winWidth = &columns - (&columns / 4)
+	let s:winRow = &lines / 8
+	let s:winHeight = &lines - (&lines / 4)
 endfunction
 
-call s:set_size()
+function! s:set_layout() abort
+	" ┌────────────────────────────────┐
+	" │                                │
+	" │                                │
+	" │        source                  │
+	" │                                │
+	" │                                │
+	" │                                │
+	" └────────────────────────────────┘
+	call ddu#custom#patch_local('default', {
+				\ 'uiParams': {
+				\	'ff': {
+				\		'winCol': s:winCol,
+				\		'winRow': s:winRow,
+				\		'winWidth': s:winWidth,
+				\		'winHeight': s:winHeight,
+				\	}
+				\}
+				\})
 
-" verticalオプションを使わないのもあって、previewの始点は左下になってる
-" あまりキレイじゃないのだ...
+	" ┌────────────────┐┌────────────────┐
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" │  source        ││                │
+	" │                ││                │
+	" │                ││   preview      │
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" └────────────────┘│                │
+	" ┌────────────────┐│                │
+	" │   filter       ││                │
+	" └────────────────┘└────────────────┘
+	call ddu#custom#patch_local('ui_filter_preview_layout', {
+				\ 'uiParams': {
+				\	'ff': {
+				\		'startFilter': v:true,
+				\		'autoAction': { 'name': 'preview' },
+				\		'winCol': s:winCol,
+				\		'winRow': s:winRow,
+				\		'winWidth': s:winWidth / 2,
+				\		'winHeight': s:winHeight,
+				\		'previewCol': s:winCol + s:winWidth / 2 + 2,
+				\		'previewRow': s:winRow + s:winHeight + 5,
+				\		'previewWidth': s:winWidth / 2,
+				\		'previewHeight': s:winHeight + 3,
+				\	}
+				\}
+				\})
 
-" ┌────────────────┐┌────────────────┐
-" │                ││                │
-" │                ││                │
-" │                ││                │
-" │  source        ││                │
-" │                ││                │
-" │                ││   preview      │
-" │                ││                │
-" │                ││                │
-" │                ││                │
-" └────────────────┘│                │
-" ┌────────────────┐│                │
-" │   filter       ││                │
-" └────────────────┘└────────────────┘
-call ddu#custom#patch_local('ui_filter_preview_layout', {
-			\ 'uiParams': {
-			\	'ff': {
-			\		'startFilter': v:true,
-			\		'autoAction': { 'name': 'preview' },
-			\		'winCol': s:winCol,
-			\		'winRow': s:winRow,
-			\		'winWidth': s:winWidth / 2,
-			\		'winHeight': s:winHeight,
-			\		'previewCol': s:winCol + s:winWidth / 2 + 2,
-			\		'previewRow': s:winRow + s:winHeight + 5,
-			\		'previewWidth': s:winWidth / 2,
-			\		'previewHeight': s:winHeight + 3,
-			\	}
-			\}
-			\})
+	" ┌────────────────┐
+	" │                │
+	" │   preview      │
+	" │                │
+	" └────────────────┘
+	" ┌────────────────┐
+	" │   source       │
+	" │                │
+	" └────────────────┘
+	" ┌────────────────┐
+	" │   filter       │
+	" └────────────────┘
+	call ddu#custom#patch_local('ui_filter_preview_horizontal_layout', {
+				\ 'uiParams': {
+				\	'ff': {
+				\		'startFilter': v:true,
+				\		'autoAction': { 'name': 'preview' },
+				\		'previewSplit': 'horizontal',
+				\		'winCol': s:winCol,
+				\		'winRow': &lines / 2,
+				\		'winWidth': s:winWidth,
+				\		'winHeight': &lines / 2 - 8,
+				\		'previewCol': s:winCol,
+				\		'previewRow': 0,
+				\		'previewWidth': s:winWidth,
+				\		'previewHeight': &lines / 2 - 8,
+				\	}
+				\}
+				\})
 
-" ┌────────────────┐
-" │                │
-" │   preview      │
-" │                │
-" └────────────────┘
-" ┌────────────────┐
-" │   source       │
-" │                │
-" └────────────────┘
-" ┌────────────────┐
-" │   filter       │
-" └────────────────┘
-call ddu#custom#patch_local('ui_filter_preview_horizontal_layout', {
-			\ 'uiParams': {
-			\	'ff': {
-			\		'startFilter': v:true,
-			\		'autoAction': { 'name': 'preview' },
-			\		'previewSplit': 'horizontal',
-			\		'winCol': s:winCol,
-			\		'winRow': &lines / 2,
-			\		'winWidth': s:winWidth,
-			\		'winHeight': &lines / 2 - 8,
-			\		'previewCol': s:winCol,
-			\		'previewRow': 0,
-			\		'previewWidth': s:winWidth,
-			\		'previewHeight': &lines / 2 - 8,
-			\	}
-			\}
-			\})
+	" ┌────────────────┐
+	" │                │
+	" │   source       │
+	" │                │
+	" └────────────────┘
+	" ┌────────────────┐
+	" │   filter       │
+	" └────────────────┘
+	call ddu#custom#patch_local('ui_filter_layout', {
+				\ 'uiParams': {
+				\	'ff': {
+				\		'startFilter': v:true,
+				\		'winCol' : s:winCol,
+				\		'winWidth' : s:winWidth,
+				\		'winRow' : s:winRow,
+				\		'winHeight' : s:winHeight,
+				\	}
+				\}
+				\})
 
-" ┌────────────────┐
-" │                │
-" │   source       │
-" │                │
-" └────────────────┘
-" ┌────────────────┐
-" │   filter       │
-" └────────────────┘
-call ddu#custom#patch_local('ui_filter_layout', {
-			\ 'uiParams': {
-			\	'ff': {
-			\		'startFilter': v:true,
-			\		'winCol' : s:winCol,
-			\		'winWidth' : s:winWidth,
-			\		'winRow' : s:winRow,
-			\		'winHeight' : s:winHeight,
-			\	}
-			\}
-			\})
+	" ┌────────────────┐┌────────────────┐
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" │  source        ││   preview      │
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" └────────────────┘└────────────────┘
+	call ddu#custom#patch_local('ui_preview_layout', {
+				\ 'uiParams': {
+				\	'ff': {
+				\		'autoAction': { 'name': 'preview' },
+				\		'winCol' : s:winCol,
+				\		'winWidth' : s:winWidth / 2,
+				\		'winRow' : s:winRow,
+				\		'winHeight' : s:winHeight,
+				\		'previewCol' : s:winCol + 2,
+				\		'previewWidth' : s:winWidth / 2,
+				\		'previewRow' : s:winRow,
+				\		'previewHeight' : s:winHeight,
+				\	}
+				\}
+				\})
+endfunction
 
-" ┌────────────────┐┌────────────────┐
-" │                ││                │
-" │                ││                │
-" │                ││                │
-" │  source        ││   preview      │
-" │                ││                │
-" │                ││                │
-" │                ││                │
-" │                ││                │
-" └────────────────┘└────────────────┘
-call ddu#custom#patch_local('ui_preview_layout', {
-			\ 'uiParams': {
-			\	'ff': {
-			\		'autoAction': { 'name': 'preview' },
-			\		'winCol' : s:winCol,
-			\		'winWidth' : s:winWidth / 2,
-			\		'winRow' : s:winRow,
-			\		'winHeight' : s:winHeight,
-			\		'previewCol' : s:winCol + 2,
-			\		'previewWidth' : s:winWidth / 2,
-			\		'previewRow' : s:winRow,
-			\		'previewHeight' : s:winHeight,
-			\	}
-			\}
-			\})
+function! s:layout() abort
+	call s:set_size()
+	call s:set_layout()
+endfunction
+
+call s:layout()
+
+autocmd VimResized * call s:layout()
 
 nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]

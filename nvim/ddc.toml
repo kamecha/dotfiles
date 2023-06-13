@@ -87,10 +87,13 @@ cnoremap <expr> <CR>
 \ '<CR>'
 cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
 cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+set cedit=<C-f>
 
 let s:pum_config_json =<< trim MARK
 {
 	"max_height": 10,
+	"max_width": 50,
+	"highlight_matches": "Red",
 	"padding": true
 }
 MARK

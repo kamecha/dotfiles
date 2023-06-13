@@ -2,7 +2,7 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 depends = ['denops.vim', 'pum.vim']
-on_event = ['InsertEnter', 'CursorHold']
+on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
 let s:ddc_config_json =<< trim MARK
 	{
@@ -15,12 +15,17 @@ let s:ddc_config_json =<< trim MARK
 			"nvim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
-				"forceCompletionPattern": "\\.\\w*|::",
-				"matchers": ["matcher_fuzzy"]
+				"forceCompletionPattern": "\\.\\w*|::"
 			},
 			"vsnip": {
 				"mark": "vsnip",
 				"dup": "keep"
+			},
+			"cmdline": {
+				"mark": "cmd"
+			},
+			"cmdline-history": {
+				"mark": "his"
 			},
 			"skkeleton": {
 				"mark": "skkeleton",
@@ -33,45 +38,24 @@ let s:ddc_config_json =<< trim MARK
 				"matchers": ["matcher_fuzzy"],
 				"sorters": ["sorter_rank"]
 			}
+		},
+		"autoCompleteEvents": [
+			"InsertEnter", 
+			"TextChangedI", "TextChangedP",
+			"CmdlineChanged", "CmdlineEnter"
+		],
+		"cmdlineSources": {
+			":": ["cmdline", "cmdline-history"]
 		}
 	}
 MARK
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
 call ddc#custom#patch_global(s:ddc_config_json)
-call ddc#custom#patch_global('cmdlineSources', {
-      \   ':': ['cmdline-history', 'cmdline'],
-      \   '@': ['cmdline-history', 'input', 'file', 'around'],
-      \   '>': ['cmdline-history', 'input', 'file', 'around'],
-      \   '/': ['around', 'line'],
-      \   '?': ['around', 'line'],
-      \   '-': ['around', 'line'],
-      \   '=': ['input'],
-      \ })
 call ddc#custom#patch_filetype('gina-commit', 'specialBufferCompletion', v:true)
 call ddc#enable()
 
 " use pum.vim
-call ddc#custom#patch_global('autoCompleteEvents', [
-      \   'InsertEnter', 'TextChangedI', 'TextChangedP',
-      \   'CmdlineEnter', 'CmdlineChanged', 'TextChangedT',
-      \ ])
-
 autocmd CmdlineEnter * call ddc#enable_cmdline_completion()
-
-"nnoremap : <Cmd>call CommandlinePre()<CR>:
-"function! CommandlinePre() abort
-"	call ddc#enable_cmdline_completion()
-"endfunction
-
-"function! CommandlinePre() abort
-"  cnoremap <expr> <Tab>
-"  \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-"  \ ddc#map#manual_complete()
-"  cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-"  cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-"  cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-"  "call ddc#enable_cmdline_completion()
-"endfunction
 '''
 
 # 補完UI
@@ -83,10 +67,10 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'Shougo/pum.vim'
 hook_source = '''
-inoremap <silent><expr> <TAB>
-      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-      \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-      \ '<TAB>' : ddc#manual_complete()
+"inoremap <silent><expr> <TAB>
+"      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+"      \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+"      \ '<TAB>' : ddc#manual_complete()
 inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
 inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
@@ -119,7 +103,7 @@ call pum#set_option(s:pum_config_json)
 " ↓ここ他人のパンツなので、暇な時に直してみる
 function s:MapPumVim() abort
 	imap <expr> <CR> pum#visible() 
-		\ ? '<Cmd>if !pum#entered()<Bar>call pum#map#select_relative(1)<Bar>endif<Bar>call pum#map#confirm()<CR>' 
+		\ ? pum#map#confirm()
 		\ : lexima#expand('<LT>CR>', 'i')
 	imap <expr> <C-n> pum#visible() 
 		\ ? '<Cmd>call pum#map#select_relative(1)<CR>' 
@@ -156,7 +140,7 @@ on_source = 'ddc.vim'
 
 # 補完filter
 [[plugins]]
-repo = '~/.vim/pack/plugins/start/ddc-matcher_lowerCamelCase'
+repo = 'Shougo/ddc-matcher_head'
 on_source = 'ddc.vim'
 
 [[plugins]]

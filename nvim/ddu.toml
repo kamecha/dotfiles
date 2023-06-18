@@ -537,13 +537,13 @@ nnoremap <buffer><silent> q
 inoremap <buffer> <C-p>
 			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
 inoremap <buffer> <CR>
-			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 inoremap <buffer> <C-t>
-			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'tabnew'}})<CR>
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'tabnew'}})<CR>
 inoremap <buffer> <C-o>
-			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
 inoremap <buffer> <C-v>
-			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
 inoremap <buffer> <C-n>
 			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)<Bar>redraw")<CR>
 inoremap <buffer> <C-p>
@@ -555,7 +555,7 @@ inoremap <buffer> <C-a>
 inoremap <buffer> <C-l>
 			\ <ESC><Cmd>call ddu#ui#ff#do_action('leaveFilterWindow')<CR>
 inoremap <buffer> <C-q>
-			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('quit')<CR>
 '''
 
 [[plugins]]

@@ -45,6 +45,9 @@ let s:ddu_config_json =<< trim MARK
 			"floaterm": {
 				"defaultAction": "open"
 			},
+			"lsp": {
+				"defaultAction": "open"
+			},
 			"ui_select": {
 				"defaultAction": "select"
 			},
@@ -98,6 +101,11 @@ let s:ddu_config_json =<< trim MARK
 MARK
 
 let s:ddu_config_json = s:ddu_config_json->join('')->json_decode()
+
+call ddu#custom#alias('filter', 'lsp_def_color', 'converter_highlight')
+call ddu#custom#alias('filter', 'lsp_typeDef_color', 'converter_highlight')
+call ddu#custom#alias('filter', 'lsp_dec_color', 'converter_highlight')
+call ddu#custom#alias('filter', 'lsp_imp_color', 'converter_highlight')
 
 call ddu#custom#patch_global(s:ddu_config_json)
 
@@ -423,8 +431,37 @@ nmap <silent> [ddu]ld <Cmd>call ddu#start({
 			\	}
 			\ },
 			\ 'sources': [
-			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/definition' }}
+			\	{
+			\		'name': 'dummy',
+			\		'options': { 'converters': [ 'lsp_def_color' ] },
+			\		'params': { 'display': '>>Definition<<' }
+			\	},
+			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/definition' }},
+			\	{
+			\		'name': 'dummy',
+			\		'options': { 'converters': ['lsp_typeDef_color'] },
+			\		'params': { 'display': '>>typeDefinition<<' }
+			\	},
+			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/typeDefinition' }},
+			\	{
+			\		'name': 'dummy',
+			\		'options': { 'converters': ['lsp_dec_color'] },
+			\		'params': { 'display': '>>declaration<<' }
+			\	},
+			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/declaration' }},
+			\	{
+			\		'name': 'dummy',
+			\		'options': { 'converters': ['lsp_imp_color'] },
+			\		'params': { 'display': '>>Implementation<<' }
+			\	},
+			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/implementation' }},
 			\ ],
+			\ 'filterParams': {
+			\	'lsp_def_color': { 'hl_group': 'Red' },
+			\	'lsp_typeDef_color': { 'hl_group': 'Blue' },
+			\	'lsp_dec_color': { 'hl_group': 'Yellow' },
+			\	'lsp_imp_color': { 'hl_group': 'Green' },
+			\ }
 			\ })<CR>
 nmap <silent> [ddu]ls <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -435,7 +472,9 @@ nmap <silent> [ddu]ls <Cmd>call ddu#start({
 			\	}
 			\ },
 			\ 'sources': [
+			\	{'name': 'dummy', 'params': { 'display': 'documentSymbol' }},
 			\	{'name': 'lsp_documentSymbol'},
+			\	{'name': 'dummy', 'params': { 'display': 'workspaceSymbol' }},
 			\	{'name': 'lsp_workspaceSymbol'}
 			\ ],
 			\ })<CR>
@@ -451,8 +490,10 @@ nmap <silent> [ddu]lh <Cmd>call ddu#start({
 			\	}
 			\ },
 			\ 'sources': [
-			\	{'name': 'lsp_hierarchy', 'params': { 'method': 'callHierarchy/incomingCalls' }},
-			\	{'name': 'lsp_hierarchy', 'params': { 'method': 'callHierarchy/outgoingCalls' }}
+			\	{'name': 'dummy', 'params': { 'display': 'incomingCalls' }},
+			\	{'name': 'lsp_callHierarchy', 'params': { 'method': 'callHierarchy/incomingCalls' }},
+			\	{'name': 'dummy', 'params': { 'display': 'outgoingCalls' }},
+			\	{'name': 'lsp_callHierarchy', 'params': { 'method': 'callHierarchy/outgoingCalls' }}
 			\ ],
 			\ })<CR>
 
@@ -662,6 +703,10 @@ on_source = 'ddu.vim'
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-filter-converter_highlight'
 on_source = 'ddu.vim'
 
 [[plugins]]

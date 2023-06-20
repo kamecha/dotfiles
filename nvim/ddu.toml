@@ -102,11 +102,6 @@ MARK
 
 let s:ddu_config_json = s:ddu_config_json->join('')->json_decode()
 
-call ddu#custom#alias('filter', 'lsp_def_color', 'converter_highlight')
-call ddu#custom#alias('filter', 'lsp_typeDef_color', 'converter_highlight')
-call ddu#custom#alias('filter', 'lsp_dec_color', 'converter_highlight')
-call ddu#custom#alias('filter', 'lsp_imp_color', 'converter_highlight')
-
 call ddu#custom#patch_global(s:ddu_config_json)
 
 " jsonだと式が書けないので、レイアウト周りはここで設定する
@@ -433,35 +428,47 @@ nmap <silent> [ddu]ld <Cmd>call ddu#start({
 			\ 'sources': [
 			\	{
 			\		'name': 'dummy',
-			\		'options': { 'converters': [ 'lsp_def_color' ] },
+			\		'options': { 
+			\			'converters': [
+			\				{ 
+			\					'name': 'converter_highlight', 'params': { 'hl_group': 'Red' }
+			\				}
+			\			] 
+			\		},
 			\		'params': { 'display': '>>Definition<<' }
 			\	},
 			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/definition' }},
 			\	{
 			\		'name': 'dummy',
-			\		'options': { 'converters': ['lsp_typeDef_color'] },
+			\		'options': {
+			\			'converters': [
+			\				{ 'name': 'converter_highlight', 'params': { 'hl_group': 'Blue' }}
+			\			] 
+			\		},
 			\		'params': { 'display': '>>typeDefinition<<' }
 			\	},
 			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/typeDefinition' }},
 			\	{
 			\		'name': 'dummy',
-			\		'options': { 'converters': ['lsp_dec_color'] },
+			\		'options': {
+			\			'converters': [
+			\				{ 'name': 'converter_highlight', 'params': { 'hl_group': 'Yellow' }}
+			\			] 
+			\		},
 			\		'params': { 'display': '>>declaration<<' }
 			\	},
 			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/declaration' }},
 			\	{
 			\		'name': 'dummy',
-			\		'options': { 'converters': ['lsp_imp_color'] },
+			\		'options': {
+			\			'converters': [
+			\				{ 'name': 'converter_highlight', 'params': { 'hl_group': 'Green' }}
+			\			] 
+			\		},
 			\		'params': { 'display': '>>Implementation<<' }
 			\	},
 			\	{'name': 'lsp_definition', 'params': { 'method': 'textDocument/implementation' }},
 			\ ],
-			\ 'filterParams': {
-			\	'lsp_def_color': { 'hl_group': 'Red' },
-			\	'lsp_typeDef_color': { 'hl_group': 'Blue' },
-			\	'lsp_dec_color': { 'hl_group': 'Yellow' },
-			\	'lsp_imp_color': { 'hl_group': 'Green' },
-			\ }
 			\ })<CR>
 nmap <silent> [ddu]ls <Cmd>call ddu#start({
 			\ 'ui': 'ff',

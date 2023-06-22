@@ -52,6 +52,17 @@ MARK
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
 call ddc#custom#patch_global(s:ddc_config_json)
 call ddc#custom#patch_filetype('gina-commit', 'specialBufferCompletion', v:true)
+call ddc#custom#patch_filetype('traqvim-message', {
+			\ 'sources': ['stamp'],
+			\ 'sourceOptions': {
+			\   'stamp': {
+			\     'mark': 'stamp',
+			\     'matchers': ['matcher_fuzzy'],
+			\	},
+			\ },
+			\ 'keywordPattern': '[a-zA-Z_:]\w*',
+			\ 'specialBufferCompletion': v:true,
+			\})
 call ddc#enable()
 
 " use pum.vim

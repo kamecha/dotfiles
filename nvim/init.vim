@@ -71,6 +71,8 @@ endif
 
 " for colorscheme settings
 colorscheme edge
+highlight DduPreview guifg=#d6deeb guibg=#38507a
+highlight DduCursor guibg=#38507a
 
 " for non lazy hook
 call dein#call_hook('source')

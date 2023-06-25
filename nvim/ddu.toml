@@ -22,6 +22,10 @@ let s:ddu_config_json =<< trim MARK
 				"previewFloatingBorder": "rounded",
 				"previewFloatingTitle": [ ["Preview", "String"] ],
 				"previewFloatingTitlePos": "center",
+				"highlights": {
+					"floatingCursorLine": "DduCursor",
+					"preview": "DduPreview"
+				},
 				"previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0] ]
 			},
 			"filer": {

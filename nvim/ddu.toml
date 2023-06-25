@@ -319,6 +319,16 @@ nmap <silent> [ddu]b <Cmd>call ddu#start({
 			\		}
 			\ },
 			\ 'sources': [{'name': 'buffer'}],
+			\ 'sourceOptions': {
+			\		'buffer': {
+			\			'matchers': ['matcher_regex', 'matcher_fzf']
+			\		}
+			\ },
+			\ 'filterParams': {
+			\		'matcher_regex': {
+			\			'regex': '^(?!.*\[No\s+Name\]$).*$'
+			\		}
+			\ }
 			\ })<CR>
 nmap <silent> [ddu]c <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -396,7 +406,18 @@ nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\			},
 			\		}
 			\ },
-			\ 'sources': [{'name': 'window', 'params': { 'format': 'tab\:%tn:%T:%w:%wi' }}]
+			\ 'sources': [
+			\		{
+			\			'name': 'window',
+			\			'options': { 'matchers': ['matcher_regex', 'matcher_fzf'] },
+			\			'params': { 'format': 'tab\:%tn:%T:%w:%wi' }
+			\		}
+			\ ],
+			\ 'filterParams': {
+			\		'matcher_regex': {
+			\			'regex': '^(?!.*ddu-ff).*$'
+			\		}
+			\ }
 			\ })<CR>
 nmap <silent> [ddu]L <Cmd>call ddu#start({
 			\ 'ui': 'ff',
@@ -756,6 +777,10 @@ on_source = 'ddu.vim'
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-filter-matcher_regex'
 on_source = 'ddu.vim'
 
 [[plugins]]

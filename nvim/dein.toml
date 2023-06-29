@@ -121,6 +121,7 @@ repo = 'nvim-lua/plenary.nvim'
 # インストールのUI
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
+rev = 'legacy'
 lua_add = '''
 vim.api.nvim_create_autocmd('LspAttach', {
 	once = true,

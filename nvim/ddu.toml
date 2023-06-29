@@ -429,6 +429,7 @@ nmap <silent> [ddu]L <Cmd>call ddu#start({
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['Line', 'String']],
+			\			'previewWindowOptions': [ ['&signcolumn', 'no'], ['&wrap', 0], ['&number', 1], ['&relativenumber', 1] ]
 			\		}
 			\ },
 			\ 'sources': [{'name': 'line', 'params': {}}],

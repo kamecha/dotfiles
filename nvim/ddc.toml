@@ -36,7 +36,8 @@ let s:ddc_config_json =<< trim MARK
 			},
 			"_": {
 				"matchers": ["matcher_fuzzy"],
-				"sorters": ["sorter_rank"]
+				"sorters": ["sorter_fuzzy"],
+				"converters": ["converter_fuzzy"]
 			}
 		},
 		"autoCompleteEvents": [
@@ -104,7 +105,6 @@ let s:pum_config_json =<< trim MARK
 {
 	"max_height": 10,
 	"max_width": 50,
-	"highlight_matches": "Red",
 	"padding": true
 }
 MARK

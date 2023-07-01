@@ -75,13 +75,16 @@ lua_source = '''
 local nvim_lsp = require("lspconfig")
 local mason_lspconfig = require('mason-lspconfig')
 local navic = require("nvim-navic")
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 mason_lspconfig.setup_handlers({ function(server_name)
 	local opts = {
 		on_attach = function(client, bufnr)
 			if client.server_capabilities.documentSymbolProvider then
 				navic.attach(client, bufnr)
 			end
-		end
+		end,
+		capabilities = capabilities
 	}
 	nvim_lsp[server_name].setup(opts)
 end })

@@ -51,6 +51,13 @@ let s:ddc_config_json =<< trim MARK
 	}
 MARK
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
+let s:ddc_config_json['sourceParams'] = #{
+			\	nvim-lsp: #{
+			\		snippetEngine: denops#callback#register({
+			\			body -> vsnip#anonymous(body)
+			\		}),
+			\	}
+			\}
 call ddc#custom#patch_global(s:ddc_config_json)
 call ddc#custom#patch_filetype('gina-commit', 'specialBufferCompletion', v:true)
 call ddc#custom#patch_filetype('traqvim-message', {

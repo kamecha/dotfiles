@@ -481,6 +481,7 @@ require('nvim-treesitter.configs').setup {
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter-textobjects'
 depends = 'nvim-treesitter'
+on_lua = ['nvim-treesitter']
 lua_source = '''
 require'nvim-treesitter.configs'.setup {
 	textobjects = {

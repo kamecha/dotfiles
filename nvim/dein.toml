@@ -545,6 +545,10 @@ repo = 'itchyny/vim-qfedit'
 [[plugins]]
 repo = 'skk-dev/dict'
 
+# 日本語検索をローマ字で
+[[plugins]]
+repo = 'lambdalisue/kensaku.vim'
+
 # <C-a> <C-x>を使い易くする
 [[plugins]]
 repo = 'monaqa/dial.nvim'

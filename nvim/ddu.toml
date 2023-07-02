@@ -423,7 +423,7 @@ nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\		}
 			\ }
 			\ })<CR>
-nmap <silent> [ddu]L <Cmd>call ddu#start({
+nmap <silent> [ddu]l <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'uiParams': {
@@ -433,6 +433,29 @@ nmap <silent> [ddu]L <Cmd>call ddu#start({
 			\		}
 			\ },
 			\ 'sources': [{'name': 'line', 'params': {}}],
+			\ })<CR>
+nmap <silent> [ddu]L <Cmd>call ddu#start({
+			\ 'ui': 'ff',
+			\ 'name': 'ui_filter_preview_horizontal_layout',
+			\ 'uiParams': {
+			\		'ff': {
+			\			'floatingTitle': [['Line', 'String']],
+			\			'filterFloatingTitle': [['日本語検索', 'LightBlue']],
+			\			'filterFloatingTitlePos': 'center',
+			\			'previewWindowOptions': [ ['&signcolumn', 'no'], ['&wrap', 0], ['&number', 1], ['&relativenumber', 1] ]
+			\		}
+			\ },
+			\ 'sources': [{'name': 'line', 'params': {}}],
+			\ 'sourceOptions': {
+			\		'line': {
+			\			'matchers': ['matcher_kensaku']
+			\		}
+			\ },
+			\ 'filterParams': {
+			\		'matcher_kensaku': {
+			\			'highlightMatched': 'String'
+			\		}
+			\ }
 			\ })<CR>
 
 " Neovim LSP 関連
@@ -794,6 +817,11 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Milly/ddu-filter-kensaku'
+depends = ['kensaku.vim']
 on_source = 'ddu.vim'
 
 [[plugins]]

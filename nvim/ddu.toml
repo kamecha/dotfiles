@@ -625,6 +625,7 @@ nmap <silent> [ddu]vs<CR> <Cmd>call ddu#start({
 " filer 表示
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
+			\ 'resume': v:true,
 			\ 'sources': [{'name': 'file'}],
 			\ 'sourceOptions': {'_': {'columns': ['icon_filename']}},
 			\ 'uiParams': {

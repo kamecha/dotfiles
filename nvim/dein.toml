@@ -186,7 +186,7 @@ hook_source = 'set helplang=ja,en'
 
 # 翻訳
 [[plugins]]
-repo = '~/workspace/Plugin/denops-translate.vim'
+repo = 'skanehira/denops-translate.vim'
 
 # gccでコメントアウト
 [[plugins]]

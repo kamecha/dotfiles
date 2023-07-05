@@ -64,6 +64,9 @@ let s:ddu_config_json =<< trim MARK
 			"dein_update": {
 				"defaultAction": "viewDiff"
 			},
+			"channel": {
+				"defaultAction": "open"
+			},
 			"window": {
 				"defaultAction": "open"
 			},
@@ -586,11 +589,6 @@ nmap <silent> [ddu]v<CR> <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'sources': [{'name': 'channel_rec', 'params': {}}],
-			\ 'kindOptions': {
-			\		'channel': {
-			\			'defaultAction': 'open',
-			\		},
-			\ },
 			\})<CR>
 nmap <silent> [ddu]ve<CR> <Cmd>call ddu#start({
 			\ 'ui': 'filer',
@@ -604,21 +602,11 @@ nmap <silent> [ddu]vu<CR> <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'sources': [{'name': 'channel_rec', 'params': {'type': 'unread'}}],
-			\ 'kindOptions': {
-			\		'channel': {
-			\			'defaultAction': 'open',
-			\		},
-			\ },
 			\})<CR>
 nmap <silent> [ddu]vs<CR> <Cmd>call ddu#start({
 			\ 'ui': 'ff',
 			\ 'name': 'ui_filter_preview_layout',
 			\ 'sources': [{'name': 'channel_rec', 'params': {'type': 'subscribed'}}],
-			\ 'kindOptions': {
-			\		'channel': {
-			\			'defaultAction': 'open',
-			\		},
-			\ },
 			\})<CR>
 
 

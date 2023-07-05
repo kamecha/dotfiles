@@ -444,7 +444,6 @@ repo = 'MunifTanjim/nui.nvim'
 # notification manager for Neovim
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
-on_lua = 'notify'
 lua_source = '''
 require('notify').setup({
 	render = "minimal",
@@ -527,6 +526,10 @@ nmap <silent> [Gina]s :Gina status<CR>
 nmap <silent> [Gina]c :Gina commit<CR>
 nmap <silent> [Gina]l :Gina log --graph --all<CR>
 nmap <silent> [Gina]b :Gina branch --all<CR>
+'''
+[plugins.ftplugin]
+gina-log = '''
+setlocal cursorline
 '''
 
 # GitHub

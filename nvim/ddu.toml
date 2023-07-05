@@ -624,6 +624,17 @@ nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\	}
 			\ },
 			\ })<CR>
+nmap <silent> [ddu]E <Cmd>call ddu#start({
+			\ 'uiParams': { 'ff': { 'startFilter': v:true } },
+			\ 'sources': [
+			\	{
+			\		'name': 'file',
+			\		'options': {
+			\			'columns': ['icon_filename']
+			\		}
+			\	}
+			\ ],
+			\ })<CR>
 '''
 
 [[plugins]]
@@ -668,8 +679,12 @@ nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 inoremap <buffer> <C-p>
 			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
-inoremap <buffer> <CR>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+inoremap <buffer><expr> <CR>
+			\ ddu#ui#get_item()->get('__sourceName') == 'file' ?
+			\	ddu#ui#get_item()->get('action')->get('isDirectory') ?
+			\		"<ESC><Cmd>call ddu#ui#do_action('itemAction', { 'name': 'narrow' })<CR>" :
+			\		"<ESC><Cmd>call ddu#ui#do_action('itemAction')<CR>" :
+			\	"<ESC><Cmd>call ddu#ui#do_action('itemAction')<CR>"
 inoremap <buffer> <C-t>
 			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'tabnew'}})<CR>
 inoremap <buffer> <C-o>

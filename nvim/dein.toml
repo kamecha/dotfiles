@@ -499,6 +499,9 @@ require'nvim-treesitter.configs'.setup {
 '''
 
 [[plugins]]
+repo = 'nvim-treesitter/playground'
+
+[[plugins]]
 repo = 'tyru/open-browser.vim'
 
 [[plugins]]
@@ -515,6 +518,10 @@ traqvim-message = '''
 nnoremap <buffer><silent> s
 			\ :TraqMessageSend<CR>
 '''
+
+# help
+[[plugins]]
+repo = 'LeafCage/vimhelpgenerator'
 
 # git
 [[plugins]]
@@ -555,3 +562,15 @@ repo = 'lambdalisue/kensaku.vim'
 # <C-a> <C-x>を使い易くする
 [[plugins]]
 repo = 'monaqa/dial.nvim'
+
+# 簡易実行
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+# session
+[[plugins]]
+repo = 'rmagatti/auto-session'
+
+# カレンダー
+[[plugins]]
+repo = 'itchyny/calendar.vim'

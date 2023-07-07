@@ -169,6 +169,7 @@ function! s:set_layout() abort
 				\		'startFilter': v:true,
 				\		'filterFloatingPosition': 'bottom',
 				\		'autoAction': { 'name': 'preview' },
+				\		'startAutoAction': v:true,
 				\		'winCol': s:winCol,
 				\		'winRow': s:winRow,
 				\		'winWidth': s:winWidth / 2,
@@ -176,7 +177,7 @@ function! s:set_layout() abort
 				\		'previewCol': s:winCol + s:winWidth / 2 + 2,
 				\		'previewRow': s:winRow + s:winHeight + 5,
 				\		'previewWidth': s:winWidth / 2,
-				\		'previewHeight': s:winHeight + 5,
+				\		'previewHeight': s:winHeight + 3,
 				\	}
 				\}
 				\})
@@ -199,15 +200,16 @@ function! s:set_layout() abort
 				\		'startFilter': v:true,
 				\		'filterFloatingPosition': 'bottom',
 				\		'autoAction': { 'name': 'preview' },
+				\		'startAutoAction': v:true,
 				\		'previewSplit': 'horizontal',
 				\		'winCol': s:winCol,
 				\		'winRow': &lines / 2,
 				\		'winWidth': s:winWidth,
-				\		'winHeight': &lines / 2 - 8,
+				\		'winHeight': s:winHeight / 2,
 				\		'previewCol': s:winCol,
 				\		'previewRow': 0,
 				\		'previewWidth': s:winWidth,
-				\		'previewHeight': &lines / 2 - 8,
+				\		'previewHeight': s:winHeight / 2,
 				\	}
 				\}
 				\})
@@ -247,11 +249,13 @@ function! s:set_layout() abort
 				\ 'uiParams': {
 				\	'ff': {
 				\		'autoAction': { 'name': 'preview' },
+				\		'startAutoAction': v:true,
+				\		'previewSplit': 'vertical',
 				\		'winCol' : s:winCol,
 				\		'winWidth' : s:winWidth / 2,
 				\		'winRow' : s:winRow,
 				\		'winHeight' : s:winHeight,
-				\		'previewCol' : s:winCol + 2,
+				\		'previewCol' : s:winCol + s:winWidth / 2 + 2,
 				\		'previewWidth' : s:winWidth / 2,
 				\		'previewRow' : s:winRow,
 				\		'previewHeight' : s:winHeight,

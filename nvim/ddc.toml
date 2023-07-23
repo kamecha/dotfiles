@@ -15,7 +15,10 @@ let s:ddc_config_json =<< trim MARK
 			"nvim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
-				"forceCompletionPattern": "\\.\\w*|::"
+				"forceCompletionPattern": "\\.\\w*|::",
+				"matchers": ["matcher_fuzzy"],
+				"sorters": ["sorter_fuzzy"],
+				"converters": ["converter_fuzzy", "converter_kind_labels"]
 			},
 			"vsnip": {
 				"mark": "vsnip",
@@ -40,6 +43,52 @@ let s:ddc_config_json =<< trim MARK
 				"converters": ["converter_fuzzy"]
 			}
 		},
+		"filterParams": {
+			"converter_kind_labels": {
+				"kindLabels": {
+					"Text": "",
+					"Method": "",
+					"Function": "",
+					"Constructor": "",
+					"Field": "",
+					"Variable": "",
+					"Class": "",
+					"Interface": "",
+					"Module": "",
+					"Property": "",
+					"Unit": "",
+					"Value": "",
+					"Enum": "",
+					"Keyword": "",
+					"Snippet": "",
+					"Color": "",
+					"File": "",
+					"Reference": "",
+					"Folder": "",
+					"EnumMember": "",
+					"Constant": "",
+					"Struct": "",
+					"Event": "",
+					"Operator": "",
+					"TypeParameter": ""
+				},
+				"kindHlGroups": {
+					"Method": "Function",
+					"Function": "Function",
+					"Constructor": "Function",
+					"Field": "Identifier",
+					"Variable": "Identifier",
+					"Class": "Structure",
+					"Interface": "Structure",
+					"Module": "Structure",
+					"Property": "Identifier",
+					"Value": "Type",
+					"Enum": "Type",
+					"File": "Structure",
+					"Event": "Type"
+				}
+			}
+		},
 		"autoCompleteEvents": [
 			"InsertEnter", 
 			"TextChangedI", "TextChangedP",
@@ -50,6 +99,8 @@ let s:ddc_config_json =<< trim MARK
 		}
 	}
 MARK
+" lspのkindのVSCode-likeなアイコンを表示する
+" https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
 let s:ddc_config_json['sourceParams'] = #{
 			\	nvim-lsp: #{

@@ -548,6 +548,12 @@ gina-log = '''
 setlocal cursorline
 '''
 
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+lua_source = '''
+require('gitsigns').setup()
+'''
+
 # GitHub
 [[plugins]]
 repo = 'skanehira/denops-gh.vim'

@@ -201,6 +201,10 @@ repo = 'Shougo/ddc-source-nvim-lsp'
 depends = ['denops.vim', 'ddc.vim']
 on_source = 'ddc.vim'
 
+[[plugins]]
+repo = 'matsui54/ddc-dictionary'
+on_source = 'ddc.vim'
+
 # 補完filter
 [[plugins]]
 repo = 'Shougo/ddc-source-cmdline'

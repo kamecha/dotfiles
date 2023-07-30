@@ -4,10 +4,11 @@ repo = 'Shougo/ddc.vim'
 depends = ['denops.vim', 'pum.vim']
 on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
+setlocal dictionary+=/usr/share/dict/american-english
 let s:ddc_config_json =<< trim MARK
 	{
 		"ui": "pum",
-		"sources": ["around", "nvim-lsp", "vsnip"],
+		"sources": ["around", "nvim-lsp", "dictionary", "vsnip"],
 		"sourceOptions": {
 			"around": {
 				"mark": "A"
@@ -19,6 +20,10 @@ let s:ddc_config_json =<< trim MARK
 				"matchers": ["matcher_fuzzy"],
 				"sorters": ["sorter_fuzzy"],
 				"converters": ["converter_fuzzy", "converter_kind_labels"]
+			},
+			"dictionary": {
+				"mark": "Dic",
+				"minKeywordLength": 4
 			},
 			"vsnip": {
 				"mark": "vsnip",
@@ -41,6 +46,12 @@ let s:ddc_config_json =<< trim MARK
 				"matchers": ["matcher_fuzzy"],
 				"sorters": ["sorter_fuzzy"],
 				"converters": ["converter_fuzzy"]
+			}
+		},
+		"sourceParams": {
+			"dictionary": {
+				"smartCase": true,
+				"isVolatile": true
 			}
 		},
 		"filterParams": {

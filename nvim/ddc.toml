@@ -23,7 +23,8 @@ let s:ddc_config_json =<< trim MARK
 			},
 			"dictionary": {
 				"mark": "Dic",
-				"minKeywordLength": 4
+				"minKeywordLength": 4,
+				"converters": ["converter_fuzzy", "converter_dictionary"]
 			},
 			"vsnip": {
 				"mark": "vsnip",
@@ -118,6 +119,11 @@ let s:ddc_config_json['sourceParams'] = #{
 			\		snippetEngine: denops#callback#register({
 			\			body -> vsnip#anonymous(body)
 			\		}),
+			\	}
+			\}
+let s:ddc_config_json['filterParams'] = #{
+			\	converter_dictionary: #{
+			\		dicts: [g:github_dir . '/gunyarakun/kantan-ej-dictionary/kantan-ej-dictionary.json']
 			\	}
 			\}
 call ddc#custom#patch_global(s:ddc_config_json)
@@ -237,6 +243,14 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'Shougo/ddc-sorter_rank'
 on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'atusy/ddc-filter-converter_dictionary'
+on_source = 'ddc.vim'
+
+# converter_dictionaryで使う辞書
+[[plugins]]
+repo = 'gunyarakun/kantan-ej-dictionary'
 
 # スニペット
 [[plugins]]

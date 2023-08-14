@@ -681,12 +681,18 @@ nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ },
 			\ })<CR>
 nmap <silent> [ddu]E <Cmd>call ddu#start({
-			\ 'uiParams': { 'ff': { 'startFilter': v:true } },
+			\ 'uiParams': { 
+			\	'ff': { 
+			\		'startFilter': v:true ,
+			\		'floatingTitle': [['File', 'Normal'], ['Browser', 'Directory']],
+			\	} 
+			\ },
 			\ 'sources': [
 			\	{
 			\		'name': 'file',
 			\		'options': {
-			\			'columns': ['icon_filename']
+			\			'columns': ['icon_filename'],
+			\			'converters': ['converter_file_info'],
 			\		}
 			\	}
 			\ ],
@@ -720,6 +726,10 @@ nnoremap <buffer><silent> p
 			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
 nnoremap <buffer><silent> e
 			\ <Cmd>call ddu#ui#ff#do_action('expandItem', {'mode': 'toggle'})<CR>
+nnoremap <buffer><expr> -
+			\ ddu#ui#get_item()->get('__sourceName') == 'file' ?
+			\	"<ESC><Cmd>call ddu#ui#do_action('itemAction', { 'name': 'narrow' , 'params': { 'path': '..' }})<CR>" :
+			\	""
 nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 autocmd CursorMoved <buffer> call s:update_cursor()
@@ -898,6 +908,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-filter-converter_file_icon'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-filter-converter_file_info'
 on_source = 'ddu.vim'
 
 # 補完Kind

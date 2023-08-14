@@ -770,6 +770,10 @@ nnoremap <buffer><expr> <CR>
 			\ ddu#ui#get_item()->get('isTree', v:false) ?
 			\ "<Cmd>call ddu#ui#do_action('expandItem', {'mode': 'toggle'})<CR>" :
 			\ "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'open'})<CR>"
+nnoremap <buffer><silent> e
+			\ <Cmd>call ddu#ui#do_action('expandItem', {'mode': 'toggle'})<CR>
+nnoremap <buffer><silent> p
+			\ <Cmd>call ddu#ui#do_action('togglePreview')<CR>
 nnoremap <buffer><silent> s
 			\ <Cmd>call ddu#ui#do_action('toggleSelectItem')<CR>
 nnoremap <buffer><silent> o

@@ -708,6 +708,8 @@ nnoremap <buffer><silent> o
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
 nnoremap <buffer><silent> v
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
+nnoremap <buffer><silent> Q
+			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
 nnoremap <buffer><silent> s
 			\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
 nnoremap <buffer><silent> i
@@ -733,6 +735,8 @@ nnoremap <buffer> <CR>
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+nnoremap <buffer><silent> Q
+			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
 inoremap <buffer> <C-p>
 			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
 inoremap <buffer><expr> <CR>

@@ -29,8 +29,10 @@ let s:ddu_config_json =<< trim MARK
 				"previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0], ["&foldenable", 0] ]
 			},
 			"filer": {
-				"split": "vertical",
-				"splitDirection": "topleft",
+				"split": "floating",
+				"floatingBorder": "rounded",
+				"previewFloating":true,
+				"previewFloatingBorder": "rounded",
 				"sortTreesFirst": true
 			}
 		},
@@ -129,7 +131,7 @@ function! s:set_size() abort
 	let s:winHeight = &lines - (&lines / 4)
 endfunction
 
-function! s:set_layout() abort
+function! s:set_ff_layout() abort
 	" ┌────────────────────────────────┐
 	" │                                │
 	" │                                │
@@ -264,9 +266,58 @@ function! s:set_layout() abort
 				\})
 endfunction
 
+function! s:set_filer_layout() abort
+	" ┌────────────────────────────────┐
+	" │                                │
+	" │                                │
+	" │        source                  │
+	" │                                │
+	" │                                │
+	" │                                │
+	" └────────────────────────────────┘
+	call ddu#custom#patch_local('default', {
+				\ 'uiParams': {
+				\	'filer': {
+				\		'winCol': s:winCol,
+				\		'winRow': s:winRow,
+				\		'winWidth': s:winWidth,
+				\		'winHeight': s:winHeight,
+				\	}
+				\}
+				\})
+
+	" ┌────────────────┐┌────────────────┐
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" │  source        ││   preview      │
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" │                ││                │
+	" └────────────────┘└────────────────┘
+	call ddu#custom#patch_local('ui_filer_preview_layout', {
+				\ 'uiParams': {
+				\	'filer': {
+				\		'autoAction': { 'name': 'preview' },
+				\		'startAutoAction': v:true,
+				\		'previewSplit': 'vertical',
+				\		'winCol' : s:winCol,
+				\		'winWidth' : s:winWidth / 2,
+				\		'winRow' : s:winRow,
+				\		'winHeight' : s:winHeight,
+				\		'previewCol' : s:winCol + s:winWidth / 2 + 2,
+				\		'previewWidth' : s:winWidth / 2,
+				\		'previewRow' : s:winRow,
+				\		'previewHeight' : s:winHeight,
+				\	}
+				\}
+				\})
+endfunction
 function! s:layout() abort
 	call s:set_size()
-	call s:set_layout()
+	call s:set_ff_layout()
+	call s:set_filer_layout()
 endfunction
 
 call s:layout()
@@ -548,8 +599,8 @@ nmap <silent> [ddu]ls <Cmd>call ddu#start({
 			\ ],
 			\ })<CR>
 nmap <silent> [ddu]lh <Cmd>call ddu#start({
-			\ 'ui': 'ff',
-			\ 'name': 'ui_preview_layout',
+			\ 'ui': 'filer',
+			\ 'name': 'ui_filer_preview_layout',
 			\ 'uiParams': {
 			\	'ff': {
 			\		'floatingTitle': [['Lsp Hierarchy', 'FloatBorder']],
@@ -617,14 +668,15 @@ nmap <silent> [ddu]vs<CR> <Cmd>call ddu#start({
 " filer 表示
 nmap <silent> [ddu]e <Cmd>call ddu#start({
 			\ 'ui': 'filer',
+			\ 'name': 'ui_filer_preview_layout',
 			\ 'resume': v:true,
 			\ 'sources': [{'name': 'file'}],
 			\ 'sourceOptions': {'_': {'columns': ['icon_filename']}},
 			\ 'uiParams': {
 			\	'filer': {
-			\		'split': 'vertical',
+			\		'split': 'floating',
 			\		'splitDirectoin': 'topleft',
-			\		'winWidth': &columns / 6,
+			\		'previewFloating': v:true,
 			\	}
 			\ },
 			\ })<CR>

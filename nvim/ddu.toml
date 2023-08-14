@@ -26,7 +26,7 @@ let s:ddu_config_json =<< trim MARK
 					"floatingCursorLine": "DduCursor",
 					"preview": "DduPreview"
 				},
-				"previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0] ]
+				"previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0], ["&foldenable", 0] ]
 			},
 			"filer": {
 				"split": "vertical",

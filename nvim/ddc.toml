@@ -16,6 +16,7 @@ let s:ddc_config_json =<< trim MARK
 			"nvim-lsp": {
 				"mark": "lsp",
 				"dup": "force",
+				"keywordPattern": "\\k+",
 				"forceCompletionPattern": "\\.\\w*|::",
 				"matchers": ["matcher_fuzzy"],
 				"sorters": ["sorter_fuzzy"],
@@ -50,6 +51,11 @@ let s:ddc_config_json =<< trim MARK
 			}
 		},
 		"sourceParams": {
+			"nvim-lsp": {
+				"enableResolveItem": true,
+				"enableAdditionalTextEdit": true,
+				"confirmBehavior": "replace"
+			},
 			"dictionary": {
 				"smartCase": true,
 				"isVolatile": true

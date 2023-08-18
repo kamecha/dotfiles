@@ -45,6 +45,10 @@ let s:ddu_config_json =<< trim MARK
 			}
 		},
 		"kindOptions": {
+			"action": {
+				"defaultAction": "do",
+				"quit": "true"
+			},
 			"file": {
 				"defaultAction": "open"
 			},
@@ -714,6 +718,8 @@ nnoremap <buffer><silent> o
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
 nnoremap <buffer><silent> v
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
+nnoremap <buffer><silent> a
+			\ <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
 nnoremap <buffer><silent> Q
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
 nnoremap <buffer><silent> s
@@ -878,6 +884,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'matsui54/ddu-source-file_external'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-action'
 on_source = 'ddu.vim'
 
 # 補完Filter

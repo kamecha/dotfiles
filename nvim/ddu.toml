@@ -459,7 +459,7 @@ nmap <silent> [ddu]q <Cmd>call ddu#start({
 			\})<CR>
 nmap <silent> [ddu]j <Cmd>call ddu#start({
 			\ 'ui': 'ff',
-			\ 'name': 'ui_filter_preview_layout',
+			\ 'name': 'ui_filter_preview_horizontal_layout',
 			\ 'uiParams': {
 			\		'ff': {
 			\			'floatingTitle': [['JumpList', 'String']],
@@ -496,7 +496,7 @@ nmap <silent> [ddu]w <Cmd>call ddu#start({
 			\		{
 			\			'name': 'window',
 			\			'options': { 'matchers': ['matcher_regex', 'matcher_fzf'] },
-			\			'params': { 'format': 'tab\:%tn:%T:%w:%wi' }
+			\			'params': { 'format': 'tab:%tn:%T:%w:%wi' }
 			\		}
 			\ ],
 			\ 'filterParams': {

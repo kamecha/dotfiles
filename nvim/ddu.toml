@@ -789,7 +789,7 @@ ddu-filer = '''
 nnoremap <buffer><expr> <CR>
 			\ ddu#ui#get_item()->get('isTree', v:false) ?
 			\ "<Cmd>call ddu#ui#do_action('expandItem', {'mode': 'toggle'})<CR>" :
-			\ "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'open'})<CR>"
+			\ "<Cmd>call ddu#ui#do_action('itemAction')<CR>"
 nnoremap <buffer><silent> e
 			\ <Cmd>call ddu#ui#do_action('expandItem', {'mode': 'toggle'})<CR>
 nnoremap <buffer><silent> p
@@ -802,6 +802,8 @@ nnoremap <buffer><silent> v
 			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
 nnoremap <buffer><silent> t
 			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open', 'params': {'command': 'tabnew'}})<CR>
+nnoremap <buffer><silent> a
+			\ <Cmd>call ddu#ui#do_action('chooseAction')<CR>
 nnoremap <buffer><silent> %
 			\ <Cmd>call ddu#ui#do_action('itemAction', {'name': 'newFile'})<CR>
 nnoremap <buffer><silent> d

@@ -42,6 +42,9 @@ let s:ddu_config_json =<< trim MARK
 			},
 			"matcher_substring": {
 				"highlightMatched": "String"
+			},
+			"matcher_kensaku": {
+				"highlightMatched": "String"
 			}
 		},
 		"kindOptions": {
@@ -750,6 +753,20 @@ inoremap <buffer> <C-a>
 			\ <Cmd>call ddu#ui#ff#do_action('toggleAllItems')<CR>
 inoremap <buffer> <C-l>
 			\ <ESC><Cmd>call ddu#ui#ff#do_action('leaveFilterWindow')<CR>
+inoremap <buffer> <C-j>
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('updateOptions', #{
+			\	uiParams: #{
+			\		ff: #{
+			\			filterFloatingTitle: [['日本語検索', 'LightBlue']],
+			\			filterFloatingTitlePos: 'center',
+			\		}
+			\	},
+			\	sourceOptions: #{
+			\		line: #{
+			\			matchers: ['matcher_kensaku']
+			\		}
+			\	},
+			\	})<CR>i
 inoremap <buffer> <C-q>
 			\ <ESC><Cmd>call ddu#ui#ff#do_action('quit')<CR>
 '''

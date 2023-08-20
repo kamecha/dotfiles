@@ -331,6 +331,23 @@ call s:layout()
 
 autocmd VimResized * call s:layout()
 
+function s:setqf(args)
+	let items = a:args->get('items')
+	let qflist = []
+	for item in items
+		let qf = {}
+		let qf['text'] = item->get('word')
+		let action = item->get('action')
+		let qf['lnum'] = action->get('lineNr')
+		let qf['bufnr'] = action->get('bufNr')
+		let qflist = add(qflist, qf)
+	endfor
+	call setqflist(qflist, ' ')
+	return 0
+endfunction
+
+call ddu#custom#action('kind', 'file', 'setqf', function('s:setqf'))
+
 nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
 

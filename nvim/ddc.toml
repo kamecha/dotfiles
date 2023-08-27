@@ -35,7 +35,12 @@ let s:ddc_config_json =<< trim MARK
 				"mark": "cmd"
 			},
 			"cmdline-history": {
-				"mark": "his"
+				"mark": "his",
+				"dup": "ignore"
+			},
+			"input": {
+				"mark": "in",
+				"isVolatile": true
 			},
 			"skkeleton": {
 				"mark": "skkeleton",
@@ -113,10 +118,12 @@ let s:ddc_config_json =<< trim MARK
 			"CmdlineChanged", "CmdlineEnter"
 		],
 		"cmdlineSources": {
-			":": ["cmdline", "cmdline-history"]
+			":": ["cmdline", "cmdline-history"],
+			"@": ["input", "around"]
 		}
 	}
 MARK
+
 " lspのkindのVSCode-likeなアイコンを表示する
 " https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
@@ -235,6 +242,10 @@ on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc-source-cmdline-history'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-input'
 on_source = 'ddc.vim'
 
 # 補完filter

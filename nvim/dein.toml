@@ -587,6 +587,16 @@ vmap  <C-x>  <Plug>(dial-decrement)
 vmap g<C-a> g<Plug>(dial-increment)
 vmap g<C-x> g<Plug>(dial-decrement)
 '''
+lua_source = '''
+local augend = require("dial.augend")
+require("dial.config").augends:register_group {
+	default = {
+		augend.constant.alias.bool,
+		augend.constant.alias.ja_weekday,
+		augend.constant.alias.ja_weekday_full,
+	}
+}
+'''
 
 # 簡易実行
 [[plugins]]

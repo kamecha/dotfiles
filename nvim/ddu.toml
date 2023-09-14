@@ -899,6 +899,10 @@ on_source = 'ddu.vim'
 repo = 'Shougo/ddu-source-action'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'yuki-yano/ddu-source-nvim-notify'
+on_source = 'ddu.vim'
+
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'

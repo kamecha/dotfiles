@@ -348,6 +348,42 @@ endfunction
 
 call ddu#custom#action('kind', 'file', 'setqf', function('s:setqf'))
 
+function s:setBreakPoint(args)
+	let items = a:args->get('items')
+	for item in items
+		let action = item->get('action')
+		let lnum = action->get('lnum')
+		let bufNr = action->get('bufNr')
+		" goto selected line
+		call execute(lnum)
+		" set breakpoint at the line
+		lua require('dap').set_breakpoint()
+	endfor
+	return 0
+endfunction
+
+call ddu#custom#action('source', 'lsp_documentSymbol', 'setBreakPoint', function('s:setBreakPoint'))
+
+function s:deleteBuffer(args)
+	let items = a:args->get('items')
+	for item in items
+		let action = item->get('action')
+		let bufNr = action->get('bufNr')
+		execute 'bdelete ' . bufNr
+	endfor
+	return 0
+endfunction
+
+call ddu#custom#action('source', 'buffer', 'bdelete', function('s:deleteBuffer'))
+
+function s:echoPath(args)
+	let context = a:args->get('context')
+	echomsg context->get('path')
+	return 0
+endfunction
+
+call ddu#custom#action('ui', 'ff', 'echoPath', function('s:echoPath'))
+
 nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
 
@@ -748,6 +784,8 @@ nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 inoremap <buffer> <C-p>
 			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
+inoremap <buffer> <C-e>
+			\ <Cmd>call ddu#ui#ff#do_action('echoPath')<CR>
 inoremap <buffer><expr> <CR>
 			\ ddu#ui#get_item()->get('__sourceName') == 'file' ?
 			\	ddu#ui#get_item()->get('action')->get('isDirectory') ?

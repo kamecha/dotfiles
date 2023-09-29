@@ -331,7 +331,7 @@ call s:layout()
 
 autocmd VimResized * call s:layout()
 
-function s:setqf(args)
+function s:setcdo(args)
 	let items = a:args->get('items')
 	let qflist = []
 	for item in items
@@ -343,10 +343,13 @@ function s:setqf(args)
 		let qflist = add(qflist, qf)
 	endfor
 	call setqflist(qflist, ' ')
+	let cmd = input(":cdo ", "normal ")
+	echo cmd
+	execute 'cdo ' . cmd
 	return 0
 endfunction
 
-call ddu#custom#action('kind', 'file', 'setqf', function('s:setqf'))
+call ddu#custom#action('kind', 'file', 'setcdo', function('s:setcdo'))
 
 function s:setBreakPoint(args)
 	let items = a:args->get('items')

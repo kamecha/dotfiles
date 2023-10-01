@@ -351,6 +351,17 @@ endfunction
 
 call ddu#custom#action('kind', 'file', 'setcdo', function('s:setcdo'))
 
+function s:file_rec(args)
+	let items = a:args->get('items')
+	let action = items[0]->get('action')
+	call ddu#start(#{
+				\ sources: [#{ name: 'file_rec', options: #{ path: action->get('path') } }]
+				\ })
+	return 0
+endfunction
+
+call ddu#custom#action('source', 'file', 'file_rec', function('s:file_rec'))
+
 function s:setBreakPoint(args)
 	let items = a:args->get('items')
 	for item in items

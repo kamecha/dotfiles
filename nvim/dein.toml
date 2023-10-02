@@ -86,6 +86,15 @@ mason_lspconfig.setup_handlers({ function(server_name)
 		end,
 		capabilities = capabilities
 	}
+	if server_name == "tsserver" then
+		opts.root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json")
+		nvim_lsp[server_name].setup(opts)
+		return
+	elseif server_name == "denols" then
+		opts.root_dir = nvim_lsp.util.root_pattern("deps.ts", "deno.json")
+		nvim_lsp[server_name].setup(opts)
+		return
+	end
 	nvim_lsp[server_name].setup(opts)
 end })
 '''

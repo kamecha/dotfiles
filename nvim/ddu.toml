@@ -351,6 +351,17 @@ endfunction
 
 call ddu#custom#action('kind', 'file', 'setcdo', function('s:setcdo'))
 
+function s:file_rec(args)
+	let items = a:args->get('items')
+	let action = items[0]->get('action')
+	call ddu#start(#{
+				\ sources: [#{ name: 'file_rec', options: #{ path: action->get('path') } }]
+				\ })
+	return 0
+endfunction
+
+call ddu#custom#action('source', 'file', 'file_rec', function('s:file_rec'))
+
 function s:setBreakPoint(args)
 	let items = a:args->get('items')
 	for item in items
@@ -386,6 +397,27 @@ function s:echoPath(args)
 endfunction
 
 call ddu#custom#action('ui', 'ff', 'echoPath', function('s:echoPath'))
+
+function s:update_source_to_kensaku(key, val)
+	let a:val['options'] = #{ matchers: ["matcher_kensaku"] }
+	return a:val
+endfunction
+
+function s:kensaku_filter(args)
+	let kensaku_sources = copy(a:args)->get('options')->get('sources')->map(function('s:update_source_to_kensaku'))
+	call ddu#ui#ff#do_action('updateOptions', #{ 
+				\	uiParams: #{
+				\		ff: #{
+				\			filterFloatingTitle: [['日本語検索', 'LightBlue']],
+				\			filterFloatingTitlePos: 'center',
+				\		}
+				\	},
+				\	sources: kensaku_sources
+				\	})
+	return 2 "Redraw
+endfunction
+
+call ddu#custom#action('ui', 'ff', 'kensaku', function('s:kensaku_filter'))
 
 nnoremap [ddu] <Nop>
 nmap <Space>u [ddu]
@@ -754,6 +786,8 @@ nnoremap <buffer><silent> o
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
 nnoremap <buffer><silent> v
 			\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
+nnoremap <buffer><silent> <C-j>
+			\ <Cmd>call ddu#ui#ff#do_action('kensaku')<CR>
 nnoremap <buffer><silent> a
 			\ <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
 nnoremap <buffer><silent> s
@@ -812,19 +846,7 @@ inoremap <buffer> <C-a>
 inoremap <buffer> <C-l>
 			\ <ESC><Cmd>call ddu#ui#ff#do_action('leaveFilterWindow')<CR>
 inoremap <buffer> <C-j>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('updateOptions', #{
-			\	uiParams: #{
-			\		ff: #{
-			\			filterFloatingTitle: [['日本語検索', 'LightBlue']],
-			\			filterFloatingTitlePos: 'center',
-			\		}
-			\	},
-			\	sourceOptions: #{
-			\		line: #{
-			\			matchers: ['matcher_kensaku']
-			\		}
-			\	},
-			\	})<CR>i
+			\ <ESC><Cmd>call ddu#ui#ff#do_action('kensaku')<CR>
 inoremap <buffer> <C-q>
 			\ <ESC><Cmd>call ddu#ui#ff#do_action('quit')<CR>
 '''

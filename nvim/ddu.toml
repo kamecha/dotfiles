@@ -390,6 +390,22 @@ endfunction
 
 call ddu#custom#action('source', 'buffer', 'bdelete', function('s:deleteBuffer'))
 
+" windowsからコピペする際にが無駄に入ってくるやつの対処
+function s:trimCRLF(args)
+	let items = a:args->get('items')
+	for item in items
+		let regName = item->get('word')[0]
+		let action = item->get('action')
+		" :h getregtype()
+		let regType = action->get('regType')
+		let regText = action->get('text')
+		call setreg(regName, regText->substitute('\r', '', 'g'))
+	endfor
+	return 1
+endfunction
+
+call ddu#custom#action('source', 'register', 'trimCRLF', function('s:trimCRLF'))
+
 function s:echoPath(args)
 	let context = a:args->get('context')
 	echomsg context->get('path')
@@ -927,6 +943,10 @@ repo = 'kamecha/ddu-source-jumplist'
 on_source = 'ddu.vim'
 
 [[plugins]]
+repo = 'Shougo/ddu-source-register'
+on_source = 'ddu.vim'
+
+[[plugins]]
 repo = 'kamecha/ddu-source-tab'
 on_source = 'ddu.vim'
 
@@ -1003,6 +1023,10 @@ on_source = 'ddu.vim'
 # 補完Kind
 [[plugins]]
 repo = 'Shougo/ddu-kind-file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-word'
 on_source = 'ddu.vim'
 
 # カラム

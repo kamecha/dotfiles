@@ -388,7 +388,7 @@ function s:deleteBuffer(args)
 	return 0
 endfunction
 
-call ddu#custom#action('source', 'buffer', 'bdelete', function('s:deleteBuffer'))
+call ddu#custom#action('source', 'buffer', 'delete', function('s:deleteBuffer'))
 
 " windowsからコピペする際にが無駄に入ってくるやつの対処
 function s:trimCRLF(args)

@@ -75,11 +75,6 @@ highlight DduCursor guibg=#38507a
 " for non lazy hook
 call dein#call_hook('source')
 
-" enable plugin setting
-call popup_preview#enable()
-" 補完におけるpreviewの非表示
-set completeopt-=preview
-
 " user settings
 " tab setting
 set tabstop=4

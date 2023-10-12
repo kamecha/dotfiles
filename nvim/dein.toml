@@ -439,6 +439,14 @@ end, {
 [[plugins]]
 repo = 'matsui54/denops-popup-preview.vim'
 depends = 'denops.vim'
+hook_add = '''
+" 補完におけるpreviewの非表示
+set completeopt-=preview
+'''
+hook_source = '''
+" enable plugin setting
+call popup_preview#enable()
+'''
 
 # git branch
 [[plugins]]

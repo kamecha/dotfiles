@@ -303,30 +303,6 @@ function! s:skkeleton_post() abort
 	" Restore sources
 	call ddc#custom#set_buffer(s:prev_buffer_config)
 endfunction
-function L_skkeleton_get_mode()
-	if (mode() == 'i') && skkeleton#is_enabled()
-		let skkeleton_mode = skkeleton#mode()
-		if skkeleton_mode == 'hira'
-			return 'あ'
-		endif
-		if skkeleton_mode == 'kata'
-			return 'ア'
-		endif
-		if skkeleton_mode == 'hankata'
-			return 'ｱ'
-		endif
-		if skkeleton_mode == 'zenkaku'
-			return 'Ａ'
-		endif
-		if skkeleton_mode == 'abbrev'
-			return 'A'
-		endif
-		return ''
-	else
-		return ''
-	endif
-endfunction
-let g:lightline = { 'component_function': { 'skkeleton' : 'L_skkeleton_get_mode'} }
 " これ何か分ってない
 " :mode is needed to redraw screen
 autocmd MyAutoCmd InsertLeave * mode
@@ -336,12 +312,10 @@ autocmd MyAutoCmd InsertLeave * mode
 [[plugins]]
 repo = 'delphinus/skkeleton_indicator.nvim'
 on_source = 'skkeleton'
-hook_source = '''
-lua << EOF
+lua_source = '''
 local skkeleton_indicator = require('skkeleton_indicator')
 skkeleton_indicator.setup({
 	alwaysShown = false,
 	fadeOutMs = 0,
 })
-EOF
 '''

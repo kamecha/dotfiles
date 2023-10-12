@@ -689,11 +689,3 @@ require("dial.config").augends:register_group {
 # 簡易実行
 [[plugins]]
 repo = 'thinca/vim-quickrun'
-
-# session
-[[plugins]]
-repo = 'rmagatti/auto-session'
-
-# カレンダー
-[[plugins]]
-repo = 'itchyny/calendar.vim'

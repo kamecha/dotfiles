@@ -97,6 +97,14 @@ inoremap <Right> <C-G>U<Right>
 imap <C-f> <Right>
 imap <C-b> <Left>
 nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
+" emacs like cmdline keybind
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-N> <Down>
+cnoremap <C-P> <Up>
+cnoremap <C-Left> <S-Left>
+cnoremap <C-Right> <S-Right>
+
 " terminal
 " tnoremap <Esc> <C-\><C-n>
 command! -nargs=* T split | wincmd j | terminal <args>

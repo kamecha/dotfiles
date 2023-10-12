@@ -244,6 +244,10 @@ tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle<CR>
 # AI補完
 [[plugins]]
 repo = 'github/copilot.vim'
+hook_add = '''
+imap <silent><script><expr> <C-L> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+'''
 
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'

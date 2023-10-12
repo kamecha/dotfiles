@@ -177,8 +177,8 @@ inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
 inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
 inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
 cnoremap <expr> <Tab>
-\ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-\ ddc#map#manual_complete()
+			\	pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+			\	ddc#map#manual_complete()
 cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
 cnoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
 cnoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
@@ -273,6 +273,13 @@ repo = 'gunyarakun/kantan-ej-dictionary'
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
 on_source = 'ddc.vim'
+hook_add = '''
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+'''
 
 [[plugins]]
 repo = 'uga-rosa/ddc-source-vsnip'

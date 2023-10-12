@@ -255,6 +255,15 @@ depends = ['plenary.nvim']
 merged = '0'
 lua_source = '''
 require('telescope').setup({})
+require('telescope').load_extension('noice')
+'''
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-file-browser.nvim'
+depends = ['telescope.nvim']
+merged = '0'
+lua_source = '''
+require('telescope').load_extension('file_browser')
 '''
 
 # help日本語
@@ -659,6 +668,9 @@ repo = 'skk-dev/dict'
 # 日本語検索をローマ字で
 [[plugins]]
 repo = 'lambdalisue/kensaku.vim'
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
 
 # <C-a> <C-x>を使い易くする
 [[plugins]]

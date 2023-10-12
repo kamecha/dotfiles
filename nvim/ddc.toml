@@ -167,11 +167,6 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'Shougo/pum.vim'
 hook_source = '''
-"inoremap <silent><expr> <TAB>
-"      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-"      \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-"      \ '<TAB>' : ddc#manual_complete()
-inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
 inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
 inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
@@ -180,13 +175,16 @@ cnoremap <expr> <Tab>
 			\	pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
 			\	ddc#map#manual_complete()
 cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-cnoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
-cnoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+cnoremap <expr> <C-n>
+			\	pum#visible() ? '<Cmd>call pum#map#select_relative(+1)<CR>' :
+			\	'<Down>'
+cnoremap <expr> <C-p>
+			\	pum#visible() ? '<Cmd>call pum#map#select_relative(-1)<CR>' :
+			\	'<Up>'
 cnoremap <expr> <CR>
-\ pum#visible() ? '<Cmd>call pum#map#confirm()<CR><CR>' :
-\ '<CR>'
+			\	pum#visible() ? '<Cmd>call pum#map#confirm()<CR><CR>' :
+			\	'<CR>'
 cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
 set cedit=<C-f>
 
 let s:pum_config_json =<< trim MARK

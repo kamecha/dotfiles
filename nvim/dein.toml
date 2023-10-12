@@ -547,64 +547,6 @@ require('notify').setup({
 vim.notify = require('notify')
 '''
 
-# tree-sitter
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-merged = '0'
-lua_source = '''
-require('nvim-treesitter.configs').setup {
-	ensure_installed = { 'lua', 'vim' },
-	highlight = {
-		enable = true,
-		disable = {
-			"ddu-ff",
-			"ddu-ff-filter",
-		},
-	},
-	indent = {
-		enable = true,
-		disable = {
-			"ddu-ff",
-			"ddu-ff-filter",
-			"html",
-		},
-	},
-}
-local vim = vim
-local opt = vim.opt
-
-opt.foldmethod = 'expr'
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
-'''
-
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter-textobjects'
-depends = 'nvim-treesitter'
-on_lua = ['nvim-treesitter']
-lua_source = '''
-require'nvim-treesitter.configs'.setup {
-	textobjects = {
-		select = {
-			enable = true,
-			lookahead = true,
-			keymaps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner",
-				["ab"] = "@block.outer",
-				["ib"] = "@block.inner",
-				["aF"] = "@frame.outer",
-				["iF"] = "@frame.inner",
-			},
-		},
-	}
-}
-'''
-
-[[plugins]]
-repo = 'nvim-treesitter/playground'
-
 [[plugins]]
 repo = 'tyru/open-browser.vim'
 

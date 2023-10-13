@@ -32,10 +32,9 @@ nnoremap <buffer><silent> q
 			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 autocmd CursorMoved <buffer> call s:update_cursor()
 function! s:update_cursor()
-	sign unplace 100
-	sign define cursor text=>> texthl=Constant
-	execute printf('sign place 100 line=%d name=cursor buffer=%s',
-		\ '.'->line(), '%'->bufnr())
+	call sign_unplace('', #{ id: 100 })
+	call sign_define('cursor', #{ text: '>>', texthl: 'Constant' })
+	call sign_place(100, '', 'cursor', '%'->bufnr(), #{ lnum: '.'->line() })
 endfunction
 
 " }}}

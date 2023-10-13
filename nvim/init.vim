@@ -15,15 +15,15 @@ luafile ~/.config/nvim/unko.lua
 
 " user settings
 " tab setting
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+" set tabstop=4
+" set shiftwidth=4
+" set softtabstop=4
 " list setting(制御文字の表示)
-set list
-set listchars=tab:>-
+" set list
+" set listchars=tab:>-
 " plugin
-set signcolumn=yes
-set number
+" set signcolumn=yes
+" set number
 " mapping
 inoremap <Left> <C-G>U<Left>
 inoremap <Right> <C-G>U<Right>
@@ -45,7 +45,7 @@ autocmd TermOpen * startinsert
 " filetype
 let g:tex_flavor = 'latex'
 " clipborad for windows
-set clipboard&
+" set clipboard&
 if has('wsl')
 	let g:clipboard = {
 				\ 'name': 'win32yank',

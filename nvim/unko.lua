@@ -69,3 +69,13 @@ vim.cmd.highlight({ "DduCursor", "guibg=#38507a" })
 -- for non lazy hook
 dein.call_hook('source')
 
+-- for options
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.list = true
+vim.opt.listchars = { tab = '>-' }
+vim.opt.number = true
+vim.opt.signcolumn = 'yes'
+vim.opt.clipboard = 'unnamedplus'
+

@@ -40,10 +40,6 @@ luafile ~/.config/nvim/unko.lua
 
 " terminal
 " tnoremap <Esc> <C-\><C-n>
-command! -nargs=* T split | wincmd j | terminal <args>
-autocmd TermOpen * startinsert
-" filetype
-let g:tex_flavor = 'latex'
 " clipborad for windows
 " set clipboard&
 " if has('wsl')

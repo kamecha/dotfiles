@@ -1,7 +1,7 @@
 " Set augroup
-augroup MyAutoCmd
-	autocmd!
-augroup END
+" augroup MyAutoCmd
+" 	autocmd!
+" augroup END
 
 luafile ~/.config/nvim/unko.lua
 

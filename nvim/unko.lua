@@ -92,3 +92,6 @@ vim.keymap.set('c', '<C-p>', '<Up>')
 vim.keymap.set('c', '<C-Left>', '<S-Left>')
 vim.keymap.set('c', '<C-Right>', '<S-Right>')
 
+-- auto commands
+vim.api.nvim_create_augroup('MyAutoCmd', { clear = true })
+

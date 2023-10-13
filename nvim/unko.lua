@@ -79,3 +79,16 @@ vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.clipboard = 'unnamedplus'
 
+-- keymap
+vim.keymap.set('i', '<Left>', '<C-G>U<Left>')
+vim.keymap.set('i', '<Right>', '<C-G>U<Right>')
+vim.keymap.set('i', '<C-f>', '<Right>', { remap = true })
+vim.keymap.set('i', '<C-b>', '<Left>', { remap = true })
+vim.keymap.set('n', '<ESC><ESC>', ':nohlsearch<CR>', { silent = true })
+vim.keymap.set('c', '<C-a>', '<Home>')
+vim.keymap.set('c', '<C-e>', '<End>')
+vim.keymap.set('c', '<C-n>', '<Down>')
+vim.keymap.set('c', '<C-p>', '<Up>')
+vim.keymap.set('c', '<C-Left>', '<S-Left>')
+vim.keymap.set('c', '<C-Right>', '<S-Right>')
+

@@ -1,3 +1,5 @@
+-- lua_source {{{
+
 print("ddu.luaだよ")
 vim.fn["ddu#custom#patch_global"]({
 	ui = "ff",
@@ -809,3 +811,5 @@ vim.keymap.set('n', '[ddu]E', function()
 		},
 	})
 end, { remap = true })
+
+-- }}}

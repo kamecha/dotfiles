@@ -235,20 +235,20 @@ rev = '*'
 
 [[plugins]]
 repo = 'voldikss/vim-floaterm'
-hook_add = '''
-let g:floaterm_width = 0.9
-let g:floaterm_height = 0.9
-nnoremap <silent> <F8> :FloatermNew<CR>
-nnoremap <silent> <F9> :FloatermToggle<CR>
-tnoremap <silent> <F9> <C-\><C-n>:FloatermToggle<CR>
+lua_add = '''
+vim.g.floaterm_width = 0.9
+vim.g.floaterm_height = 0.9
+vim.keymap.set('n', '<F8>', ':FloatermNew<CR>', { silent = true })
+vim.keymap.set('n', '<F9>', ':FloatermToggle<CR>', { silent = true })
+vim.keymap.set('t', '<F9>', '<C-\\><C-n>:FloatermToggle<CR>', { silent = true })
 '''
 
 # AI補完
 [[plugins]]
 repo = 'github/copilot.vim'
-hook_add = '''
-imap <silent><script><expr> <C-L> copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
+lua_add = '''
+vim.keymap.set('i', '<C-l>', 'copilot#Accept("<CR>")', { silent = true, script = true, expr = true, replace_keycodes = false })
+vim.g.copilot_no_tab_map = true
 '''
 
 [[plugins]]
@@ -312,8 +312,8 @@ require('barbecue').setup({
 
 [[plugins]]
 repo = 'nvim-lualine/lualine.nvim'
-hook_add = '''
-set laststatus=3
+lua_add = '''
+vim.opt.laststatus = 3
 '''
 lua_source = '''
 local navic = require("nvim-navic")
@@ -380,8 +380,8 @@ require('lualine').setup({
 # タブライン
 [[plugins]]
 repo = 'nanozuki/tabby.nvim'
-hook_add = '''
-set showtabline=2
+lua_add = '''
+vim.opt.showtabline = 2
 '''
 lua_source = '''
 local theme = {
@@ -454,13 +454,11 @@ end, {
 [[plugins]]
 repo = 'matsui54/denops-popup-preview.vim'
 depends = 'denops.vim'
-hook_add = '''
-" 補完におけるpreviewの非表示
-set completeopt-=preview
+lua_add = '''
+vim.opt.completeopt:remove('preview')
 '''
-hook_source = '''
-" enable plugin setting
-call popup_preview#enable()
+lua_source = '''
+vim.fn['popup_preview#enable']()
 '''
 
 # git branch
@@ -495,12 +493,12 @@ repo = 'EdenEast/nightfox.nvim'
 
 [[plugins]]
 repo = 'sainnhe/edge'
-hook_add = '''
-if has('termguicolors')
-	set termguicolors
-endif
-let g:edge_style = 'aura'
-let g:edge_better_performance = 1
+lua_add = '''
+if vim.fn.has('termguicolors') == 1 then
+	vim.opt.termguicolors = true
+end
+vim.g.edge_style = 'aura'
+vim.g.edge_better_performance = 1
 '''
 
 # UI
@@ -574,13 +572,13 @@ repo = 'LeafCage/vimhelpgenerator'
 # git
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
-hook_add = '''
-nnoremap [Gina] <Nop>
-nmap <space>g [Gina]
-nmap <silent> [Gina]s :Gina status<CR>
-nmap <silent> [Gina]c :Gina commit<CR>
-nmap <silent> [Gina]l :Gina log --graph --all<CR>
-nmap <silent> [Gina]b :Gina branch --all<CR>
+lua_add = '''
+vim.keymap.set('n', '[Gina]', '<Nop>')
+vim.keymap.set('n', '<space>g', '[Gina]', { remap = true })
+vim.keymap.set('n', '[Gina]s', ':Gina status<CR>', { remap = true, silent = true })
+vim.keymap.set('n', '[Gina]c', ':Gina commit<CR>', { remap = true, silent = true })
+vim.keymap.set('n', '[Gina]l', ':Gina log --graph --all<CR>', { remap = true, silent = true })
+vim.keymap.set('n', '[Gina]b', ':Gina branch --all<CR>', { remap = true, silent = true })
 '''
 [plugins.ftplugin]
 gina-log = '''
@@ -619,15 +617,15 @@ repo = 'lambdalisue/mr.vim'
 # <C-a> <C-x>を使い易くする
 [[plugins]]
 repo = 'monaqa/dial.nvim'
-hook_add = '''
-nmap  <C-a>  <Plug>(dial-increment)
-nmap  <C-x>  <Plug>(dial-decrement)
-nmap g<C-a> g<Plug>(dial-increment)
-nmap g<C-x> g<Plug>(dial-decrement)
-vmap  <C-a>  <Plug>(dial-increment)
-vmap  <C-x>  <Plug>(dial-decrement)
-vmap g<C-a> g<Plug>(dial-increment)
-vmap g<C-x> g<Plug>(dial-decrement)
+lua_add = '''
+vim.keymap.set('n', '<C-a>', '<Plug>(dial-increment)')
+vim.keymap.set('n', '<C-x>', '<Plug>(dial-decrement)')
+vim.keymap.set('n', 'g<C-a>', 'g<Plug>(dial-increment)', { remap = true })
+vim.keymap.set('n', 'g<C-x>', 'g<Plug>(dial-decrement)', { remap = true })
+vim.keymap.set('v', '<C-a>', '<Plug>(dial-increment)')
+vim.keymap.set('v', '<C-x>', '<Plug>(dial-decrement)')
+vim.keymap.set('v', 'g<C-a>', 'g<Plug>(dial-increment)', { remap = true })
+vim.keymap.set('v', 'g<C-x>', 'g<Plug>(dial-decrement)', { remap = true })
 '''
 lua_source = '''
 local augend = require("dial.augend")

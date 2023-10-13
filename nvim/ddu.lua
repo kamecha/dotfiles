@@ -336,7 +336,7 @@ vim.api.nvim_create_autocmd("VimResized", {
 
 -- custom action
 
-vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function (args)
+vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function(args)
 	local qflist = {}
 	for _, item in ipairs(args["items"]) do
 		local qf = {}
@@ -351,4 +351,64 @@ vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function (args)
 	print(cmd)
 	vim.fn.execute("cdo " .. cmd)
 	return 0
+end)
+
+vim.fn["ddu#custom#action"]('source', 'file', 'file_rec', function(args)
+	local items = args["items"]
+	local action = items[1]["action"]
+	vim.fn["ddu#start"]({
+		sources = {
+			{ name = "file_rec", options = { path = action["path"] } }
+		}
+	})
+	return 0
+end)
+
+vim.fn["ddu#custom#action"]('kind', 'lsp', 'setBreakPoint', function(args)
+	for _, item in ipairs(args["items"]) do
+		local action = item["action"]
+		local lnum = action["lnum"]
+		vim.fn.execute(lnum)
+		require("dap").set_breakpoint()
+	end
+	return 0
+end)
+
+vim.fn["ddu#custom#action"]('source', 'buffer', 'delete', function(args)
+	for _, item in ipairs(args["items"]) do
+		local action = item["action"]
+		local bufNr = action["bufNr"]
+		vim.fn.execute("bdelete " .. bufNr)
+	end
+	return 0
+end)
+
+vim.fn["ddu#custom#action"]('source', 'register', 'trimCRLF', function(args)
+	for _, item in ipairs(args["items"]) do
+		local regName = item["word"][0]
+		local action = item["action"]
+		-- local regType = action["regType"]
+		local regText = action["text"]
+		vim.fn.setreg(regName, vim.fn.substitute(regText, "\r", "", "g"))
+	end
+	return 1
+end)
+
+vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
+	local sources = args["options"]["sources"]
+	for _, source in ipairs(sources) do
+		source["options"] = {
+			matchers = { "matcher_kensaku" }
+		}
+	end
+	vim.fn["ddu#ui#ff#do_action"]('updateOptions', {
+		uiParams = {
+			ff = {
+				filterFloatingTitle = { { "日本語検索", "LightBlue" } },
+				filterFloatingTitlePos = "center",
+			}
+		},
+		sources = sources
+	})
+	return 2
 end)

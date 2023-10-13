@@ -43,39 +43,54 @@ luafile ~/.config/nvim/ddu-ui-ff.lua
 
 " ddu-ff-filter {{{
 
-nnoremap <buffer> <CR>
-			\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-nnoremap <buffer><silent> q
-			\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-inoremap <buffer> <C-p>
-			\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
-inoremap <buffer> <C-e>
-			\ <Cmd>call ddu#ui#ff#do_action('echoPath')<CR>
-inoremap <buffer><expr> <CR>
-			\ ddu#ui#get_item()->get('__sourceName') == 'file' ?
-			\	ddu#ui#get_item()->get('action')->get('isDirectory') ?
-			\		"<ESC><Cmd>call ddu#ui#do_action('itemAction', { 'name': 'narrow' })<CR>" :
-			\		"<ESC><Cmd>call ddu#ui#do_action('itemAction')<CR>" :
-			\	"<ESC><Cmd>call ddu#ui#do_action('itemAction')<CR>"
-inoremap <buffer> <C-t>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'tabnew'}})<CR>
-inoremap <buffer> <C-o>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'split'}})<CR>
-inoremap <buffer> <C-v>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('itemAction', {'params': {'command': 'vsplit'}})<CR>
-inoremap <buffer> <C-n>
-			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)<Bar>redraw")<CR>
-inoremap <buffer> <C-p>
-			\ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)<Bar>redraw")<CR>
-inoremap <buffer> <C-s>
-			\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-inoremap <buffer> <C-a>
-			\ <Cmd>call ddu#ui#ff#do_action('toggleAllItems')<CR>
-inoremap <buffer> <C-l>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('leaveFilterWindow')<CR>
-inoremap <buffer> <C-j>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('kensaku')<CR>
-inoremap <buffer> <C-q>
-			\ <ESC><Cmd>call ddu#ui#ff#do_action('quit')<CR>
+lua << EOF
+vim.keymap.set('n', '<CR>', function()
+	vim.fn["ddu#ui#ff#do_action"]('itemAction')
+end, { buffer = true })
+vim.keymap.set('n', 'q', function()
+	vim.fn["ddu#ui#ff#do_action"]('quit')
+end, { buffer = true })
+vim.keymap.set('i', '<CR>', function()
+	if vim.fn["ddu#ui#get_item"]()["__sourceName"] == "file" and vim.fn["ddu#ui#get_item"]()["action"]["isDirectory"] == true then
+		vim.fn["ddu#ui#ff#do_action"]('itemAction', { name = "narrow" })
+	else
+		vim.fn["ddu#ui#ff#do_action"]('itemAction')
+	end
+end, { buffer = true })
+vim.keymap.set('i', '<C-p>', function()
+	vim.fn["ddu#ui#ff#do_action"]('preview')
+end, { buffer = true })
+vim.keymap.set('i', '<C-t>', function()
+	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "tabnew" } })
+end, { buffer = true })
+vim.keymap.set('i', '<C-o>', function()
+	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "split" } })
+end, { buffer = true })
+vim.keymap.set('i', '<C-v>', function()
+	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "vsplit" } })
+end, { buffer = true })
+vim.keymap.set('i', '<C-n>', function()
+	vim.fn["ddu#ui#ff#do_action"]("cursorNext")
+end, { buffer = true })
+vim.keymap.set('i', '<C-p>', function()
+	vim.fn["ddu#ui#ff#do_action"]("cursorPrevious")
+end, { buffer = true })
+vim.keymap.set('i', '<C-s>', function()
+	vim.fn["ddu#ui#ff#do_action"]("toggleSelectItem")
+end, { buffer = true })
+vim.keymap.set('i', '<C-a>', function()
+	vim.fn["ddu#ui#ff#do_action"]("toggleAllItems")
+end, { buffer = true })
+vim.keymap.set('i', '<C-l>', function()
+	vim.fn["ddu#ui#ff#do_action"]("leaveFilterWindow")
+end, { buffer = true })
+vim.keymap.set('i', '<C-j>', function()
+	vim.fn["ddu#ui#ff#do_action"]("kensaku")
+end, { buffer = true })
+vim.keymap.set('i', '<C-q>', function()
+	vim.fn["ddu#ui#ff#do_action"]("quit")
+end, { buffer = true })
+
+EOF
 
 " }}}

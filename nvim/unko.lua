@@ -95,3 +95,19 @@ vim.keymap.set('c', '<C-Right>', '<S-Right>')
 -- auto commands
 vim.api.nvim_create_augroup('MyAutoCmd', { clear = true })
 
+-- for each environment
+-- for wsl2
+if vim.fn.has('wsl') == 1 then
+	vim.g.clipboard = {
+		name = 'win32yank',
+		copy = {
+			['+'] = 'win32yank.exe -i --crlf',
+			['*'] = 'win32yank.exe -i --crlf',
+		},
+		paste = {
+			['+'] = 'win32yank.exe -o --lf',
+			['*'] = 'win32yank.exe -o --lf',
+		},
+		cache_enabled = 0,
+	}
+end

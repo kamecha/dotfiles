@@ -333,3 +333,22 @@ vim.api.nvim_create_autocmd("VimResized", {
 		layout()
 	end
 })
+
+-- custom action
+
+vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function (args)
+	local qflist = {}
+	for _, item in ipairs(args["items"]) do
+		local qf = {}
+		qf["text"] = item["word"]
+		local action = item["action"]
+		qf["lnum"] = action["lineNr"]
+		qf["bufnr"] = action["bufNr"]
+		table.insert(qflist, qf)
+	end
+	vim.fn.setqflist(qflist, ' ')
+	local cmd = vim.fn.input(":cdo ", "normal ")
+	print(cmd)
+	vim.fn.execute("cdo " .. cmd)
+	return 0
+end)

@@ -1,26 +1,6 @@
 " hook_source {{{
 luafile ~/.config/nvim/ddu.lua
 
-function s:setcdo(args)
-	let items = a:args->get('items')
-	let qflist = []
-	for item in items
-		let qf = {}
-		let qf['text'] = item->get('word')
-		let action = item->get('action')
-		let qf['lnum'] = action->get('lineNr')
-		let qf['bufnr'] = action->get('bufNr')
-		let qflist = add(qflist, qf)
-	endfor
-	call setqflist(qflist, ' ')
-	let cmd = input(":cdo ", "normal ")
-	echo cmd
-	execute 'cdo ' . cmd
-	return 0
-endfunction
-
-call ddu#custom#action('kind', 'file', 'setcdo', function('s:setcdo'))
-
 function s:file_rec(args)
 	let items = a:args->get('items')
 	let action = items[0]->get('action')

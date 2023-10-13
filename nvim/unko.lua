@@ -61,3 +61,8 @@ if #removed_plugins > 0 then
 	dein.recache_runtimepath()
 end
 
+-- for color setting
+vim.cmd.colorscheme("edge")
+vim.cmd.highlight({ "DduPreview", "guifg=#d6deeb", "guibg=#38507a" })
+vim.cmd.highlight({ "DduCursor", "guibg=#38507a" })
+

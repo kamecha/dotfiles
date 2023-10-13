@@ -66,3 +66,6 @@ vim.cmd.colorscheme("edge")
 vim.cmd.highlight({ "DduPreview", "guifg=#d6deeb", "guibg=#38507a" })
 vim.cmd.highlight({ "DduCursor", "guibg=#38507a" })
 
+-- for non lazy hook
+dein.call_hook('source')
+

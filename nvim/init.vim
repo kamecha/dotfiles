@@ -11,7 +11,7 @@ luafile ~/.config/nvim/unko.lua
 " highlight DduCursor guibg=#38507a
 
 " for non lazy hook
-call dein#call_hook('source')
+" call dein#call_hook('source')
 
 " user settings
 " tab setting

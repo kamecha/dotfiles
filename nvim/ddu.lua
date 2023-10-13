@@ -412,3 +412,400 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	})
 	return 2
 end)
+
+-- ddu key mapping
+
+vim.keymap.set('n', '[ddu]', '<Nop>')
+vim.keymap.set('n', '<Space>u', '[ddu]', { remap = true })
+
+-- telescopeのREADMEの順っぽく設定
+
+-- file周り
+vim.keymap.set('n', '[ddu]f', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Filter", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{ name = "file_rec", params = {} }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]g', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Files", "FloatBorder" }, { "Git", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{
+				name = "file_external",
+				params = { cmd = { "git", "ls-files" } }
+			}
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]r', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				ignoreEmpty = false,
+				autoResize = false,
+				floatingTitle = { { "Live Grep", "String" } }
+			}
+		},
+		sources = {
+			{
+				name = "rg",
+				options = { matchers = {}, volatile = true }
+			}
+		}
+	})
+end, { remap = true })
+
+-- vim周り
+vim.keymap.set('n', '[ddu]b', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Buffers", "Blue" } },
+			}
+		},
+		sources = {
+			{ name = "buffer" }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]c', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Command History", "FloatBorder" } },
+				autoAction = {}
+			}
+		},
+		sources = {
+			{ name = "command_history" }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]h', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Help", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{ name = "help" }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]q', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "QuickFix", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{ name = "qf", params = { isSubset = true, format = "%p|%t" } }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]j', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_horizontal_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "JumpList", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{ name = "jumplist" }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]t', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Tab", "FloatBorder" } },
+				autoAction = {
+					name = "preview",
+					params = { border = { "+", "-", "+", "|" } }
+				}
+			}
+		},
+		sources = {
+			{ name = "tab", params = { format = "tab|%n|%T:%w" } }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]w', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Window", "FloatBorder" } },
+				autoAction = {
+					name = "preview",
+				}
+			}
+		},
+		sources = {
+			{
+				name = "window",
+				options = { matchers = { "matcher_regex", "matcher_fzf" } },
+				params = { format = "tab:%tn:%T:%w:%wi" }
+			}
+		},
+		filterParams = {
+			matcher_regex = {
+				regex = "^(?!.*ddu-ff).*$"
+			}
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]L', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_horizontal_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Line", "FloatBorder" } },
+				previewWindowOptions = { { "&signcolumn", "no" }, { "&wrap", 0 }, { "&number", 0 }, { "&relativenumber", 1 } }
+			}
+		},
+		sources = {
+			{ name = "line" }
+		}
+	})
+end, { remap = true })
+
+-- lsp
+vim.keymap.set('n', '[ddu]lr', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Lsp References", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{ name = "lsp_references" }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]ld', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Lsp Definition", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Red" } }
+					}
+				},
+				params = { display = ">>Definition<<" }
+			},
+			{ name = "lsp_definition", params = { method = "textDocument/definition" } },
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Blue" } }
+					}
+				},
+				params = { display = ">>typeDefinition<<" }
+			},
+			{ name = "lsp_definition", params = { method = "textDocument/typeDefinition" } },
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Yellow" } }
+					}
+				},
+				params = { display = ">>declaration<<" }
+			},
+			{ name = "lsp_definition", params = { method = "textDocument/declaration" } },
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Green" } }
+					}
+				},
+				params = { display = ">>Implementation<<" }
+			},
+			{ name = "lsp_definition", params = { method = "textDocument/implementation" } },
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]ls', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Lsp Symbol", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{ name = "dummy", params = { display = "documentSymbol" } },
+			{ name = "lsp_documentSymbol" },
+			{ name = "dummy", params = { display = "workspaceSymbol" } },
+			{ name = "lsp_workspaceSymbol" },
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]lh', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Lsp Hierarchy", "FloatBorder" } },
+				displayTree = true,
+				startFilter = false
+			}
+		},
+		sources = {
+			{ name = "dummy", params = { display = "incomingCalls" } },
+			{ name = "lsp_callHierarchy", params = { method = "callHierarchy/incomingCalls" } },
+			{ name = "dummy", params = { display = "outgoingCalls" } },
+			{ name = "lsp_callHierarchy", params = { method = "callHierarchy/outgoingCalls" } },
+		}
+	})
+end, { remap = true })
+
+-- 他プラグインとの連携
+vim.keymap.set('n', '[ddu]T', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_horizontal_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Floaterm", "FloatBorder" } },
+				startFilter = false,
+			}
+		},
+		sources = {
+			{ name = "floaterm" },
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]d', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Dein", "Black" } },
+				autoAction = {}
+			}
+		},
+		sources = {
+			{ name = "dein" },
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]v<CR>', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		sources = {
+			{ name = "channel_rec" },
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]ve<CR>', function()
+	vim.fn["ddu#start"]({
+		ui = "filer",
+		sources = {
+			{ name = "channel_rec", params = { type = "unread" } },
+			{ name = "channel" },
+		},
+		sourceOptions = {
+			channel = { path = "VtraQ" },
+			channel_rec = { path = "unread" }
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]vu<CR>', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_layout",
+		sources = {
+			{ name = "channel_rec", params = { type = "unread" } },
+		}
+	})
+end, { remap = true })
+
+-- filer
+vim.keymap.set('n', '[ddu]e', function()
+	vim.fn["ddu#start"]({
+		ui = "filer",
+		uiParams = {
+			filer = {
+				split = "floating",
+				splitDirection = "topleft",
+				previewFloating = true
+			}
+		},
+		name = "ui_filer_preview_layout",
+		resume = true,
+		sources = { { name = "file" } },
+		sourceOptions = { _ = { columns = { "icon_filename" } } },
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]E', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		uiParams = {
+			ff = {
+				startFilter = true,
+				floatingTitle = { { "File", "FloatBorder" }, { "Browser", "Directory" } },
+			}
+		},
+		sources = {
+			{
+				name = "file",
+				options = {
+					columns = { "icon_filename" },
+					converters = { "converter_file_info" }
+				}
+			}
+		},
+	})
+end, { remap = true })

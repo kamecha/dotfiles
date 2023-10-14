@@ -7,21 +7,7 @@ hook_source = '''
 setlocal dictionary+=/usr/share/dict/american-english
 let s:ddc_config_json =<< trim MARK
 	{
-		"ui": "pum",
-		"sources": ["around", "nvim-lsp", "dictionary", "vsnip"],
 		"sourceOptions": {
-			"around": {
-				"mark": "A"
-			},
-			"nvim-lsp": {
-				"mark": "lsp",
-				"dup": "force",
-				"keywordPattern": "\\k+",
-				"forceCompletionPattern": "\\.\\w*|::",
-				"matchers": ["matcher_fuzzy"],
-				"sorters": ["sorter_fuzzy"],
-				"converters": ["converter_fuzzy", "converter_kind_labels"]
-			},
 			"dictionary": {
 				"mark": "Dic",
 				"minKeywordLength": 4,
@@ -56,60 +42,9 @@ let s:ddc_config_json =<< trim MARK
 			}
 		},
 		"sourceParams": {
-			"nvim-lsp": {
-				"enableResolveItem": true,
-				"enableAdditionalTextEdit": true,
-				"confirmBehavior": "replace"
-			},
 			"dictionary": {
 				"smartCase": true,
 				"isVolatile": true
-			}
-		},
-		"filterParams": {
-			"converter_kind_labels": {
-				"kindLabels": {
-					"Text": "",
-					"Method": "",
-					"Function": "",
-					"Constructor": "",
-					"Field": "",
-					"Variable": "",
-					"Class": "",
-					"Interface": "",
-					"Module": "",
-					"Property": "",
-					"Unit": "",
-					"Value": "",
-					"Enum": "",
-					"Keyword": "",
-					"Snippet": "",
-					"Color": "",
-					"File": "",
-					"Reference": "",
-					"Folder": "",
-					"EnumMember": "",
-					"Constant": "",
-					"Struct": "",
-					"Event": "",
-					"Operator": "",
-					"TypeParameter": ""
-				},
-				"kindHlGroups": {
-					"Method": "Function",
-					"Function": "Function",
-					"Constructor": "Function",
-					"Field": "Identifier",
-					"Variable": "Identifier",
-					"Class": "Structure",
-					"Interface": "Structure",
-					"Module": "Structure",
-					"Property": "Identifier",
-					"Value": "Type",
-					"Enum": "Type",
-					"File": "Structure",
-					"Event": "Type"
-				}
 			}
 		},
 		"autoCompleteEvents": [
@@ -127,35 +62,113 @@ MARK
 " lspのkindのVSCode-likeなアイコンを表示する
 " https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
-let s:ddc_config_json['sourceParams'] = #{
-			\	nvim-lsp: #{
-			\		snippetEngine: denops#callback#register({
-			\			body -> vsnip#anonymous(body)
-			\		}),
-			\	}
-			\}
 let s:ddc_config_json['filterParams'] = #{
 			\	converter_dictionary: #{
 			\		dicts: [g:github_dir . '/gunyarakun/kantan-ej-dictionary/kantan-ej-dictionary.json']
 			\	}
 			\}
 call ddc#custom#patch_global(s:ddc_config_json)
-call ddc#custom#patch_filetype('gina-commit', 'specialBufferCompletion', v:true)
-call ddc#custom#patch_filetype('traqvim-message', {
-			\ 'sources': ['stamp'],
-			\ 'sourceOptions': {
-			\   'stamp': {
-			\     'mark': 'stamp',
-			\     'matchers': ['matcher_fuzzy'],
-			\	},
-			\ },
-			\ 'keywordPattern': '[a-zA-Z_:]\w*',
-			\ 'specialBufferCompletion': v:true,
-			\})
-call ddc#enable()
 
-" use pum.vim
-autocmd CmdlineEnter * call ddc#enable_cmdline_completion()
+lua << EOF
+
+vim.fn["ddc#custom#patch_global"]({
+	ui = "pum",
+	sources = { "around", "nvim-lsp", "dictionary", "vsnip" },
+	sourceOptions = {
+		around = { mark = "A" },
+		["nvim-lsp"] = {
+			mark = "lsp",
+			dup = "force",
+			keywordPattern = "\\k+",
+			forceCompletionPattern = "\\.\\w*|::",
+			matchers = { "matcher_fuzzy" },
+			sorters = { "sorter_fuzzy" },
+			converters = { "converter_fuzzy", "converter_kind_labels" }
+		}
+	},
+	sourceParams = {
+		["nvim-lsp"] = {
+			enableResolveItem = true,
+			enableAdditionalTextEdit = true,
+			confirmBehavior = "replace",
+			snippetEngine = vim.fn["denops#callback#register"](function(body)
+				vim.fn["vsnip#anonymous"](body)
+			end)
+		}
+	},
+	filterParams = {
+		converter_kind_labels = {
+			kindLabels = {
+				Text = "",
+				Method = "",
+				Function = "",
+				Constructor = "",
+				Field = "",
+				Variable = "",
+				Class = "",
+				Interface = "",
+				Module = "",
+				Property = "",
+				Unit = "",
+				Value = "",
+				Enum = "",
+				Keyword = "",
+				Snippet = "",
+				Color = "",
+				File = "",
+				Reference = "",
+				Folder = "",
+				EnumMember = "",
+				Constant = "",
+				Struct = "",
+				Event = "",
+				Operator = "",
+				TypeParameter = ""
+			},
+			kindHlGroups = {
+				Method = "Function",
+				Function = "Function",
+				Constructor = "Function",
+				Field = "Identifier",
+				Variable = "Identifier",
+				Class = "Structure",
+				Interface = "Structure",
+				Module = "Structure",
+				Property = "Identifier",
+				Value = "Type",
+				Enum = "Type",
+				File = "Structure",
+				Event = "Type"
+			}
+		}
+	}
+})
+
+vim.fn["ddc#custom#patch_filetype"]("gina-commit", {
+	specialBufferCompletion = true,
+})
+vim.fn["ddc#custom#patch_filetype"]("traqvim-message", {
+	sources = { "stamp" },
+	sourceOptions = {
+		stamp = {
+			mark = "stamp",
+			matchers = { "matcher_fuzzy" },
+		}
+	},
+	keywordPattern = "[a-zA-Z_:]\\w*",
+	specialBufferCompletion = true,
+})
+
+vim.fn["ddc#enable"]()
+
+-- use pum
+vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
+	pattern = "*",
+	callback = function()
+		vim.fn["ddc#enable_cmdline_completion"]()
+	end
+})
+EOF
 '''
 
 # 補完UI

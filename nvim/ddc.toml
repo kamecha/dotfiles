@@ -3,57 +3,7 @@
 repo = 'Shougo/ddc.vim'
 depends = ['denops.vim', 'pum.vim']
 on_event = ['InsertEnter', 'CmdlineEnter']
-hook_source = '''
-let s:ddc_config_json =<< trim MARK
-	{
-		"sourceOptions": {
-			"vsnip": {
-				"mark": "vsnip",
-				"dup": "keep"
-			},
-			"cmdline": {
-				"mark": "cmd"
-			},
-			"cmdline-history": {
-				"mark": "his",
-				"dup": "ignore"
-			},
-			"input": {
-				"mark": "in",
-				"isVolatile": true
-			},
-			"skkeleton": {
-				"mark": "skkeleton",
-				"matchers": ["skkeleton"],
-				"sorters": [],
-				"minAutoCompleteLength": 0,
-				"isVolatile": 1
-			},
-			"_": {
-				"matchers": ["matcher_fuzzy"],
-				"sorters": ["sorter_fuzzy"],
-				"converters": ["converter_fuzzy"]
-			}
-		},
-		"autoCompleteEvents": [
-			"InsertEnter", 
-			"TextChangedI", "TextChangedP",
-			"CmdlineChanged", "CmdlineEnter"
-		],
-		"cmdlineSources": {
-			":": ["cmdline", "cmdline-history"],
-			"@": ["input", "around"]
-		}
-	}
-MARK
-
-" lspのkindのVSCode-likeなアイコンを表示する
-" https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
-let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
-call ddc#custom#patch_global(s:ddc_config_json)
-
-lua << EOF
-
+lua_source = '''
 vim.opt_local.dictionary:append('/usr/share/dict/american-english')
 
 vim.fn["ddc#custom#patch_global"]({
@@ -74,6 +24,22 @@ vim.fn["ddc#custom#patch_global"]({
 			mark = "Dic",
 			minKeywordLength = 4,
 			converters = { "converter_fuzzy", "converter_dictionary" }
+		},
+		vsnip = { mark = "Snip", dup = "keep" },
+		cmdline = { mark = "cmd" },
+		["cmdline-history"] = { mark = "his", dup = "ignore" },
+		input = { mark = "in", isVolatile = true },
+		skkeleton = {
+			mark = "skkeleton",
+			matchers = { "skkeleton" },
+			sorters = {},
+			minAutoCompleteLength = 0,
+			isVolatile = true
+		},
+		_ = {
+			matchers = { "matcher_fuzzy" },
+			sorters = { "sorter_fuzzy" },
+			converters = { "converter_fuzzy" }
 		}
 	},
 	sourceParams = {
@@ -91,6 +57,8 @@ vim.fn["ddc#custom#patch_global"]({
 		}
 	},
 	filterParams = {
+		-- lspのkindのVSCode-likeなアイコンを表示する
+		-- https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
 		converter_kind_labels = {
 			kindLabels = {
 				Text = "",
@@ -138,6 +106,15 @@ vim.fn["ddc#custom#patch_global"]({
 		converter_dictionary = {
 			dicts = { vim.g.github_dir .. "/gunyarakun/kantan-ej-dictionary/kantan-ej-dictionary.json" }
 		}
+	},
+	autoCompleteEvents = {
+		"InsertEnter",
+		"TextChangedI", "TextChangedP",
+		"CmdlineChanged", "CmdlineEnter"
+	},
+	cmdlineSources = {
+		[":"] = { "cmdline", "cmdline-history" },
+		["@"] = { "input", "around" }
 	}
 })
 
@@ -165,7 +142,6 @@ vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
 		vim.fn["ddc#enable_cmdline_completion"]()
 	end
 })
-EOF
 '''
 
 # 補完UI

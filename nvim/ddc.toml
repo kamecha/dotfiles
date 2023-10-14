@@ -4,15 +4,9 @@ repo = 'Shougo/ddc.vim'
 depends = ['denops.vim', 'pum.vim']
 on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
-setlocal dictionary+=/usr/share/dict/american-english
 let s:ddc_config_json =<< trim MARK
 	{
 		"sourceOptions": {
-			"dictionary": {
-				"mark": "Dic",
-				"minKeywordLength": 4,
-				"converters": ["converter_fuzzy", "converter_dictionary"]
-			},
 			"vsnip": {
 				"mark": "vsnip",
 				"dup": "keep"
@@ -41,12 +35,6 @@ let s:ddc_config_json =<< trim MARK
 				"converters": ["converter_fuzzy"]
 			}
 		},
-		"sourceParams": {
-			"dictionary": {
-				"smartCase": true,
-				"isVolatile": true
-			}
-		},
 		"autoCompleteEvents": [
 			"InsertEnter", 
 			"TextChangedI", "TextChangedP",
@@ -62,14 +50,11 @@ MARK
 " lspのkindのVSCode-likeなアイコンを表示する
 " https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
 let s:ddc_config_json = s:ddc_config_json->join('')->json_decode()
-let s:ddc_config_json['filterParams'] = #{
-			\	converter_dictionary: #{
-			\		dicts: [g:github_dir . '/gunyarakun/kantan-ej-dictionary/kantan-ej-dictionary.json']
-			\	}
-			\}
 call ddc#custom#patch_global(s:ddc_config_json)
 
 lua << EOF
+
+vim.opt_local.dictionary:append('/usr/share/dict/american-english')
 
 vim.fn["ddc#custom#patch_global"]({
 	ui = "pum",
@@ -84,6 +69,11 @@ vim.fn["ddc#custom#patch_global"]({
 			matchers = { "matcher_fuzzy" },
 			sorters = { "sorter_fuzzy" },
 			converters = { "converter_fuzzy", "converter_kind_labels" }
+		},
+		dictionary = {
+			mark = "Dic",
+			minKeywordLength = 4,
+			converters = { "converter_fuzzy", "converter_dictionary" }
 		}
 	},
 	sourceParams = {
@@ -94,6 +84,10 @@ vim.fn["ddc#custom#patch_global"]({
 			snippetEngine = vim.fn["denops#callback#register"](function(body)
 				vim.fn["vsnip#anonymous"](body)
 			end)
+		},
+		dictionary = {
+			smartCase = true,
+			isVolatile = true
 		}
 	},
 	filterParams = {
@@ -140,6 +134,9 @@ vim.fn["ddc#custom#patch_global"]({
 				File = "Structure",
 				Event = "Type"
 			}
+		},
+		converter_dictionary = {
+			dicts = { vim.g.github_dir .. "/gunyarakun/kantan-ej-dictionary/kantan-ej-dictionary.json" }
 		}
 	}
 })

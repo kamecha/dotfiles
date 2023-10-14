@@ -271,7 +271,7 @@ require('telescope').load_extension('file_browser')
 # help日本語
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
-hook_source = 'set helplang=ja,en'
+lua_add = 'vim.opt.helplang = "ja,en"'
 
 # 翻訳
 [[plugins]]

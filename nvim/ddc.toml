@@ -288,28 +288,41 @@ on_source = 'ddc.vim'
 repo = 'vim-skk/skkeleton'
 on_map = { 'ic' = '<Plug>(skkeleton-toggle)'}
 depends = ['ddc.vim']
-hook_add = '''
-imap <C-j> <Plug>(skkeleton-toggle)
-cmap <C-j> <Plug>(skkeleton-toggle)
+lua_add = '''
+vim.keymap.set('i', '<C-j>', '<Plug>(skkeleton-toggle)', { remap = true })
+vim.keymap.set('c', '<C-j>', '<Plug>(skkeleton-toggle)', { remap = true })
 '''
-hook_source = '''
-call skkeleton#config({ 
-			\ 'globalJisyo': g:github_dir . '/skk-dev/dict/SKK-JISYO.L',
-			\ 'registerConvertResult': v:true
-			\})
-autocmd MyAutoCmd User skkeleton-enable-pre call s:skkeleton_pre()
-function! s:skkeleton_pre() abort
-	let s:prev_buffer_config = ddc#custom#get_buffer()
-	call ddc#custom#patch_buffer({ 'ui': 'native', 'sources': [ 'around', 'skkeleton'], 'keywordPattern': '([ァ-ヮア-ン]|ー)+' })
-endfunction
-autocmd MyAutoCmd User skkeleton-disable-pre call s:skkeleton_post()
-function! s:skkeleton_post() abort
-	" Restore sources
-	call ddc#custom#set_buffer(s:prev_buffer_config)
-endfunction
-" これ何か分ってない
-" :mode is needed to redraw screen
-autocmd MyAutoCmd InsertLeave * mode
+lua_source = '''
+vim.fn["skkeleton#config"]({
+	globalJisyo = vim.g.github_dir .. '/skk-dev/dict/SKK-JISYO.L',
+	registerConvertResult = true,
+})
+vim.api.nvim_create_autocmd({ "User" }, {
+	group = "MyAutoCmd",
+	pattern = "skkeleton-enable-pre",
+	callback = function()
+		prev_buffer_config = vim.fn["ddc#custom#get_buffer"]()
+		vim.fn["ddc#custom#patch_buffer"]({
+			ui = "native",
+			sources = { "around", "skkeleton" },
+			keywordPattern = "([ァ-ヮア-ン]|ー)+",
+		})
+	end
+})
+vim.api.nvim_create_autocmd({ "User" }, {
+	group = "MyAutoCmd",
+	pattern = "skkeleton-disable-pre",
+	callback = function()
+		vim.fn["ddc#custom#set_buffer"](prev_buffer_config)
+	end
+})
+vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+	group = "MyAutoCmd",
+	pattern = "*",
+	callback = function()
+		vim.cmd("mode")
+	end
+})
 '''
 
 # skk の表示をリッチにするやつ

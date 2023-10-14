@@ -38,11 +38,9 @@ if dein.load_state(dein_dir) == 1 then
 	local toml = rc_dir .. '/dein.toml'
 	local ddu_toml = rc_dir .. '/ddu.toml'
 	local ddc_toml = rc_dir .. '/ddc.toml'
-	local lazy_toml = rc_dir .. '/dein_lazy.toml'
 	dein.load_toml(toml)
 	dein.load_toml(ddu_toml, { lazy = true })
 	dein.load_toml(ddc_toml, { lazy = true })
-	dein.load_toml(lazy_toml, { lazy = true })
 	dein.end_()
 	dein.save_state()
 end

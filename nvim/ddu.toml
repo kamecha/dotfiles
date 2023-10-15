@@ -44,7 +44,10 @@ vim.fn["ddu#custom#patch_global"]({
 		},
 		matcher_kensaku = {
 			highlightMatched = "String"
-		}
+		},
+		converter_file_icon = {
+			source = "nvim-web-devicons"
+		},
 	},
 	kindOptions = {
 		action = {

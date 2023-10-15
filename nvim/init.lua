@@ -1,10 +1,10 @@
 
-vim.cmd.luafile(vim.fn.stdpath("config") .. "/lazy.lua")
+-- vim.cmd.luafile(vim.fn.stdpath("config") .. "/lazy.lua")
 
--- vim.cmd.luafile(vim.fn.stdpath("config") .. "/dein.lua")
+vim.cmd.luafile(vim.fn.stdpath("config") .. "/dein.lua")
 
 -- for color setting
--- vim.cmd.colorscheme("edge")
+vim.cmd.colorscheme("edge")
 vim.cmd.highlight({ "DduPreview", "guifg=#d6deeb", "guibg=#38507a" })
 vim.cmd.highlight({ "DduCursor", "guibg=#38507a" })
 
@@ -50,3 +50,6 @@ if vim.fn.has('wsl') == 1 then
 		cache_enabled = 0,
 	}
 end
+
+-- user defined
+vim.cmd.source(vim.fn.stdpath("config") .. "/user.vim")

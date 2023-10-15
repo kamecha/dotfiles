@@ -291,7 +291,6 @@ repo = 'thinca/vim-partedit'
 # font周りの設定(nerd fontとか)
 [[plugins]]
 repo = 'nvim-tree/nvim-web-devicons'
-rev = 'nerd-v2-compat'
 
 [[plugins]]
 repo = 'utilyre/barbecue.nvim'

@@ -892,7 +892,8 @@ vim.api.nvim_create_autocmd("FileType", {
 			vim.fn["ddu#ui#ff#do_action"]('quit')
 		end, { buffer = true })
 		vim.keymap.set('i', '<CR>', function()
-			if vim.fn["ddu#ui#get_item"]()["__sourceName"] == "file" and vim.fn["ddu#ui#get_item"]()["action"]["isDirectory"] == true then
+			if vim.fn["ddu#ui#get_item"]()["__sourceName"] == "file" and
+				vim.fn["ddu#ui#get_item"]()["action"]["isDirectory"] == true then
 				vim.fn["ddu#ui#ff#do_action"]('itemAction', { name = "narrow" })
 			else
 				vim.fn["ddu#ui#ff#do_action"]('itemAction')

@@ -360,6 +360,25 @@ vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function(args)
 	return 0
 end)
 
+vim.fn["ddu#custom#action"]('kind', 'file', 'grep', function(args)
+	local path = args["items"][1]["action"]["path"]
+	local directory = vim.fn.isdirectory(path) and path or vim.fn.fnamemodify(path, ":h")
+	vim.fn["ddu#start"]({
+		name = args["options"]["name"],
+		push = true,
+		sources = {
+			{
+				name = "rg",
+				params = {
+					path = directory,
+					input = vim.fn.input("Pattern: ")
+				}
+			}
+		}
+	})
+	return 0
+end)
+
 vim.fn["ddu#custom#action"]('source', 'file', 'file_rec', function(args)
 	local items = args["items"]
 	local action = items[1]["action"]

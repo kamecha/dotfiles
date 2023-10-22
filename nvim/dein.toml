@@ -232,11 +232,6 @@ require("neodev").setup({})
 repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
 
-# ターミナルを良い感じにする
-[[plugins]]
-repo = 'akinsho/toggleterm.nvim'
-rev = '*'
-
 [[plugins]]
 repo = 'voldikss/vim-floaterm'
 lua_add = '''

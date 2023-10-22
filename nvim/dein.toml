@@ -459,6 +459,12 @@ lua_source = '''
 vim.fn['popup_preview#enable']()
 '''
 
+# lspで関数の引数を書いてる時に情報表示してくれるやつ
+# これ入れてなくても、情報でるけど、忘れないように、ひとまず登録だけしとく
+[[plugins]]
+repo = 'matsui54/denops-signature_help'
+depends = 'denops.vim'
+
 # git branch
 [[plugins]]
 repo = 'itchyny/vim-gitbranch'

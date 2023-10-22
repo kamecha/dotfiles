@@ -7,16 +7,24 @@ vim.cmd.luafile(vim.fn.stdpath("config") .. "/dein.lua")
 vim.cmd.colorscheme("edge")
 vim.cmd.highlight({ "DduPreview", "guifg=#d6deeb", "guibg=#38507a" })
 vim.cmd.highlight({ "DduCursor", "guibg=#38507a" })
+vim.cmd.highlight({ "JpSpace", "guibg=#404455" })
 
 -- for options
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.list = true
-vim.opt.listchars = { tab = '>-' }
+vim.opt.listchars = { tab = '>-', eol = '↲', trail = '_', nbsp = '␣' }
 vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.clipboard = 'unnamedplus'
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+	pattern = "*",
+	callback = function ()
+		vim.cmd.match("JpSpace", "/　/")
+	end
+})
 
 -- keymap
 vim.keymap.set('i', '<Left>', '<C-G>U<Left>')

@@ -602,7 +602,8 @@ vim.keymap.set('n', '[ddu]L', function()
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Line", "FloatBorder" } },
-				previewWindowOptions = { { "&signcolumn", "no" }, { "&wrap", 0 }, { "&number", 0 }, { "&relativenumber", 1 } }
+				previewWindowOptions = { { "&signcolumn", "no" }, { "&wrap", 0 }, { "&number", 0 },
+					{ "&relativenumber", 1 } }
 			}
 		},
 		sources = {
@@ -689,9 +690,9 @@ vim.keymap.set('n', '[ddu]ls', function()
 			}
 		},
 		sources = {
-			{ name = "dummy", params = { display = "documentSymbol" } },
+			{ name = "dummy",              params = { display = "documentSymbol" } },
 			{ name = "lsp_documentSymbol" },
-			{ name = "dummy", params = { display = "workspaceSymbol" } },
+			{ name = "dummy",              params = { display = "workspaceSymbol" } },
 			{ name = "lsp_workspaceSymbol" },
 		}
 	})
@@ -708,9 +709,9 @@ vim.keymap.set('n', '[ddu]lh', function()
 			}
 		},
 		sources = {
-			{ name = "dummy", params = { display = "incomingCalls" } },
+			{ name = "dummy",             params = { display = "incomingCalls" } },
 			{ name = "lsp_callHierarchy", params = { method = "callHierarchy/incomingCalls" } },
-			{ name = "dummy", params = { display = "outgoingCalls" } },
+			{ name = "dummy",             params = { display = "outgoingCalls" } },
 			{ name = "lsp_callHierarchy", params = { method = "callHierarchy/outgoingCalls" } },
 		}
 	})

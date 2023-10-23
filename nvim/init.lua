@@ -20,7 +20,7 @@ vim.opt.clipboard = 'unnamedplus'
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	pattern = "*",
-	callback = function ()
+	callback = function()
 		vim.cmd.match("JpSpace", "/　/")
 	end
 })

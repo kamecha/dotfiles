@@ -57,6 +57,3 @@ if vim.fn.has('wsl') == 1 then
 		cache_enabled = 0,
 	}
 end
-
--- user defined
-vim.cmd.source(vim.fn.stdpath("config") .. "/user.vim")

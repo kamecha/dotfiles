@@ -127,21 +127,16 @@ vim.fn["ddu#custom#patch_global"]({
 })
 
 -- layout
-WinCol = 1
-WinRow = 1
-WinWidth = vim.api.nvim_get_option("columns")
-WinHeight = vim.api.nvim_get_option("lines")
-Columns = vim.api.nvim_get_option("columns")
-Lines = vim.api.nvim_get_option("lines")
 
 local function set_size()
 	-- 関数外部のwinColを参照して、columns / 8を代入する
+	Columns = vim.api.nvim_get_option("columns")
+	Lines = vim.api.nvim_get_option("lines")
 	WinCol = math.floor(Columns / 8)
 	WinRow = math.floor(Lines / 8)
 	WinWidth = math.floor(Columns - (Columns / 4))
 	WinHeight = math.floor(Lines - (Lines / 4))
 end
-
 local function set_ff_layout()
 	-- ┌────────────────────────────────┐
 	-- │                                │

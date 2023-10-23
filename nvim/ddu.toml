@@ -423,9 +423,11 @@ end)
 vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	local sources = args["options"]["sources"]
 	for _, source in ipairs(sources) do
-		source["options"] = {
-			matchers = { "matcher_kensaku" }
-		}
+		if source["name"] ~= "dummy" then
+			source["options"] = {
+				matchers = { "matcher_kensaku" }
+			}
+		end
 	end
 	vim.fn["ddu#ui#ff#do_action"]('updateOptions', {
 		uiParams = {

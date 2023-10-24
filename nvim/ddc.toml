@@ -8,7 +8,7 @@ vim.opt_local.dictionary:append('/usr/share/dict/american-english')
 
 vim.fn["ddc#custom#patch_global"]({
 	ui = "pum",
-	sources = { "around", "nvim-lsp", "dictionary", "vsnip" },
+	sources = { "around", "nvim-lsp", "vsnip", "file", "dictionary" },
 	sourceOptions = {
 		around = { mark = "A" },
 		["nvim-lsp"] = {
@@ -26,6 +26,11 @@ vim.fn["ddc#custom#patch_global"]({
 			converters = { "converter_fuzzy", "converter_dictionary" }
 		},
 		vsnip = { mark = "Snip", dup = "keep" },
+		file = {
+			mark = "F",
+			isVolatile = true,
+			forceCompletionPattern = "\\S/\\S*"
+		},
 		cmdline = { mark = "cmd" },
 		["cmdline-history"] = { mark = "his", dup = "ignore" },
 		input = { mark = "in", isVolatile = true },
@@ -50,6 +55,9 @@ vim.fn["ddc#custom#patch_global"]({
 			snippetEngine = vim.fn["denops#callback#register"](function(body)
 				vim.fn["vsnip#anonymous"](body)
 			end)
+		},
+		file = {
+			mode = "os"
 		},
 		dictionary = {
 			smartCase = true,
@@ -243,6 +251,10 @@ on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'matsui54/ddc-dictionary'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'LumaKernel/ddc-source-file'
 on_source = 'ddc.vim'
 
 [[plugins]]

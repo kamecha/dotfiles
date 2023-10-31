@@ -651,3 +651,10 @@ require("dial.config").augends:register_group {
 # 簡易実行
 [[plugins]]
 repo = 'thinca/vim-quickrun'
+
+# ウィンドウの移動
+[[plugins]]
+repo = '4513ECHO/vim-snipewin'
+lua_add = '''
+vim.keymap.set('n', '<C-w>W', '<Plug>(snipewin)', { remap = true })
+'''

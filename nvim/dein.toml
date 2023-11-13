@@ -651,3 +651,43 @@ require("dial.config").augends:register_group {
 # 簡易実行
 [[plugins]]
 repo = 'thinca/vim-quickrun'
+
+# ウィンドウの移動
+[[plugins]]
+repo = '4513ECHO/vim-snipewin'
+lua_add = '''
+vim.keymap.set('n', '<C-w>W', '<Plug>(snipewin)', { remap = true })
+'''
+
+[[plugins]]
+repo = 'kamecha/denops-dbus_synctex'
+on_ft = ['tex']
+hook_source = '''
+autocmd FileType tex call s:TexKeymap()
+
+function! s:TexKeymap() abort
+	nnoremap <buffer> <Leader>s
+				\ <Cmd>call dbus_synctex#syncView(
+				\		expand("%:p"),
+				\		expand("%:p")->substitute(".tex$", ".pdf", ""),
+				\		line("."),
+				\		col("."),
+				\	)<CR>
+endfunction
+
+function s:syncSource(texPath, line, col, time) abort
+	call cursor([a:line, a:col < 0 ? 1 : a:col])
+endfunction
+
+function s:initSyncTeX() abort
+	call dbus_synctex#createSessionBus()
+	call dbus_synctex#registerCallback(
+				\function("s:syncSource"))
+	call dbus_synctex#registerSyncSource(
+				\expand('%:p')->substitute(".tex$", ".pdf", ""),
+				\)
+endfunction
+
+autocmd User DenopsPluginPost:dbus_synctex
+			\ call s:initSyncTeX()
+'''

@@ -1,4 +1,3 @@
--- vim.cmd.luafile(vim.fn.expand(vim.fn.stdpath("config") .. "/lazy.lua"))
 
 vim.cmd.luafile(vim.fn.expand(vim.fn.stdpath("config") .. "/dein.lua"))
 

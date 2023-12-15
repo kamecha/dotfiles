@@ -558,7 +558,8 @@ repo = 'tyru/open-browser.vim'
 repo = 'kamecha/traqVimPractice'
 [plugins.ftplugin]
 traqvim = '''
-setlocal noswapfile
+nmap <buffer><silent> <C-n> <Plug>(traqvim-next)
+nmap <buffer><silent> <C-p> <Plug>(traqvim-prev)
 nnoremap <buffer><silent> r
 			\ :TraqReload<CR>
 nnoremap <buffer><silent> o

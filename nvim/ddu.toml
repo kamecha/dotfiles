@@ -121,7 +121,8 @@ vim.fn["ddu#custom#patch_global"]({
 			matchers = { "matcher_dein_update" }
 		},
 		_ = {
-			matchers = { "matcher_fzf" }
+			matchers = { "matcher_fzf" },
+			sorters = { "sorter_fzf" }
 		}
 	}
 })

@@ -320,6 +320,34 @@ local function set_filer_layout()
 			}
 		}
 	})
+
+	-- ┌────────────────┐
+	-- │                │
+	-- │   preview      │
+	-- │                │
+	-- └────────────────┘
+	-- ┌────────────────┐
+	-- │                │
+	-- │   source       │
+	-- │                │
+	-- └────────────────┘
+	vim.fn["ddu#custom#patch_local"]('ui_filer_preview_horizontal_layout', {
+		uiParams = {
+			filer = {
+				autoAction = { name = 'preview' },
+				startAutoAction = true,
+				previewSplit = 'horizontal',
+				winCol = WinCol,
+				winWidth = WinWidth,
+				winRow = WinRow + math.floor(WinHeight / 2),
+				winHeight = math.floor(WinHeight / 2),
+				-- previewCol = WinCol,
+				previewWidth = WinWidth,
+				-- previewRow = WinRow + math.floor(WinHeight / 2),
+				previewHeight = math.floor(WinHeight / 2),
+			}
+		}
+	})
 end
 
 local function layout()
@@ -808,7 +836,7 @@ vim.keymap.set('n', '[ddu]e', function()
 				previewFloating = true
 			}
 		},
-		name = "ui_filer_preview_layout",
+		name = "ui_filer_preview_horizontal_layout",
 		resume = true,
 		sources = { { name = "file" } },
 		sourceOptions = {

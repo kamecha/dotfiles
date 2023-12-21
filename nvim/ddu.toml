@@ -811,7 +811,12 @@ vim.keymap.set('n', '[ddu]e', function()
 		name = "ui_filer_preview_layout",
 		resume = true,
 		sources = { { name = "file" } },
-		sourceOptions = { _ = { columns = { "icon_filename" } } },
+		sourceOptions = {
+			_ = {
+				columns = { "icon_filename" },
+				converters = { "converter_file_git_status" }
+			}
+		},
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]E', function()
@@ -828,7 +833,7 @@ vim.keymap.set('n', '[ddu]E', function()
 				name = "file",
 				options = {
 					columns = { "icon_filename" },
-					converters = { "converter_file_info" }
+					converters = { "converter_file_git_status", "converter_file_info" }
 				}
 			}
 		},
@@ -1127,6 +1132,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-filter-converter_file_info'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-filter-converter_file_git_status'
 on_source = 'ddu.vim'
 
 # 補完Kind

@@ -732,11 +732,51 @@ vim.keymap.set('n', '[ddu]ls', function()
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Symbol", "FloatBorder" } },
+				displayTree = true,
 			}
 		},
 		sources = {
 			{ name = "dummy",              params = { display = "documentSymbol" } },
-			{ name = "lsp_documentSymbol" },
+			{
+				name = "lsp_documentSymbol",
+				options = {
+					converters = {
+						{
+							name = "converter_lsp_symbol",
+							params = {
+								iconMap = {
+									["File"] = "",
+									["Module"] = "",
+									["Namespace"] = "",
+									["Package"] = "",
+									["Class"] = "",
+									["Method"] = "",
+									["Property"] = "",
+									["Field"] = "",
+									["Constructor"] = "",
+									["Enum"] = "",
+									["Interface"] = "",
+									["Function"] = "",
+									["Variable"] = "",
+									["Constant"] = "",
+									["String"] = "",
+									["Number"] = "",
+									["Boolean"] = "",
+									["Array"] = "",
+									["Object"] = "",
+									["Key"] = "",
+									["Null"] = "",
+									["EnumMember"] = "",
+									["Struct"] = "",
+									["Event"] = "",
+									["Operator"] = "",
+									["TypeParameter"] = "",
+								}
+							}
+						}
+					}
+				}
+			},
 			{ name = "dummy",              params = { display = "workspaceSymbol" } },
 			{ name = "lsp_workspaceSymbol" },
 		}

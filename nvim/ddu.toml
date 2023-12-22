@@ -448,8 +448,15 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	local sources = args["options"]["sources"]
 	for _, source in ipairs(sources) do
 		if source["name"] ~= "dummy" then
+			local options = source["options"]
+			local converters = nil
+			if options ~= nil then
+				converters = options["converters"]
+			end
 			source["options"] = {
-				matchers = { "matcher_kensaku" }
+				matchers = { "matcher_kensaku" },
+				sorters = {},
+				converters = converters,
 			}
 		end
 	end

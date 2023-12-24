@@ -852,14 +852,22 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ve<CR>', function()
 	vim.fn["ddu#start"]({
 		ui = "filer",
-		sources = {
-			{ name = "channel_rec", params = { type = "unread" } },
-			{ name = "channel" },
+		uiParams = {
+			filer = {
+				displayRoot = false,
+			},
 		},
-		sourceOptions = {
-			channel = { path = "VtraQ" },
-			channel_rec = { path = "unread" }
-		}
+		sources = {
+			{ name = "dummy", params = { display = "未読チャンネル" } },
+			{ name = "channel_rec", params = { type = "unread" } },
+			{ name = "dummy", params = { display = "チャンネルツリー" } },
+			{
+				name = "channel",
+				options = {
+					columns = { "channel" }
+				}
+			},
+		},
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]vu<CR>', function()

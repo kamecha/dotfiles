@@ -715,7 +715,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]lr', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp References", "FloatBorder" } },
@@ -732,7 +732,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ld', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Definition", "FloatBorder" } },

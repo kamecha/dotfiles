@@ -127,14 +127,12 @@ vim.fn["ddu#custom#patch_global"]({
 			highlights = {
 				path = "Normal",
 				lineNr = "Normal",
-				word = "Search"
 			}
 		},
 		anyjump_reference = {
 			highlights = {
 				path = "Normal",
 				lineNr = "Normal",
-				word = "Search"
 			}
 		},
 	}

@@ -111,9 +111,6 @@ vim.fn["ddu#custom#patch_global"]({
 			matchers = { "matcher_fzf" },
 			converters = { "converter_file_icon" }
 		},
-		channel = {
-			columns = { "filename" }
-		},
 		dummy = {
 			matchers = {}
 		},
@@ -636,15 +633,17 @@ vim.keymap.set('n', '[ddu]w', function()
 		sources = {
 			{
 				name = "window",
-				options = { matchers = { "matcher_regex", "matcher_fzf" } },
-				params = { format = "tab:%tn:%T:%w:%wi" }
+				options = {
+					columns = {
+						{ name = "window", params = { format = "tab %tn" } },
+						{ name = "window", params = { format = " %T" } },
+						{ name = "window", params = { format = " %w" } },
+						{ name = "window", params = { format = " %wi" } },
+					},
+					matchers = { "converter_display_word", "matcher_fzf" }
+				},
 			}
 		},
-		filterParams = {
-			matcher_regex = {
-				regex = "^(?!.*ddu-ff).*$"
-			}
-		}
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]L', function()

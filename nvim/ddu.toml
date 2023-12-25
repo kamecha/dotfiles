@@ -121,6 +121,22 @@ vim.fn["ddu#custom#patch_global"]({
 			matchers = { "matcher_fzf" },
 			sorters = { "sorter_fzf" }
 		}
+	},
+	sourceParams = {
+		anyjump_definition = {
+			highlights = {
+				path = "Normal",
+				lineNr = "Normal",
+				word = "Search"
+			}
+		},
+		anyjump_reference = {
+			highlights = {
+				path = "Normal",
+				lineNr = "Normal",
+				word = "Search"
+			}
+		},
 	}
 })
 
@@ -706,7 +722,10 @@ vim.keymap.set('n', '[ddu]lr', function()
 			}
 		},
 		sources = {
-			{ name = "lsp_references" }
+			{ name = "dummy",              params = { display = ">>lsp references<<" } },
+			{ name = "lsp_references" },
+			{ name = "dummy",              params = { display = ">>anyjump<<" } },
+			{ name = "anyjump_reference" }
 		}
 	})
 end, { remap = true })
@@ -760,6 +779,16 @@ vim.keymap.set('n', '[ddu]ld', function()
 				params = { display = ">>Implementation<<" }
 			},
 			{ name = "lsp_definition", params = { method = "textDocument/implementation" } },
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Black" } }
+					}
+				},
+				params = { display = ">>any jump<<" }
+			},
+			{ name = "anyjump_definition" },
 		}
 	})
 end, { remap = true })
@@ -1211,6 +1240,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'yuki-yano/ddu-source-nvim-notify'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Omochice/ddu-source-anyjump'
 on_source = 'ddu.vim'
 
 # 補完Filter

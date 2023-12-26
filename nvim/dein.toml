@@ -600,7 +600,8 @@ repo = 'tyru/open-browser.vim'
 repo = 'kamecha/traqVimPractice'
 [plugins.ftplugin]
 traqvim = '''
-setlocal noswapfile
+nmap <buffer><silent> <C-n> <Plug>(traqvim-next)
+nmap <buffer><silent> <C-p> <Plug>(traqvim-prev)
 nnoremap <buffer><silent> r
 			\ :TraqReload<CR>
 nnoremap <buffer><silent> o
@@ -634,7 +635,22 @@ setlocal cursorline
 [[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
 lua_source = '''
-require('gitsigns').setup()
+require('gitsigns').setup({
+	on_attach = function(bufnr)
+		local gs = package.loaded.gitsigns
+		-- Navigation
+		vim.keymap.set('n', ']c', function()
+			if vim.wo.diff then return ']c' end
+			vim.schedule(function() gs.next_hunk() end)
+			return '<Ignore>'
+		end, { buffer = bufnr, expr = true })
+		vim.keymap.set('n', '[c', function()
+			if vim.wo.diff then return '[c' end
+			vim.schedule(function() gs.prev_hunk() end)
+			return '<Ignore>'
+		end, { buffer = bufnr, expr = true })
+	end
+})
 '''
 
 # GitHub
@@ -703,33 +719,32 @@ vim.keymap.set('n', '<C-w>W', '<Plug>(snipewin)', { remap = true })
 
 [[plugins]]
 repo = 'kamecha/denops-dbus_synctex'
+depends = 'denops.vim'
 on_ft = ['tex']
-hook_source = '''
-autocmd FileType tex call s:TexKeymap()
+lua_source = '''
+local syncTex = require("dbus_synctex")
 
-function! s:TexKeymap() abort
-	nnoremap <buffer> <Leader>s
-				\ <Cmd>call dbus_synctex#syncView(
-				\		expand("%:p"),
-				\		expand("%:p")->substitute(".tex$", ".pdf", ""),
-				\		line("."),
-				\		col("."),
-				\	)<CR>
-endfunction
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	pattern = "tex",
+	callback = function()
+		vim.keymap.set("n", "<Leader>s", syncTex.syncViewCWD, { buffer = true })
+	end
+})
 
-function s:syncSource(texPath, line, col, time) abort
-	call cursor([a:line, a:col < 0 ? 1 : a:col])
-endfunction
-
-function s:initSyncTeX() abort
-	call dbus_synctex#createSessionBus()
-	call dbus_synctex#registerCallback(
-				\function("s:syncSource"))
-	call dbus_synctex#registerSyncSource(
-				\expand('%:p')->substitute(".tex$", ".pdf", ""),
-				\)
-endfunction
-
-autocmd User DenopsPluginPost:dbus_synctex
-			\ call s:initSyncTeX()
+vim.api.nvim_create_autocmd({ "User" }, {
+	pattern = "DenopsPluginPost:dbus_synctex",
+	callback = function()
+		syncTex.createSessionBus()
+		syncTex.registerCallback(function(_, line, col, _)
+			local colT = col < 0 and 1 or col
+			require('notify')(
+				'move (' .. vim.fn.line('.') .. ', ' .. vim.fn.col('.') .. ') -> (' .. line .. ', ' .. colT .. ')',
+				'info',
+				{ title = 'SyncSource' }
+			)
+			vim.fn.cursor({ line, colT })
+		end)
+		syncTex.registerSyncSource(syncTex.getPdfPathCWD())
+	end
+})
 '''

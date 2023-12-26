@@ -111,9 +111,6 @@ vim.fn["ddu#custom#patch_global"]({
 			matchers = { "matcher_fzf" },
 			converters = { "converter_file_icon" }
 		},
-		channel = {
-			columns = { "filename" }
-		},
 		dummy = {
 			matchers = {}
 		},
@@ -121,8 +118,23 @@ vim.fn["ddu#custom#patch_global"]({
 			matchers = { "matcher_dein_update" }
 		},
 		_ = {
-			matchers = { "matcher_fzf" }
+			matchers = { "matcher_fzf" },
+			sorters = { "sorter_fzf" }
 		}
+	},
+	sourceParams = {
+		anyjump_definition = {
+			highlights = {
+				path = "Normal",
+				lineNr = "Normal",
+			}
+		},
+		anyjump_reference = {
+			highlights = {
+				path = "Normal",
+				lineNr = "Normal",
+			}
+		},
 	}
 })
 
@@ -216,6 +228,38 @@ local function set_ff_layout()
 				winHeight = math.floor(WinHeight / 2),
 				previewCol = WinCol,
 				previewRow = 0,
+				previewWidth = WinWidth,
+				previewHeight = math.floor(WinHeight / 2),
+			}
+		}
+	})
+
+	-- ┌────────────────┐
+	-- │                │
+	-- │   preview      │
+	-- │                │
+	-- └────────────────┘
+	-- ┌────────────────┐
+	-- │   filter       │
+	-- └────────────────┘
+	-- ┌────────────────┐
+	-- │   source       │
+	-- │                │
+	-- └────────────────┘
+	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_horizontal_top_layout', {
+		uiParams = {
+			ff = {
+				startFilter = true,
+				filterFloatingPosition = 'top',
+				autoAction = { name = 'preview' },
+				startAutoAction = true,
+				previewSplit = 'horizontal',
+				winCol = WinCol,
+				winRow = math.floor(Lines / 2) + 1,
+				winWidth = WinWidth,
+				winHeight = math.floor(WinHeight / 2),
+				-- previewCol = WinCol,
+				previewRow = math.floor(Lines / 2) + 1 - 3,
 				previewWidth = WinWidth,
 				previewHeight = math.floor(WinHeight / 2),
 			}
@@ -319,6 +363,34 @@ local function set_filer_layout()
 			}
 		}
 	})
+
+	-- ┌────────────────┐
+	-- │                │
+	-- │   preview      │
+	-- │                │
+	-- └────────────────┘
+	-- ┌────────────────┐
+	-- │                │
+	-- │   source       │
+	-- │                │
+	-- └────────────────┘
+	vim.fn["ddu#custom#patch_local"]('ui_filer_preview_horizontal_layout', {
+		uiParams = {
+			filer = {
+				autoAction = { name = 'preview' },
+				startAutoAction = true,
+				previewSplit = 'horizontal',
+				winCol = WinCol,
+				winWidth = WinWidth,
+				winRow = WinRow + math.floor(WinHeight / 2),
+				winHeight = math.floor(WinHeight / 2),
+				-- previewCol = WinCol,
+				previewWidth = WinWidth,
+				-- previewRow = WinRow + math.floor(WinHeight / 2),
+				previewHeight = math.floor(WinHeight / 2),
+			}
+		}
+	})
 end
 
 local function layout()
@@ -419,8 +491,15 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	local sources = args["options"]["sources"]
 	for _, source in ipairs(sources) do
 		if source["name"] ~= "dummy" then
+			local options = source["options"]
+			local converters = nil
+			if options ~= nil then
+				converters = options["converters"]
+			end
 			source["options"] = {
-				matchers = { "matcher_kensaku" }
+				matchers = { "matcher_kensaku" },
+				sorters = {},
+				converters = converters,
 			}
 		end
 	end
@@ -478,7 +557,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]r', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				ignoreEmpty = false,
@@ -588,7 +667,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]w', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Window", "FloatBorder" } },
@@ -600,15 +679,17 @@ vim.keymap.set('n', '[ddu]w', function()
 		sources = {
 			{
 				name = "window",
-				options = { matchers = { "matcher_regex", "matcher_fzf" } },
-				params = { format = "tab:%tn:%T:%w:%wi" }
+				options = {
+					columns = {
+						{ name = "window", params = { format = "tab %tn" } },
+						{ name = "window", params = { format = " %T" } },
+						{ name = "window", params = { format = " %w" } },
+						{ name = "window", params = { format = " %wi" } },
+					},
+					matchers = { "converter_display_word", "matcher_fzf" }
+				},
 			}
 		},
-		filterParams = {
-			matcher_regex = {
-				regex = "^(?!.*ddu-ff).*$"
-			}
-		}
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]L', function()
@@ -632,21 +713,24 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]lr', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp References", "FloatBorder" } },
 			}
 		},
 		sources = {
-			{ name = "lsp_references" }
+			{ name = "dummy",              params = { display = ">>lsp references<<" } },
+			{ name = "lsp_references" },
+			{ name = "dummy",              params = { display = ">>anyjump<<" } },
+			{ name = "anyjump_reference" }
 		}
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]ld', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Definition", "FloatBorder" } },
@@ -693,6 +777,16 @@ vim.keymap.set('n', '[ddu]ld', function()
 				params = { display = ">>Implementation<<" }
 			},
 			{ name = "lsp_definition", params = { method = "textDocument/implementation" } },
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Black" } }
+					}
+				},
+				params = { display = ">>any jump<<" }
+			},
+			{ name = "anyjump_definition" },
 		}
 	})
 end, { remap = true })
@@ -703,11 +797,51 @@ vim.keymap.set('n', '[ddu]ls', function()
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Symbol", "FloatBorder" } },
+				displayTree = true,
 			}
 		},
 		sources = {
 			{ name = "dummy",              params = { display = "documentSymbol" } },
-			{ name = "lsp_documentSymbol" },
+			{
+				name = "lsp_documentSymbol",
+				options = {
+					converters = {
+						{
+							name = "converter_lsp_symbol",
+							params = {
+								iconMap = {
+									["File"] = "",
+									["Module"] = "",
+									["Namespace"] = "",
+									["Package"] = "",
+									["Class"] = "",
+									["Method"] = "",
+									["Property"] = "",
+									["Field"] = "",
+									["Constructor"] = "",
+									["Enum"] = "",
+									["Interface"] = "",
+									["Function"] = "",
+									["Variable"] = "",
+									["Constant"] = "",
+									["String"] = "",
+									["Number"] = "",
+									["Boolean"] = "",
+									["Array"] = "",
+									["Object"] = "",
+									["Key"] = "",
+									["Null"] = "",
+									["EnumMember"] = "",
+									["Struct"] = "",
+									["Event"] = "",
+									["Operator"] = "",
+									["TypeParameter"] = "",
+								}
+							}
+						}
+					}
+				}
+			},
 			{ name = "dummy",              params = { display = "workspaceSymbol" } },
 			{ name = "lsp_workspaceSymbol" },
 		}
@@ -776,14 +910,22 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ve<CR>', function()
 	vim.fn["ddu#start"]({
 		ui = "filer",
-		sources = {
-			{ name = "channel_rec", params = { type = "unread" } },
-			{ name = "channel" },
+		uiParams = {
+			filer = {
+				displayRoot = false,
+			},
 		},
-		sourceOptions = {
-			channel = { path = "VtraQ" },
-			channel_rec = { path = "unread" }
-		}
+		sources = {
+			{ name = "dummy", params = { display = "未読チャンネル" } },
+			{ name = "channel_rec", params = { type = "unread" } },
+			{ name = "dummy", params = { display = "チャンネルツリー" } },
+			{
+				name = "channel",
+				options = {
+					columns = { "channel" }
+				}
+			},
+		},
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]vu<CR>', function()
@@ -807,10 +949,14 @@ vim.keymap.set('n', '[ddu]e', function()
 				previewFloating = true
 			}
 		},
-		name = "ui_filer_preview_layout",
+		name = "ui_filer_preview_horizontal_layout",
 		resume = true,
 		sources = { { name = "file" } },
-		sourceOptions = { _ = { columns = { "icon_filename" } } },
+		sourceOptions = {
+			_ = {
+				columns = { "icon_filename", "file_git_status" },
+			}
+		},
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]E', function()
@@ -827,7 +973,7 @@ vim.keymap.set('n', '[ddu]E', function()
 				name = "file",
 				options = {
 					columns = { "icon_filename" },
-					converters = { "converter_file_info" }
+					converters = { "converter_file_git_status", "converter_file_info" }
 				}
 			}
 		},
@@ -1094,6 +1240,10 @@ on_source = 'ddu.vim'
 repo = 'yuki-yano/ddu-source-nvim-notify'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'Omochice/ddu-source-anyjump'
+on_source = 'ddu.vim'
+
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
@@ -1126,6 +1276,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-filter-converter_file_info'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-filter-converter_file_git_status'
 on_source = 'ddu.vim'
 
 # 補完Kind

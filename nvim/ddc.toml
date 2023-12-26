@@ -8,10 +8,10 @@ vim.opt_local.dictionary:append('/usr/share/dict/american-english')
 
 vim.fn["ddc#custom#patch_global"]({
 	ui = "pum",
-	sources = { "around", "nvim-lsp", "vsnip", "file", "dictionary" },
+	sources = { "around", "lsp", "vsnip", "file", "dictionary" },
 	sourceOptions = {
 		around = { mark = "A" },
-		["nvim-lsp"] = {
+		["lsp"] = {
 			mark = "lsp",
 			dup = "force",
 			keywordPattern = "\\k+",
@@ -48,7 +48,7 @@ vim.fn["ddc#custom#patch_global"]({
 		}
 	},
 	sourceParams = {
-		["nvim-lsp"] = {
+		["lsp"] = {
 			enableResolveItem = true,
 			enableAdditionalTextEdit = true,
 			confirmBehavior = "replace",
@@ -245,7 +245,7 @@ repo = 'Shougo/ddc-around'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-source-nvim-lsp'
+repo = 'Shougo/ddc-source-lsp'
 depends = ['denops.vim', 'ddc.vim']
 on_source = 'ddc.vim'
 

@@ -318,12 +318,12 @@ end
 
 local function set_filer_layout()
 	-- ┌────────────────────────────────┐
-	-- │                                │
-	-- │                                │
-	-- │        source                  │
-	-- │                                │
-	-- │                                │
-	-- │                                │
+	-- │                ┌─────────────┐ │
+	-- │                │             │ │
+	-- │        source  │  preview    │ │
+	-- │                │             │ │
+	-- │                │             │ │
+	-- │                └─────────────┘ │
 	-- └────────────────────────────────┘
 	vim.fn["ddu#custom#patch_local"]('default', {
 		uiParams = {
@@ -332,6 +332,10 @@ local function set_filer_layout()
 				winRow = WinRow,
 				winWidth = WinWidth,
 				winHeight = WinHeight,
+				previewCol = WinCol + math.floor(WinWidth / 2),
+				previewRow = WinRow + WinHeight + 1,
+				previewWidth = math.floor(WinWidth / 2),
+				previewHeight = WinHeight - 2,
 			}
 		}
 	})
@@ -949,8 +953,6 @@ vim.keymap.set('n', '[ddu]e', function()
 				previewFloating = true
 			}
 		},
-		name = "ui_filer_preview_horizontal_layout",
-		resume = true,
 		sources = { { name = "file" } },
 		sourceOptions = {
 			_ = {

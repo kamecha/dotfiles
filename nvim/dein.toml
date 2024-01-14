@@ -706,3 +706,6 @@ vim.api.nvim_create_autocmd({ "User" }, {
 	end
 })
 '''
+
+[[plugins]]
+repo = 'HakonHarnes/img-clip.nvim'

@@ -60,6 +60,26 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 	border = "single"
 	}
 )
+local lspconfig = require'lspconfig'
+-- Only define once
+if not lspconfig.hdl_checker then
+	require'lspconfig/configs'.hdl_checker = {
+		default_config = {
+			cmd = {"hdl_checker", "--lsp", };
+			filetypes = {"vhdl", "verilog", "systemverilog"};
+			root_dir = function(fname)
+				-- will look for a parent directory with a .git directory. If none, just
+				-- use the current directory
+				return lspconfig.util.find_git_ancestor(fname) or lspconfig.util.path.dirname(fname)
+				-- or (not both)
+				-- Will look for the .hdl_checker.config file in a parent directory. If
+				-- none, will use the current directory
+				-- return lspconfig.util.root_pattern('.hdl_checker.config')(fname) or lspconfig.util.path.dirname(fname)
+			end;
+			settings = {};
+		};
+	}
+end
 '''
 
 [[plugins]]
@@ -204,21 +224,43 @@ repo = 'nvim-lua/plenary.nvim'
 # インストールのUI
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
-rev = 'legacy'
-lua_add = '''
-vim.api.nvim_create_autocmd('LspAttach', {
-	once = true,
-	callback = function()
-		require('fidget').setup({
-			text = {
-				spinner = 'moon',
-			},
-		})
-	end,
-})
-'''
+rev = 'v1.1.0'
 lua_source = '''
 require('fidget').setup({})
+
+local progress = require("fidget.progress")
+
+local handle = progress.handle.create({
+	title = "check denops",
+	message = "checking...",
+	lsp_client = { name = "denops" },
+	percentage = 0,
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "DenopsProcessStarted",
+	desc = "fired when the Denops local server process is started",
+	callback = function ()
+		handle:report({
+			title = "denops local server started",
+			message = "local server started",
+			percentage = 50,
+		})
+	end
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "DenopsReady",
+	desc = "fired when a connection with Denops is established",
+	callback = function ()
+		handle:report({
+			title = "connection with denops established",
+			message = "connection established",
+			percentage = 100,
+		})
+		handle:finish()
+	end
+})
 '''
 
 [[plugins]]

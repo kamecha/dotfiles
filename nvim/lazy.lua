@@ -61,9 +61,28 @@ require("lazy").setup({
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-vsnip",
+			"hrsh7th/vim-vsnip",
 		},
 		config = function()
-			-- ...
+			local cmp = require("cmp")
+			cmp.setup({
+				sources = {
+					{ name = "nvim_lsp" },
+					{ name = "buffer" },
+					{ name = "path" },
+				},
+				mapping = cmp.mapping.preset.insert({
+					['<C-n>'] = cmp.mapping.select_next_item(),
+					['<C-p>'] = cmp.mapping.select_prev_item(),
+					['<C-y>'] = cmp.mapping.confirm({ select = true }),
+					['<C-e>'] = cmp.mapping.abort(),
+					['<C-b>'] = cmp.mapping.scroll_docs(-4),
+					['<C-f>'] = cmp.mapping.scroll_docs(4),
+				})
+			})
 		end,
 	},
 
@@ -93,5 +112,52 @@ require("lazy").setup({
 	-- local plugins can also be configure with the dev option.
 	-- This will use {config.dev.path}/noice.nvim/ instead of fetching it from Github
 	-- With the dev option, you can easily switch between the local and installed version of a plugin
-	{ "folke/noice.nvim",                         dev = true },
+	{
+		"folke/noice.nvim",
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+		config = function()
+			require("noice").setup({
+				cmdline = {
+					enabled = true
+				},
+				popupmenu = {
+					enabled = true,
+					backend = "cmp"
+				}
+			})
+		end
+	},
+	{
+		"vim-denops/denops.vim"
+	},
+	{
+		"kamecha/denops-dbus_synctex",
+		dependencies = { "vim-denops/denops.vim" },
+		config = function()
+			local syncTex = require("dbus_synctex")
+			vim.api.nvim_create_autocmd({ "FileType" }, {
+				pattern = "tex",
+				callback = function()
+					vim.keymap.set("n", "<Leader>s", syncTex.syncViewCWD, { buffer = true })
+				end
+			})
+			vim.api.nvim_create_autocmd({ "User" }, {
+			pattern = "DenopsPluginPost:dbus_synctex",
+			callback = function()
+				syncTex.createSessionBus()
+				syncTex.registerCallback(function (_, line, col, _)
+					vim.fn.cursor({ line, col < 0 and 1 or col })
+				end)
+				syncTex.registerSyncSource(syncTex.getPdfPathCWD())
+			end
+		})
+		end
+	}
 })

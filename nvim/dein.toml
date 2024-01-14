@@ -120,6 +120,14 @@ mason_lspconfig.setup_handlers({ function(server_name)
 				diagnostics = { globals = { "vim" } },
 			}
 		}
+	elseif server_name == "rust-analyzer" then
+		opts.settings = {
+			["rust-analyzer"] = {
+				check = {
+					command = "clippy"
+				}
+			}
+		}
 	end
 	nvim_lsp[server_name].setup(opts)
 end })
@@ -263,12 +271,6 @@ vim.api.nvim_create_autocmd("User", {
 })
 '''
 
-[[plugins]]
-repo = 'folke/neodev.nvim'
-lua_source = '''
-require("neodev").setup({})
-'''
-
 # deno
 [[plugins]]
 repo = 'vim-denops/denops.vim'
@@ -292,22 +294,22 @@ vim.keymap.set('i', '<C-l>', 'copilot#Accept("<CR>")', { silent = true, script =
 vim.g.copilot_no_tab_map = true
 '''
 
-[[plugins]]
-repo = 'nvim-telescope/telescope.nvim'
-depends = ['plenary.nvim']
-merged = '0'
-lua_source = '''
-require('telescope').setup({})
-require('telescope').load_extension('noice')
-'''
+# [[plugins]]
+# repo = 'nvim-telescope/telescope.nvim'
+# depends = ['plenary.nvim']
+# merged = '0'
+# lua_source = '''
+# require('telescope').setup({})
+# require('telescope').load_extension('noice')
+# '''
 
-[[plugins]]
-repo = 'nvim-telescope/telescope-file-browser.nvim'
-depends = ['telescope.nvim']
-merged = '0'
-lua_source = '''
-require('telescope').load_extension('file_browser')
-'''
+# [[plugins]]
+# repo = 'nvim-telescope/telescope-file-browser.nvim'
+# depends = ['telescope.nvim']
+# merged = '0'
+# lua_source = '''
+# require('telescope').load_extension('file_browser')
+# '''
 
 # help日本語
 [[plugins]]
@@ -529,6 +531,10 @@ repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown', 'pandoc.markdown', 'rmd']
 build = 'cd app && yarn install'
 
+[[plugins]]
+repo = 'kat0h/bufpreview.vim'
+build = 'deno task prepare'
+
 # colorのプレビュー
 [[plugins]]
 repo = 'gko/vim-coloresque'
@@ -587,10 +593,13 @@ repo = 'MunifTanjim/nui.nvim'
 repo = 'rcarriga/nvim-notify'
 lua_source = '''
 require('notify').setup({
-	render = "minimal",
+	render = "default",
 	timeout = 1000,
 	})
 vim.notify = require('notify')
+--vim.on_key(function(key)
+--	require('notify')(key, 'info', {title = 'Key pressed'})
+--end, 0)
 '''
 
 [[plugins]]
@@ -751,3 +760,18 @@ vim.api.nvim_create_autocmd({ "User" }, {
 
 [[plugins]]
 repo = 'HakonHarnes/img-clip.nvim'
+
+[[plugins]]
+repo = 'kamecha/openVI-modoki'
+
+# [[plugins]]
+# repo = 'lervag/vimtex'
+# lua_add = '''
+# vim.g.vimtex_view_general_viewer = 'evince'
+# '''
+
+# [[plugins]]
+# repo = 'madox2/vim-ai'
+
+[[plugins]]
+repo = 'Shougo/vinarise.vim'

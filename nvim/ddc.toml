@@ -60,8 +60,7 @@ vim.fn["ddc#custom#patch_global"]({
 			mode = "os"
 		},
 		dictionary = {
-			smartCase = true,
-			isVolatile = true
+			paths = { '/usr/share/dict/american-english' }
 		}
 	},
 	filterParams = {
@@ -250,7 +249,7 @@ depends = ['denops.vim', 'ddc.vim']
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'matsui54/ddc-dictionary'
+repo = 'uga-rosa/ddc-source-dictionary'
 on_source = 'ddc.vim'
 
 [[plugins]]
@@ -289,6 +288,9 @@ on_source = 'ddc.vim'
 # converter_dictionaryで使う辞書
 [[plugins]]
 repo = 'gunyarakun/kantan-ej-dictionary'
+
+[[plugins]]
+repo = 'dwyl/english-words'
 
 # スニペット
 [[plugins]]
@@ -341,7 +343,10 @@ vim.keymap.set('c', '<C-j>', '<Plug>(skkeleton-toggle)', { remap = true })
 '''
 lua_source = '''
 vim.fn["skkeleton#config"]({
-	globalJisyo = vim.g.github_dir .. '/skk-dev/dict/SKK-JISYO.L',
+	globalDictionaries = {
+		{ vim.g.github_dir .. "/skk-dev/dict/SKK-JISYO.L", "euc-jp" },
+		{ "/home/kamecha_linux/dotfiles/SKK-JISYO.nicoime", "utf-16le" },
+	},
 	registerConvertResult = true,
 })
 vim.api.nvim_create_autocmd({ "User" }, {

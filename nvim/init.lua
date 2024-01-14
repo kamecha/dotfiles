@@ -1,6 +1,8 @@
 
 vim.cmd.luafile(vim.fn.expand(vim.fn.stdpath("config") .. "/dein.lua"))
 
+vim.cmd.source(vim.fn.expand(vim.fn.stdpath("config") .. "/user.vim"))
+
 -- for color setting
 vim.cmd.colorscheme("edge")
 vim.cmd.highlight({ "DduPreview", "guifg=#d6deeb", "guibg=#38507a" })

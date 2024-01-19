@@ -134,9 +134,9 @@ vim.fn["ddc#custom#patch_filetype"]("traqvim-message", {
 		stamp = {
 			mark = "stamp",
 			matchers = { "matcher_fuzzy" },
+			keywordPattern = "[a-zA-Z_:]\\w*",
 		}
 	},
-	keywordPattern = "[a-zA-Z_:]\\w*",
 	specialBufferCompletion = true,
 })
 
@@ -356,8 +356,13 @@ vim.api.nvim_create_autocmd({ "User" }, {
 		vim.b.prev_buffer_config = vim.fn["ddc#custom#get_buffer"]()
 		vim.fn["ddc#custom#patch_buffer"]({
 			ui = "native",
-			sources = { "around", "skkeleton" },
-			keywordPattern = "([ァ-ヮア-ン]|ー)+",
+			sources = {
+				"around",
+				{
+					name = "skkeleton",
+					options = { keywordPattern = "([ァ-ヮア-ン]|ー)+" },
+				},
+			},
 		})
 	end
 })

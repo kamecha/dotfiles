@@ -11,7 +11,7 @@ if vim.fn.exists('g:dein#auto_recache') ~= 1 then
 end
 
 -- dein installation check
-if not vim.fn.glob(dein_repo_dir) == '' then
+if vim.fn.glob(dein_repo_dir) == '' then
 	vim.fn.system('git clone https://github.com/Shougo/dein.vim ' .. dein_repo_dir)
 end
 

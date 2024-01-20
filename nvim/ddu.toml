@@ -397,17 +397,7 @@ local function set_filer_layout()
 	})
 end
 
-local function update_ff_layout()
-	local currentOptions = vim.fn["ddu#custom#get_current"]()
-	if vim.tbl_isempty(currentOptions) then
-		return
-	end
-	local updatedLocalOptions = vim.fn["ddu#custom#get_local"]()
-	vim.fn["ddu#ui#do_action"]('updateOptions', updatedLocalOptions[currentOptions["name"]])
-	vim.fn["ddu#ui#do_action"]('redraw', { method = "uiRedraw" })
-end
-
-local function update_filer_layout()
+local function update_ui_layout()
 	local currentOptions = vim.fn["ddu#custom#get_current"]()
 	if vim.tbl_isempty(currentOptions) then
 		return
@@ -429,8 +419,7 @@ vim.api.nvim_create_autocmd("VimResized", {
 	pattern = "*",
 	callback = function()
 		layout()
-		update_ff_layout()
-		update_filer_layout()
+		update_ui_layout()
 	end
 })
 
@@ -994,7 +983,7 @@ vim.keymap.set('n', '[ddu]e', function()
 			}
 		},
 	})
-	update_filer_layout()
+	update_ui_layout()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]E', function()
 	vim.fn["ddu#start"]({

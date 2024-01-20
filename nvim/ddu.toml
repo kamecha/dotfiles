@@ -746,9 +746,9 @@ vim.keymap.set('n', '[ddu]lr', function()
 			}
 		},
 		sources = {
-			{ name = "dummy",              params = { display = ">>lsp references<<" } },
+			{ name = "dummy",            params = { display = ">>lsp references<<" } },
 			{ name = "lsp_references" },
-			{ name = "dummy",              params = { display = ">>anyjump<<" } },
+			{ name = "dummy",            params = { display = ">>anyjump<<" } },
 			{ name = "anyjump_reference" }
 		}
 	})

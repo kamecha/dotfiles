@@ -403,8 +403,8 @@ local function update_ff_layout()
 		return
 	end
 	local updatedLocalOptions = vim.fn["ddu#custom#get_local"]()
-	vim.fn["ddu#ui#ff#do_action"]('updateOptions', updatedLocalOptions[currentOptions["name"]])
-	vim.fn["ddu#ui#ff#do_action"]('redraw', { method = "uiRedraw" })
+	vim.fn["ddu#ui#do_action"]('updateOptions', updatedLocalOptions[currentOptions["name"]])
+	vim.fn["ddu#ui#do_action"]('redraw', { method = "uiRedraw" })
 end
 
 local function update_filer_layout()
@@ -413,8 +413,8 @@ local function update_filer_layout()
 		return
 	end
 	local updatedLocalOptions = vim.fn["ddu#custom#get_local"]()
-	vim.fn["ddu#ui#filer#do_action"]('updateOptions', updatedLocalOptions[currentOptions["name"]])
-	vim.fn["ddu#ui#filer#do_action"]('redraw', { method = "uiRedraw" })
+	vim.fn["ddu#ui#do_action"]('updateOptions', updatedLocalOptions[currentOptions["name"]])
+	vim.fn["ddu#ui#do_action"]('redraw', { method = "uiRedraw" })
 end
 
 local function layout()
@@ -540,7 +540,7 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 			}
 		end
 	end
-	vim.fn["ddu#ui#ff#do_action"]('updateOptions', {
+	vim.fn["ddu#ui#do_action"]('updateOptions', {
 		uiParams = {
 			ff = {
 				filterFloatingTitle = { { "日本語検索", "LightBlue" } },
@@ -1028,45 +1028,45 @@ vim.opt_local.cursorline = true
 vim.opt_local.signcolumn = 'yes'
 
 vim.keymap.set('n', '<CR>', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction')
+	vim.fn["ddu#ui#do_action"]('itemAction')
 end, { buffer = true })
 vim.keymap.set('n', 't', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "tabnew" } })
+	vim.fn["ddu#ui#do_action"]('itemAction', { params = { command = "tabnew" } })
 end, { buffer = true })
 vim.keymap.set('n', 'o', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "split" } })
+	vim.fn["ddu#ui#do_action"]('itemAction', { params = { command = "split" } })
 end, { buffer = true })
 vim.keymap.set('n', 'v', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "vsplit" } })
+	vim.fn["ddu#ui#do_action"]('itemAction', { params = { command = "vsplit" } })
 end, { buffer = true })
 vim.keymap.set('n', '<C-j>', function()
-	vim.fn["ddu#ui#ff#do_action"]('kensaku')
+	vim.fn["ddu#ui#do_action"]('kensaku')
 end, { buffer = true })
 vim.keymap.set('n', 'a', function()
-	vim.fn["ddu#ui#ff#do_action"]('chooseAction')
+	vim.fn["ddu#ui#do_action"]('chooseAction')
 end, { buffer = true })
 vim.keymap.set('n', 's', function()
-	vim.fn["ddu#ui#ff#do_action"]('toggleSelectItem')
+	vim.fn["ddu#ui#do_action"]('toggleSelectItem')
 end, { buffer = true })
 vim.keymap.set('n', 'i', function()
-	vim.fn["ddu#ui#ff#do_action"]('openFilterWindow')
+	vim.fn["ddu#ui#do_action"]('openFilterWindow')
 end, { buffer = true })
 vim.keymap.set('n', 'c', function()
-	vim.fn["ddu#ui#ff#do_action"]('closeFilterWindow')
+	vim.fn["ddu#ui#do_action"]('closeFilterWindow')
 end, { buffer = true })
 vim.keymap.set('n', 'p', function()
-	vim.fn["ddu#ui#ff#do_action"]('preview')
+	vim.fn["ddu#ui#do_action"]('preview')
 end, { buffer = true })
 vim.keymap.set('n', 'e', function()
-	vim.fn["ddu#ui#ff#do_action"]('expandItem', { mode = "toggle" })
+	vim.fn["ddu#ui#do_action"]('expandItem', { mode = "toggle" })
 end, { buffer = true })
 vim.keymap.set('n', 'q', function()
-	vim.fn["ddu#ui#ff#do_action"]('quit')
+	vim.fn["ddu#ui#do_action"]('quit')
 end, { buffer = true })
 vim.keymap.set('n', '-', function()
 	local sourceName = vim.fn["ddu#ui#get_item"]()["__sourceName"]
 	if sourceName == "file" then
-		vim.fn["ddu#ui#ff#do_action"]('itemAction', {
+		vim.fn["ddu#ui#do_action"]('itemAction', {
 			name = "narrow",
 			params = { path = ".." }
 		})
@@ -1084,47 +1084,47 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
 '''
 lua_ddu-ff-filter = '''
 vim.keymap.set('n', '<CR>', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction')
+	vim.fn["ddu#ui#do_action"]('itemAction')
 end, { buffer = true })
 vim.keymap.set('n', 'q', function()
-	vim.fn["ddu#ui#ff#do_action"]('quit')
+	vim.fn["ddu#ui#do_action"]('quit')
 end, { buffer = true })
 vim.keymap.set('i', '<CR>', function()
 	if vim.fn["ddu#ui#get_item"]()["__sourceName"] == "file" and
 		vim.fn["ddu#ui#get_item"]()["action"]["isDirectory"] == true then
-		vim.fn["ddu#ui#ff#do_action"]('itemAction', { name = "narrow" })
+		vim.fn["ddu#ui#do_action"]('itemAction', { name = "narrow" })
 	else
-		vim.fn["ddu#ui#ff#do_action"]('itemAction')
+		vim.fn["ddu#ui#do_action"]('itemAction')
 	end
 end, { buffer = true })
 vim.keymap.set('i', '<C-p>', function()
-	vim.fn["ddu#ui#ff#do_action"]('preview')
+	vim.fn["ddu#ui#do_action"]('preview')
 end, { buffer = true })
 vim.keymap.set('i', '<C-t>', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "tabnew" } })
+	vim.fn["ddu#ui#do_action"]('itemAction', { params = { command = "tabnew" } })
 end, { buffer = true })
 vim.keymap.set('i', '<C-o>', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "split" } })
+	vim.fn["ddu#ui#do_action"]('itemAction', { params = { command = "split" } })
 end, { buffer = true })
 vim.keymap.set('i', '<C-v>', function()
-	vim.fn["ddu#ui#ff#do_action"]('itemAction', { params = { command = "vsplit" } })
+	vim.fn["ddu#ui#do_action"]('itemAction', { params = { command = "vsplit" } })
 end, { buffer = true })
 vim.keymap.set('i', '<C-n>', function()
-	vim.fn["ddu#ui#ff#do_action"]("cursorNext")
+	vim.fn["ddu#ui#do_action"]("cursorNext")
 end, { buffer = true })
 vim.keymap.set('i', '<C-p>', function()
-	vim.fn["ddu#ui#ff#do_action"]("cursorPrevious")
+	vim.fn["ddu#ui#do_action"]("cursorPrevious")
 end, { buffer = true })
 vim.keymap.set('i', '<C-s>', function()
-	vim.fn["ddu#ui#ff#do_action"]("toggleSelectItem")
+	vim.fn["ddu#ui#do_action"]("toggleSelectItem")
 end, { buffer = true })
 vim.keymap.set('i', '<C-a>', function()
-	vim.fn["ddu#ui#ff#do_action"]("toggleAllItems")
+	vim.fn["ddu#ui#do_action"]("toggleAllItems")
 end, { buffer = true })
-vim.keymap.set('i', '<C-l>', '<Esc><Cmd>call ddu#ui#ff#do_action("leaveFilterWindow")<CR>', { buffer = true })
-vim.keymap.set('i', '<C-j>', '<Esc><Cmd>call ddu#ui#ff#do_action("kensaku")<CR>', { buffer = true })
+vim.keymap.set('i', '<C-l>', '<Esc><Cmd>call ddu#ui#do_action("leaveFilterWindow")<CR>', { buffer = true })
+vim.keymap.set('i', '<C-j>', '<Esc><Cmd>call ddu#ui#do_action("kensaku")<CR>', { buffer = true })
 vim.keymap.set('i', '<C-q>', function()
-	vim.fn["ddu#ui#ff#do_action"]("quit")
+	vim.fn["ddu#ui#do_action"]("quit")
 end, { buffer = true })
 '''
 

@@ -968,6 +968,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]e', function()
 	vim.fn["ddu#start"]({
 		ui = "filer",
+		resume = true,
 		uiParams = {
 			filer = {
 				split = "floating",

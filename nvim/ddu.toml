@@ -140,16 +140,11 @@ vim.fn["ddu#custom#patch_global"]({
 
 -- layout
 
-local function set_size()
-	-- 関数外部のwinColを参照して、columns / 8を代入する
-	Columns = vim.api.nvim_get_option("columns")
-	Lines = vim.api.nvim_get_option("lines")
-	WinCol = math.floor(Columns / 8)
-	WinRow = math.floor(Lines / 8)
-	WinWidth = math.floor(Columns - (Columns / 4))
-	WinHeight = math.floor(Lines - (Lines / 4))
-end
 local function set_ff_layout()
+	local dduCol = "( &columns / 8 )"
+	local dduRow = "( &lines / 8 )"
+	local dduWidth = "( &columns - (&columns / 4) )"
+	local dduHeight = "( &lines - (&lines / 4) )"
 	-- ┌────────────────────────────────┐
 	-- │                                │
 	-- │                                │
@@ -161,10 +156,10 @@ local function set_ff_layout()
 	vim.fn["ddu#custom#patch_local"]('default', {
 		uiParams = {
 			ff = {
-				winCol = WinCol,
-				winRow = WinRow,
-				winWidth = WinWidth,
-				winHeight = WinHeight
+				winCol = dduCol,
+				winRow = dduRow,
+				winWidth = dduWidth,
+				winHeight = dduHeight,
 			}
 		}
 	})
@@ -190,14 +185,14 @@ local function set_ff_layout()
 				filterFloatingPosition = 'bottom',
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
-				winCol = WinCol,
-				winRow = WinRow,
-				winWidth = math.floor(WinWidth / 2),
-				winHeight = WinHeight,
-				previewCol = WinCol + math.floor(WinWidth / 2) + 2,
-				previewRow = WinRow + WinHeight + 5,
-				previewWidth = math.floor(WinWidth / 2),
-				previewHeight = WinHeight + 3,
+				winCol = dduCol,
+				winRow = dduRow,
+				winWidth = dduWidth .. "/ 2",
+				winHeight = dduHeight,
+				previewCol = dduCol .. " + " .. dduWidth .. "/ 2" .. " + 2",
+				previewRow = dduRow .. " + " .. dduHeight .. " + 5",
+				previewWidth = dduWidth .. "/ 2",
+				previewHeight = dduHeight .. " + 3",
 			}
 		}
 	})
@@ -222,14 +217,14 @@ local function set_ff_layout()
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
 				previewSplit = 'horizontal',
-				winCol = WinCol,
-				winRow = math.floor(Lines / 2),
-				winWidth = WinWidth,
-				winHeight = math.floor(WinHeight / 2),
-				previewCol = WinCol,
+				winCol = dduCol,
+				winRow = "&lines / 2",
+				winWidth = dduWidth,
+				winHeight = dduHeight .. " / 2",
+				previewCol = dduCol,
 				previewRow = 0,
-				previewWidth = WinWidth,
-				previewHeight = math.floor(WinHeight / 2),
+				previewWidth = dduWidth,
+				previewHeight = dduHeight .. " / 2",
 			}
 		}
 	})
@@ -254,14 +249,14 @@ local function set_ff_layout()
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
 				previewSplit = 'horizontal',
-				winCol = WinCol,
-				winRow = math.floor(Lines / 2) + 1,
-				winWidth = WinWidth,
-				winHeight = math.floor(WinHeight / 2),
+				winCol = dduCol,
+				winRow = "&lines / 2 + 1",
+				winWidth = dduWidth,
+				winHeight = dduHeight .. " / 2",
 				-- previewCol = WinCol,
-				previewRow = math.floor(Lines / 2) + 1 - 3,
-				previewWidth = WinWidth,
-				previewHeight = math.floor(WinHeight / 2),
+				previewRow = "&lines / 2 + 1 - 3",
+				previewWidth = dduWidth,
+				previewHeight = dduHeight .. " / 2",
 			}
 		}
 	})
@@ -279,10 +274,10 @@ local function set_ff_layout()
 			ff = {
 				startFilter = true,
 				filterFloatingPosition = 'bottom',
-				winCol = WinCol,
-				winWidth = WinWidth,
-				winRow = WinRow,
-				winHeight = WinHeight,
+				winCol = dduCol,
+				winWidth = dduWidth,
+				winRow = dduRow,
+				winHeight = dduHeight,
 			}
 		}
 	})
@@ -303,20 +298,24 @@ local function set_ff_layout()
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
 				previewSplit = 'vertical',
-				winCol = WinCol,
-				winWidth = math.floor(WinWidth / 2),
-				winRow = WinRow,
-				winHeight = WinHeight,
-				previewCol = WinCol + math.floor(WinWidth / 2) + 2,
-				previewWidth = math.floor(WinWidth / 2),
-				previewRow = WinRow,
-				previewHeight = WinHeight,
+				winCol = dduCol,
+				winWidth = dduWidth .. "/ 2",
+				winRow = dduRow,
+				winHeight = dduHeight,
+				previewCol = dduCol .. " + " .. dduWidth .. "/ 2" .. " + 2",
+				previewWidth = dduWidth .. "/ 2",
+				previewRow = dduRow,
+				previewHeight = dduHeight,
 			}
 		}
 	})
 end
 
 local function set_filer_layout()
+	local dduCol = "( &columns / 8 )"
+	local dduRow = "( &lines / 8 )"
+	local dduWidth = "( &columns - (&columns / 4) )"
+	local dduHeight = "( &lines - (&lines / 4) )"
 	-- ┌────────────────────────────────┐
 	-- │                ┌─────────────┐ │
 	-- │                │             │ │
@@ -328,14 +327,14 @@ local function set_filer_layout()
 	vim.fn["ddu#custom#patch_local"]('default', {
 		uiParams = {
 			filer = {
-				winCol = WinCol,
-				winRow = WinRow,
-				winWidth = WinWidth,
-				winHeight = WinHeight,
-				previewCol = WinCol + math.floor(WinWidth / 2),
-				previewRow = WinRow + WinHeight + 1,
-				previewWidth = math.floor(WinWidth / 2),
-				previewHeight = WinHeight - 2,
+				winCol = dduCol,
+				winRow = dduRow,
+				winWidth = dduWidth,
+				winHeight = dduHeight,
+				previewCol = dduCol .. "+" .. dduWidth .. "/ 2",
+				previewRow = dduRow .. "+" .. dduHeight .. "+ 1",
+				previewWidth = dduWidth .. "/ 2",
+				previewHeight = dduHeight .. "- 2",
 			}
 		}
 	})
@@ -356,14 +355,14 @@ local function set_filer_layout()
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
 				previewSplit = 'vertical',
-				winCol = WinCol,
-				winWidth = math.floor(WinWidth / 2),
-				winRow = WinRow,
-				winHeight = WinHeight,
-				previewCol = WinCol + math.floor(WinWidth / 2) + 2,
-				previewWidth = math.floor(WinWidth / 2),
-				previewRow = WinRow,
-				previewHeight = WinHeight,
+				winCol = dduCol,
+				winWidth = dduWidth .. "/ 2",
+				winRow = dduRow,
+				winHeight = dduHeight,
+				previewCol = dduCol .. " + " .. dduWidth .. "/ 2" .. " + 2",
+				previewWidth = dduWidth .. "/ 2",
+				previewRow = dduRow,
+				previewHeight = dduHeight,
 			}
 		}
 	})
@@ -384,14 +383,14 @@ local function set_filer_layout()
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
 				previewSplit = 'horizontal',
-				winCol = WinCol,
-				winWidth = WinWidth,
-				winRow = WinRow + math.floor(WinHeight / 2),
-				winHeight = math.floor(WinHeight / 2),
+				winCol = dduCol,
+				winWidth = dduWidth,
+				winRow = dduRow .. "+" .. dduHeight .. "/ 2",
+				winHeight = dduHeight .. "/ 2",
 				-- previewCol = WinCol,
-				previewWidth = WinWidth,
+				previewWidth = dduWidth,
 				-- previewRow = WinRow + math.floor(WinHeight / 2),
-				previewHeight = math.floor(WinHeight / 2),
+				previewHeight = dduHeight .. "/ 2",
 			}
 		}
 	})
@@ -414,7 +413,6 @@ local function update_ui_layout()
 end
 
 local function layout()
-	set_size()
 	set_ff_layout()
 	set_filer_layout()
 end

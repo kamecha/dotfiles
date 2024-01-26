@@ -712,7 +712,7 @@ vim.keymap.set('n', '[ddu]w', function()
 						{ name = "window", params = { format = " %w" } },
 						{ name = "window", params = { format = " %wi" } },
 					},
-					matchers = { "converter_display_word", "matcher_fzf" }
+					converters = { "converter_display_word", "matcher_fzf" }
 				},
 			}
 		},

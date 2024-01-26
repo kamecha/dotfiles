@@ -15,7 +15,6 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '>-', eol = '↲', trail = '_', nbsp = '␣' }
 vim.opt.number = true
 vim.opt.signcolumn = 'yes'
-vim.opt.clipboard = 'unnamedplus'
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	pattern = "*",

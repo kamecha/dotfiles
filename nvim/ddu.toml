@@ -404,7 +404,13 @@ local function update_ui_layout()
 	end
 	local updatedLocalOptions = vim.fn["ddu#custom#get_local"]()
 	vim.fn["ddu#ui#do_action"]('updateOptions', updatedLocalOptions[currentOptions["name"]])
+	vim.fn["ddu#ui#do_action"]('closePreviewWindow')
 	vim.fn["ddu#ui#do_action"]('redraw', { method = "uiRedraw" })
+	vim.fn["ddu#ui#do_action"]('preview')
+	if currentOptions["ui"] == "ff" then
+		vim.fn["ddu#ui#do_action"]('closeFilterWindow')
+		vim.fn["ddu#ui#do_action"]('openFilterWindow')
+	end
 end
 
 local function layout()

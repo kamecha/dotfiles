@@ -131,6 +131,7 @@ mason_lspconfig.setup_handlers({ function(server_name)
 	end
 	nvim_lsp[server_name].setup(opts)
 end })
+nvim_lsp["denols"].setup(opts)
 '''
 
 [[plugins]]

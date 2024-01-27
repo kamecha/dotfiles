@@ -983,7 +983,7 @@ vim.keymap.set('n', '[ddu]e', function()
 		sources = { { name = "file" } },
 		sourceOptions = {
 			_ = {
-				columns = { "icon_filename", "file_git_status" },
+				columns = { "icon_filename", "file_git_status", "file_buf_modified" },
 			}
 		},
 	})
@@ -1318,6 +1318,10 @@ on_source = 'ddu.vim'
 # icon
 [[plugins]]
 repo = 'ryota2357/ddu-column-icon_filename'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-column-file_buf_modified'
 on_source = 'ddu.vim'
 
 # command

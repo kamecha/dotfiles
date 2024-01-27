@@ -51,8 +51,7 @@ vim.fn["ddu#custom#patch_global"]({
 	},
 	kindOptions = {
 		action = {
-			defaultAction = "do",
-			quit = "true"
+			defaultAction = "do"
 		},
 		file = {
 			defaultAction = "open"

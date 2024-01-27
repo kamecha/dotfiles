@@ -711,8 +711,37 @@ vim.keymap.set('n', '[ddu]w', function()
 				name = "window",
 				options = {
 					columns = {
-						{ name = "window", params = { format = "tab %tn" } },
-						{ name = "window", params = { format = " %T" } },
+						{ name = "window", params = { format = "tab %tn " } },
+						{
+							name = "custom",
+							params = {
+								getLengthCallbackId = vim.fn["denops#callback#register"](function(args)
+									local length = 0
+									for _, item in ipairs(args.items) do
+										local name = require("tabby.tab").get_name(item.action.tabnr)
+										-- 最大長を取得
+										length = math.max(length, #name)
+									end
+									return length
+								end),
+								getTextCallbackId = vim.fn["denops#callback#register"](function(args)
+									local text = ""
+									text = require("tabby.tab").get_name(args.item.action.tabnr)
+									return {
+										text = text
+											.. string.rep(" ", args.endCol - args.startCol - #text),
+										highlights = {
+											{
+												name = "ddu-column-custom-unko",
+												hl_group = "ErrorMsg",
+												col = args.startCol,
+												width = #text,
+											}
+										}
+									}
+								end),
+							}
+						},
 						{ name = "window", params = { format = " %w" } },
 						{ name = "window", params = { format = " %wi" } },
 					},
@@ -1322,6 +1351,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-column-file_buf_modified'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-column-custom'
 on_source = 'ddu.vim'
 
 # command

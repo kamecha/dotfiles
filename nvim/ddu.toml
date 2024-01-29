@@ -1154,6 +1154,7 @@ repo = 'Shougo/ddu-ui-filer'
 on_source = 'ddu.vim'
 [plugins.ftplugin]
 lua_ddu-filer = '''
+vim.opt_local.cursorline = true
 vim.keymap.set('n', '<CR>', function()
 	local item = vim.fn["ddu#ui#get_item"]()
 	if item["isTree"] ~= nil and item["isTree"] then

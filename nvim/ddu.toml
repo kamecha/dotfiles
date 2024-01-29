@@ -1003,17 +1003,76 @@ vim.keymap.set('n', '[ddu]e', function()
 		resume = true,
 		uiParams = {
 			filer = {
+				displayRoot = false,
 				split = "floating",
 				splitDirection = "topleft",
 				previewFloating = true
 			}
 		},
-		sources = { { name = "file" } },
-		sourceOptions = {
-			_ = {
-				columns = { "icon_filename", "file_git_status", "file_buf_modified" },
+		sources = {
+			{
+				name = "dummy",
+				params = {
+					display = "開いてるエディター",
+					hlGroup = "String"
+				}
+			},
+			{
+				name = "tab",
+				options = {
+					columns = {
+						{
+							name = "custom",
+							params = {
+								getLengthCallbackId = vim.fn["denops#callback#register"](function(args)
+									local length = 0
+									for _, item in ipairs(args.items) do
+										local display = item["word"]
+										if item["display"] ~= nil and item["display"] ~= "" then
+											display = item["display"]
+										end
+										display = " " .. "+" .. display
+										length = math.max(length, #display)
+									end
+									return length
+								end),
+								getTextCallbackId = vim.fn["denops#callback#register"](function(args)
+									local display = args.item["word"]
+									if args.item["display"] ~= nil and args.item["display"] ~= "" then
+										display = args.item["display"]
+									end
+									local text = ""
+									if args.item["__level"] == 0 then
+										if args.item["__expanded"] then
+											text = "-" .. display
+										else
+											text = "+" .. display
+										end
+									else
+										text = " " .. "|" ..display
+									end
+									return { text = text }
+								end),
+							}
+						}
+					}
+				},
+				params = { format = "tab(%n)" }
+			},
+			{
+				name = "dummy",
+				params = {
+					display = string.gsub(vim.fn.getcwd(), vim.fn.getenv("HOME"), "~"),
+					hlGroup = "String"
+				}
+			},
+			{
+				name = "file",
+				options = {
+					columns = { "icon_filename", "file_git_status", "file_buf_modified" }
+				}
 			}
-		},
+		}
 	})
 	update_ui_layout()
 end, { remap = true })

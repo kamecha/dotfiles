@@ -1,4 +1,3 @@
-
 vim.cmd.luafile(vim.fn.expand(vim.fn.stdpath("config") .. "/dein.lua"))
 
 -- for color setting
@@ -35,6 +34,14 @@ vim.keymap.set('c', '<C-n>', '<Down>')
 vim.keymap.set('c', '<C-p>', '<Up>')
 vim.keymap.set('c', '<C-Left>', '<S-Left>')
 vim.keymap.set('c', '<C-Right>', '<S-Right>')
+vim.keymap.set('n', '*', function()
+	if vim.v.count > 0 then
+		return '*'
+	else
+		return ':silent execute "keepj norm! *" <Bar> call winrestview(' ..
+		vim.fn.string(vim.fn.winsaveview()) .. ')<CR>'
+	end
+end, { silent = true, expr = true })
 
 -- auto commands
 vim.api.nvim_create_augroup('MyAutoCmd', { clear = true })

@@ -1020,7 +1020,6 @@ vim.keymap.set('n', '[ddu]e', function()
 			{
 				name = "tab",
 				options = { columns = { "custom" } },
-				params = { format = "tab(%n)" }
 			},
 			{
 				name = "dummy",

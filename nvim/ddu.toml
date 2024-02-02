@@ -35,6 +35,43 @@ vim.fn["ddu#custom#patch_global"]({
 			sortTreesFirst = true
 		}
 	},
+	sourceOptions = {
+		rg = {
+			matchers = { "converter_display_word", "matcher_fzf" }
+		},
+		file_rec = {
+			matchers = { "matcher_fzf" },
+			converters = { "converter_file_icon" }
+		},
+		file_external = {
+			matchers = { "matcher_fzf" },
+			converters = { "converter_file_icon" }
+		},
+		dummy = {
+			matchers = {}
+		},
+		dein_update = {
+			matchers = { "matcher_dein_update" }
+		},
+		_ = {
+			matchers = { "matcher_fzf" },
+			sorters = { "sorter_fzf" }
+		}
+	},
+	sourceParams = {
+		anyjump_definition = {
+			highlights = {
+				path = "Normal",
+				lineNr = "Normal",
+			}
+		},
+		anyjump_reference = {
+			highlights = {
+				path = "Normal",
+				lineNr = "Normal",
+			}
+		},
+	},
 	filterParams = {
 		matcher_fzf = {
 			highlightMatched = "String"
@@ -98,43 +135,6 @@ vim.fn["ddu#custom#patch_global"]({
 			quit = false
 		}
 	},
-	sourceOptions = {
-		rg = {
-			matchers = { "converter_display_word", "matcher_fzf" }
-		},
-		file_rec = {
-			matchers = { "matcher_fzf" },
-			converters = { "converter_file_icon" }
-		},
-		file_external = {
-			matchers = { "matcher_fzf" },
-			converters = { "converter_file_icon" }
-		},
-		dummy = {
-			matchers = {}
-		},
-		dein_update = {
-			matchers = { "matcher_dein_update" }
-		},
-		_ = {
-			matchers = { "matcher_fzf" },
-			sorters = { "sorter_fzf" }
-		}
-	},
-	sourceParams = {
-		anyjump_definition = {
-			highlights = {
-				path = "Normal",
-				lineNr = "Normal",
-			}
-		},
-		anyjump_reference = {
-			highlights = {
-				path = "Normal",
-				lineNr = "Normal",
-			}
-		},
-	}
 })
 
 -- layout

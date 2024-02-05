@@ -180,12 +180,12 @@ local function set_ff_layout()
 	local dduWidth = "( &columns - (&columns / 4) )"
 	local dduHeight = "( &lines - (&lines / 4) )"
 	-- ┌────────────────────────────────┐
-	-- │                                │
-	-- │                                │
-	-- │        source                  │
-	-- │                                │
-	-- │                                │
-	-- │                                │
+	-- │                ┌─────────────┐ │
+	-- │                │             │ │
+	-- │        source  │  preview    │ │
+	-- │                │             │ │
+	-- │                │             │ │
+	-- │                └─────────────┘ │
 	-- └────────────────────────────────┘
 	vim.fn["ddu#custom#patch_local"]('default', {
 		uiParams = {
@@ -194,6 +194,10 @@ local function set_ff_layout()
 				winRow = dduRow,
 				winWidth = dduWidth,
 				winHeight = dduHeight,
+				previewCol = dduCol .. "+" .. dduWidth .. "/ 2",
+				previewRow = dduRow .. "+" .. dduHeight .. "+ 1",
+				previewWidth = dduWidth .. "/ 2",
+				previewHeight = dduHeight .. "- 2",
 			}
 		}
 	})

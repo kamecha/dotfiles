@@ -233,43 +233,8 @@ repo = 'nvim-lua/plenary.nvim'
 # インストールのUI
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
-rev = 'v1.1.0'
 lua_source = '''
 require('fidget').setup({})
-
-local progress = require("fidget.progress")
-
-local handle = progress.handle.create({
-	title = "check denops",
-	message = "checking...",
-	lsp_client = { name = "denops" },
-	percentage = 0,
-})
-
-vim.api.nvim_create_autocmd("User", {
-	pattern = "DenopsProcessStarted",
-	desc = "fired when the Denops local server process is started",
-	callback = function ()
-		handle:report({
-			title = "denops local server started",
-			message = "local server started",
-			percentage = 50,
-		})
-	end
-})
-
-vim.api.nvim_create_autocmd("User", {
-	pattern = "DenopsReady",
-	desc = "fired when a connection with Denops is established",
-	callback = function ()
-		handle:report({
-			title = "connection with denops established",
-			message = "connection established",
-			percentage = 100,
-		})
-		handle:finish()
-	end
-})
 '''
 
 # deno

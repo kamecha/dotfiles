@@ -196,7 +196,7 @@ local function set_ff_layout()
 				winHeight = dduHeight,
 				previewCol = dduCol .. "+" .. dduWidth .. "/ 2",
 				previewRow = dduRow .. "+" .. dduHeight .. "+ 1",
-				previewWidth = dduWidth .. "/ 2",
+				previewWidth = "(" .. dduWidth .. "- 1)" .. "/ 2",
 				previewHeight = dduHeight .. "- 2",
 			}
 		}
@@ -371,7 +371,7 @@ local function set_filer_layout()
 				winHeight = dduHeight,
 				previewCol = dduCol .. "+" .. dduWidth .. "/ 2",
 				previewRow = dduRow .. "+" .. dduHeight .. "+ 1",
-				previewWidth = dduWidth .. "/ 2",
+				previewWidth = "(" .. dduWidth .. "- 1)" .. "/ 2",
 				previewHeight = dduHeight .. "- 2",
 			}
 		}

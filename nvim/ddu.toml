@@ -3,6 +3,8 @@ repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
 on_source = 'denops.vim'
 lua_source = '''
+vim.fn["ddu#custom#alias"]('column', 'tab_column', 'custom')
+
 vim.fn["ddu#custom#patch_global"]({
 	ui = "ff",
 	uiOptions = {
@@ -85,6 +87,39 @@ vim.fn["ddu#custom#patch_global"]({
 		converter_file_icon = {
 			source = "nvim-web-devicons"
 		},
+	},
+	columnParams = {
+		tab_column = {
+			getLengthCallbackId = vim.fn["denops#callback#register"](function(args)
+				local length = 0
+				for _, item in ipairs(args.items) do
+					local display = item["word"]
+					if item["display"] ~= nil and item["display"] ~= "" then
+						display = item["display"]
+					end
+					display = " " .. "+" .. display
+					length = math.max(length, #display)
+				end
+				return length
+			end),
+			getTextCallbackId = vim.fn["denops#callback#register"](function(args)
+				local display = args.item["word"]
+				if args.item["display"] ~= nil and args.item["display"] ~= "" then
+					display = args.item["display"]
+				end
+				local text = ""
+				if args.item["__level"] == 0 then
+					if args.item["__expanded"] then
+						text = "-" .. display
+					else
+						text = "+" .. display
+					end
+				else
+					text = " " .. "|" .. display
+				end
+				return { text = text }
+			end),
+		}
 	},
 	kindOptions = {
 		action = {
@@ -990,7 +1025,7 @@ vim.keymap.set('n', '[ddu]e', function()
 			},
 			{
 				name = "tab",
-				options = { columns = { "custom" } },
+				options = { columns = { "tab_column" } },
 			},
 			{
 				name = "dummy",
@@ -1004,39 +1039,6 @@ vim.keymap.set('n', '[ddu]e', function()
 				options = {
 					columns = { "icon_filename", "file_git_status", "file_buf_modified" }
 				}
-			}
-		},
-		columnParams = {
-			custom = {
-				getLengthCallbackId = vim.fn["denops#callback#register"](function(args)
-					local length = 0
-					for _, item in ipairs(args.items) do
-						local display = item["word"]
-						if item["display"] ~= nil and item["display"] ~= "" then
-							display = item["display"]
-						end
-						display = " " .. "+" .. display
-						length = math.max(length, #display)
-					end
-					return length
-				end),
-				getTextCallbackId = vim.fn["denops#callback#register"](function(args)
-					local display = args.item["word"]
-					if args.item["display"] ~= nil and args.item["display"] ~= "" then
-						display = args.item["display"]
-					end
-					local text = ""
-					if args.item["__level"] == 0 then
-						if args.item["__expanded"] then
-							text = "-" .. display
-						else
-							text = "+" .. display
-						end
-					else
-						text = " " .. "|" ..display
-					end
-					return { text = text }
-				end),
 			}
 		},
 	})

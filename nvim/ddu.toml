@@ -596,7 +596,8 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 		},
 		sources = sources
 	})
-	return 2
+	vim.fn["ddu#ui#do_action"]('redraw', { method = "uiRedraw" })
+	return 0 -- Don't Redraw again
 end)
 
 -- ddu key mapping

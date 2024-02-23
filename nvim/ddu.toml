@@ -480,12 +480,23 @@ vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function(args)
 		local action = item["action"]
 		qf["lnum"] = action["lineNr"]
 		qf["bufnr"] = action["bufNr"]
+		qf["filename"] = action["path"]
 		table.insert(qflist, qf)
 	end
+	-- lnumを降順にソート
+	table.sort(qflist, function(a, b)
+		return a["lnum"] > b["lnum"]
+	end)
 	vim.fn.setqflist(qflist, ' ')
 	local cmd = vim.fn.input(":cdo ", "normal ")
-	print(cmd)
+	-- :cdoが実行されてる間のウィンドウ
+	-- なんでか知らんけど、contextでのwinIdとは違うらしい
+	local cdo_winid = vim.fn.win_getid()
+	local cdo_bufnr = vim.fn.winbufnr(cdo_winid)
 	vim.fn.execute("cdo " .. cmd)
+	vim.fn.win_execute(cdo_winid, "buffer " .. cdo_bufnr)
+	-- カーソルを元のウィンドウ(context)に戻す
+	vim.fn.win_gotoid(args["context"]["winId"])
 	return 0
 end)
 

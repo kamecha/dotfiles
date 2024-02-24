@@ -778,3 +778,6 @@ vim.keymap.set('c', '<C-j>', '<Cmd>call searchx#next()<CR>')
 -- Clear highlights
 vim.keymap.set('n', '<C-l>', '<Cmd>call searchx#clear()<CR><C-l>')
 '''
+
+[[plugins]]
+repo = 'kshenoy/vim-signature'

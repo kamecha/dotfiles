@@ -655,10 +655,12 @@ vim.keymap.set('n', '<Space>u', '[ddu]', { remap = true })
 vim.keymap.set('n', '[ddu]f', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
 		uiParams = {
 			ff = {
+				startFilter = true,
 				floatingTitle = { { "Filter", "FloatBorder" } },
+				autoAction = { name = 'preview' },
+				startAutoAction = true,
 			}
 		},
 		sources = {
@@ -669,10 +671,12 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]g', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
 		uiParams = {
 			ff = {
+				startFilter = true,
 				floatingTitle = { { "Files", "FloatBorder" }, { "Git", "FloatBorder" } },
+				autoAction = { name = 'preview' },
+				startAutoAction = true,
 			}
 		},
 		sources = {
@@ -721,9 +725,9 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]c', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_layout",
 		uiParams = {
 			ff = {
+				startFilter = true,
 				floatingTitle = { { "Command History", "FloatBorder" } },
 				autoAction = {}
 			}
@@ -736,7 +740,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]h', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Help", "FloatBorder" } },
@@ -750,7 +754,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]q', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "QuickFix", "FloatBorder" } },
@@ -778,7 +782,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]t', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Tab", "FloatBorder" } },

@@ -600,6 +600,50 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	return 0 -- Don't Redraw again
 end)
 
+-- dduをpushして、shellでのpipeっぽいことをやる
+vim.fn["ddu#custom#action"]('ui', 'ff', 'pipe', function(args)
+	local current = vim.fn["ddu#custom#get_current"]()
+	print(vim.inspect(current["sourceOptions"]))
+	local context = vim.fn["ddu#get_context"](current["name"])
+	local input = context["input"] or ""
+	local beforeSources = args["options"]["sources"]
+	local afterSources = {}
+	local items = vim.fn["ddu#ui#get_items"]()
+	for _, source in ipairs(beforeSources) do
+		local s = {}
+		s["name"] = "custom_params"
+		s["options"] = source["options"]
+		-- itemのうち__sourceName別に分ける
+		s["params"] = {
+			items = vim.tbl_filter(function(item)
+				return item["__sourceName"] == source["name"]
+			end, items)
+		}
+		if source["name"] == "rg" then
+			s["options"]["matchers"] = { "converter_display_word", "matcher_fzf" }
+		end
+		table.insert(afterSources, s)
+	end
+	local begoreTitle = current["uiParams"]["ff"]["filterFloatingTitle"] or ""
+	local title = ""
+	if begoreTitle ~= "" then
+		title = begoreTitle .. " | " .. input
+	else
+		title = input
+	end
+	vim.fn["ddu#start"]({
+		push = true,
+		name = current["name"],
+		sources = afterSources,
+		uiParams = {
+			ff = {
+				filterFloatingTitle = title,
+			}
+		}
+	})
+	return 0
+end)
+
 -- ddu key mapping
 
 vim.keymap.set('n', '[ddu]', '<Nop>')
@@ -1112,6 +1156,9 @@ end, { buffer = true })
 vim.keymap.set('n', '<C-j>', function()
 	vim.fn["ddu#ui#do_action"]('kensaku')
 end, { buffer = true })
+vim.keymap.set('n', '|', function()
+	vim.fn["ddu#ui#do_action"]('pipe')
+end, { buffer = true })
 vim.keymap.set('n', 'a', function()
 	vim.fn["ddu#ui#do_action"]('chooseAction')
 end, { buffer = true })
@@ -1339,6 +1386,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'Omochice/ddu-source-anyjump'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-source-custom_params'
 on_source = 'ddu.vim'
 
 # 補完Filter

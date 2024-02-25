@@ -64,6 +64,9 @@ vim.fn["ddc#custom#patch_global"]({
 		}
 	},
 	filterParams = {
+		converter_fuzzy = {
+			hlGroup = "Blue"
+		},
 		-- lspのkindのVSCode-likeなアイコンを表示する
 		-- https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
 		converter_kind_labels = {

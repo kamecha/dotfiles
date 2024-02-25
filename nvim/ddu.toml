@@ -81,13 +81,13 @@ vim.fn["ddu#custom#patch_global"]({
 	},
 	filterParams = {
 		matcher_fzf = {
-			highlightMatched = "String"
+			highlightMatched = "Blue"
 		},
 		matcher_substring = {
-			highlightMatched = "String"
+			highlightMatched = "Blue"
 		},
 		matcher_kensaku = {
-			highlightMatched = "String"
+			highlightMatched = "Blue"
 		},
 		converter_file_icon = {
 			source = "nvim-web-devicons"

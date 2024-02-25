@@ -40,7 +40,7 @@ vim.keymap.set('n', '*', function()
 		return '*'
 	else
 		return ':silent execute "keepj norm! *" <Bar> call winrestview(' ..
-		vim.fn.string(vim.fn.winsaveview()) .. ')<CR>'
+			vim.fn.string(vim.fn.winsaveview()) .. ')<CR>'
 	end
 end, { silent = true, expr = true })
 

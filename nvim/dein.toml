@@ -241,6 +241,9 @@ require('fidget').setup({})
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
+lua_add = '''
+vim.g["denops#server#deno_args"] = { "-q", "--no-lock", "-A", "--unstable" }
+'''
 
 [[plugins]]
 repo = 'vim-denops/denops-startup-recorder.vim'

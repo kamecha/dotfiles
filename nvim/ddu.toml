@@ -48,11 +48,11 @@ vim.fn["ddu#custom#patch_global"]({
 		},
 		file_rec = {
 			matchers = { "matcher_fzf" },
-			converters = { "converter_file_icon" }
+			converters = { "converter_hl_dir", "converter_file_icon" }
 		},
 		file_external = {
 			matchers = { "matcher_fzf" },
-			converters = { "converter_file_icon" }
+			converters = { "converter_hl_dir", "converter_file_icon" }
 		},
 		dummy = {
 			matchers = {}
@@ -1439,6 +1439,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-filter-converter_file_git_status'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kyoh86/ddu-filter-converter_hl_dir'
 on_source = 'ddu.vim'
 
 # 補完Kind

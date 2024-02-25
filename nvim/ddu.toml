@@ -1395,6 +1395,14 @@ on_source = 'ddu.vim'
 repo = 'kamecha/ddu-source-custom_params'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'matsui54/ddu-source-highlight'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = '4513ECHO/ddu-source-colorscheme'
+on_source = 'ddu.vim'
+
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'

@@ -4,6 +4,7 @@ vim.cmd.luafile(vim.fn.expand(vim.fn.stdpath("config") .. "/dein.lua"))
 vim.cmd.colorscheme("edge")
 vim.cmd.highlight({ "DduPreview", "guifg=#d6deeb", "guibg=#38507a" })
 vim.cmd.highlight({ "DduCursor", "guibg=#38507a" })
+vim.cmd.highlight({ "Search", "ctermfg=NONE", "ctermbg=94", "guifg=NONE", "guibg=#773800" })
 vim.cmd.highlight({ "JpSpace", "guibg=#404455" })
 
 -- for options

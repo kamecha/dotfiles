@@ -243,6 +243,10 @@ repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
 
 [[plugins]]
+repo = 'vim-denops/denops-startup-recorder.vim'
+depends = 'denops.vim'
+
+[[plugins]]
 repo = 'voldikss/vim-floaterm'
 lua_add = '''
 vim.g.floaterm_width = 0.9

@@ -706,7 +706,8 @@ vim.keymap.set('n', '<C-w>W', '<Plug>(snipewin)', { remap = true })
 repo = 'kamecha/denops-dbus_synctex'
 depends = 'denops.vim'
 on_ft = ['tex']
-lua_source = '''
+on_if = 'has("wsl")'
+lua_post_source = '''
 local syncTex = require("dbus_synctex")
 
 vim.api.nvim_create_autocmd({ "FileType" }, {

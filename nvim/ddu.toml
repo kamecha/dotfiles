@@ -1006,19 +1006,44 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]lh', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Hierarchy", "FloatBorder" } },
-				displayTree = true,
-				startFilter = false
 			}
 		},
 		sources = {
-			{ name = "dummy",             params = { display = "incomingCalls" } },
-			{ name = "lsp_callHierarchy", params = { method = "callHierarchy/incomingCalls" } },
-			{ name = "dummy",             params = { display = "outgoingCalls" } },
-			{ name = "lsp_callHierarchy", params = { method = "callHierarchy/outgoingCalls" } },
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Green" } }
+					}
+				},
+				params = { display = ">>incomingCalls<<" }
+			},
+			{
+				name = "lsp_callHierarchy",
+				options = {
+					converters = { "lsp_hierarchy_filter" }
+				},
+				params = { method = "callHierarchy/incomingCalls" }
+			},
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Green" } }
+					}
+				},
+				params = { display = ">>outgoingCalls<<" }
+			},
+			{
+				name = "lsp_callHierarchy",
+				options = {
+					converters = { "lsp_hierarchy_filter" }
+				},
+				params = { method = "callHierarchy/outgoingCalls" }
+			},
 		}
 	})
 end, { remap = true })

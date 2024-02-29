@@ -627,7 +627,6 @@ end)
 -- dduをpushして、shellでのpipeっぽいことをやる
 vim.fn["ddu#custom#action"]('ui', 'ff', 'pipe', function(args)
 	local current = vim.fn["ddu#custom#get_current"]()
-	print(vim.inspect(current["sourceOptions"]))
 	local context = vim.fn["ddu#get_context"](current["name"])
 	local input = context["input"] or ""
 	local beforeSources = args["options"]["sources"]

@@ -1025,7 +1025,10 @@ vim.keymap.set('n', '[ddu]lh', function()
 				options = {
 					converters = { "lsp_hierarchy_filter" }
 				},
-				params = { method = "callHierarchy/incomingCalls" }
+				params = {
+					method = "callHierarchy/incomingCalls",
+					autoExpandSingle = false
+				}
 			},
 			{
 				name = "dummy",
@@ -1041,7 +1044,10 @@ vim.keymap.set('n', '[ddu]lh', function()
 				options = {
 					converters = { "lsp_hierarchy_filter" }
 				},
-				params = { method = "callHierarchy/outgoingCalls" }
+				params = {
+					method = "callHierarchy/outgoingCalls",
+					autoExpandSingle = false
+				}
 			},
 		}
 	})

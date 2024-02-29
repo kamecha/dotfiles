@@ -1049,6 +1049,44 @@ vim.keymap.set('n', '[ddu]lh', function()
 					autoExpandSingle = false
 				}
 			},
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Cyan" } }
+					}
+				},
+				params = { display = ">>supertypes<<" }
+			},
+			{
+				name = "lsp_typeHierarchy",
+				options = {
+					converters = { "lsp_hierarchy_filter" }
+				},
+				params = {
+					method = "typeHierarchy/supertypes",
+					autoExpandSingle = false
+				}
+			},
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Cyan" } }
+					}
+				},
+				params = { display = ">>subtypes<<" }
+			},
+			{
+				name = "lsp_typeHierarchy",
+				options = {
+					converters = { "lsp_hierarchy_filter" }
+				},
+				params = {
+					method = "typeHierarchy/subtypes",
+					autoExpandSingle = false
+				}
+			},
 		}
 	})
 end, { remap = true })

@@ -1,3 +1,12 @@
+-- neovim config path
+local rc_dir = ''
+if vim.fn.has('win32') == 1 then
+	rc_dir = vim.fn.expand('~\\AppData\\Local\\nvim')
+else
+	rc_dir = vim.fn.expand('~/.config/nvim')
+end
+vim.api.nvim_set_var('rc_dir', rc_dir)
+
 -- Install dir
 local dein_dir = vim.fn.expand('~/.cache/dein/nvim')
 local dein_repo_dir = vim.fn.expand(dein_dir .. '/repos/github.com/Shougo/dein.vim')
@@ -34,12 +43,6 @@ local dein = require('dein')
 -- register plugin via dein
 if dein.load_state(dein_dir) == 1 then
 	dein.begin(dein_dir)
-	local rc_dir = ''
-	if vim.fn.has('win32') == 1 then
-		rc_dir = vim.fn.expand('~\\AppData\\Local\\nvim')
-	else
-		rc_dir = vim.fn.expand('~/.config/nvim')
-	end
 	local toml = vim.fn.expand(rc_dir .. '/dein.toml')
 	local ddu_toml = vim.fn.expand(rc_dir .. '/ddu.toml')
 	local ddc_toml = vim.fn.expand(rc_dir .. '/ddc.toml')

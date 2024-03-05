@@ -35,6 +35,7 @@ vim.keymap.set('c', '<C-n>', '<Down>')
 vim.keymap.set('c', '<C-p>', '<Up>')
 vim.keymap.set('c', '<C-Left>', '<S-Left>')
 vim.keymap.set('c', '<C-Right>', '<S-Right>')
+-- *で検索したときにカーソル位置を元に戻す
 vim.keymap.set('n', '*', function()
 	if vim.v.count > 0 then
 		return '*'

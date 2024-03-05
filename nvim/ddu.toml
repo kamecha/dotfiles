@@ -788,6 +788,32 @@ vim.keymap.set('n', '[ddu]q', function()
 		}
 	})
 end, { remap = true })
+vim.keymap.set('n', '[ddu]m', function()
+	local wininfo = vim.fn.getwininfo()
+	-- wininfoのうちbufnrだけを取り出す
+	local sources = {}
+	for _, win in ipairs(wininfo) do
+		table.insert(sources, {
+			name = "marklist",
+			options = { converters = { "converter_hl_dir" } },
+			params = { buf = vim.fn.bufname(win.bufnr), winid = win.winid }
+		})
+	end
+	table.insert(sources, {
+		name = "marklist",
+		options = { converters = { "converter_hl_dir" } }
+	})
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_horizontal_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "MarkList", "FloatBorder" } },
+			}
+		},
+		sources = sources
+	})
+end, { remap = true })
 vim.keymap.set('n', '[ddu]j', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
@@ -1432,6 +1458,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-source-jumplist'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kamecha/ddu-source-marklist'
 on_source = 'ddu.vim'
 
 [[plugins]]

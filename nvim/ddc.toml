@@ -358,7 +358,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
 	callback = function()
 		vim.b.prev_buffer_config = vim.fn["ddc#custom#get_buffer"]()
 		vim.fn["ddc#custom#patch_buffer"]({
-			ui = "native",
+			ui = "pum",
 			sources = {
 				"around",
 				{

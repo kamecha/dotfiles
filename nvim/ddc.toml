@@ -4,7 +4,21 @@ repo = 'Shougo/ddc.vim'
 depends = ['denops.vim', 'pum.vim']
 on_event = ['InsertEnter', 'CmdlineEnter']
 lua_source = '''
-vim.opt_local.dictionary:append('/usr/share/dict/american-english')
+if vim.fn.has('wsl') == 1 then
+	vim.opt_local.dictionary:append('/usr/share/dict/american-english')
+	vim.fn["ddc#custom#patch_global"]({
+		sourceParams = {
+			dictionary = {
+				paths = { '/usr/share/dict/american-english' }
+			}
+		},
+		filterParams = {
+			converter_dictionary = {
+				dicts = { vim.g.github_dir .. "/gunyarakun/kantan-ej-dictionary/kantan-ej-dictionary.json" }
+			}
+		}
+	})
+end
 
 vim.fn["ddc#custom#patch_global"]({
 	ui = "pum",
@@ -59,9 +73,6 @@ vim.fn["ddc#custom#patch_global"]({
 		file = {
 			mode = "os"
 		},
-		dictionary = {
-			paths = { '/usr/share/dict/american-english' }
-		}
 	},
 	filterParams = {
 		converter_fuzzy = {
@@ -113,9 +124,6 @@ vim.fn["ddc#custom#patch_global"]({
 				Event = "Type"
 			}
 		},
-		converter_dictionary = {
-			dicts = { vim.g.github_dir .. "/gunyarakun/kantan-ej-dictionary/kantan-ej-dictionary.json" }
-		}
 	},
 	autoCompleteEvents = {
 		"InsertEnter",
@@ -347,8 +355,8 @@ vim.keymap.set('c', '<C-j>', '<Plug>(skkeleton-toggle)', { remap = true })
 lua_source = '''
 vim.fn["skkeleton#config"]({
 	globalDictionaries = {
-		{ vim.g.github_dir .. "/skk-dev/dict/SKK-JISYO.L", "euc-jp" },
-		{ "/home/kamecha_linux/dotfiles/SKK-JISYO.nicoime", "utf-16le" },
+		{ vim.fn.expand(vim.g.github_dir .. "/skk-dev/dict/SKK-JISYO.L"), "euc-jp" },
+		{ vim.fn.expand(vim.g.rc_dir .. "/SKK-JISYO.nicoime"),            "utf-16le" },
 	},
 	registerConvertResult = true,
 })

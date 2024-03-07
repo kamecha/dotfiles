@@ -971,6 +971,25 @@ vim.keymap.set('n', '[ddu]ld', function()
 		}
 	})
 end, { remap = true })
+vim.keymap.set('n', '[ddu]lD', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		name = "ui_filter_preview_horizontal_top_layout",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "Lsp Definition", "FloatBorder" } },
+			}
+		},
+		sources = {
+			{
+				name = "lsp_diagnostic",
+				options = {
+					converters = { "converter_lsp_diagnostic" }
+				}
+			}
+		}
+	})
+end, { remap = true })
 vim.keymap.set('n', '[ddu]ls', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",

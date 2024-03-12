@@ -647,10 +647,10 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'pipe', function(args)
 		end
 		table.insert(afterSources, s)
 	end
-	local begoreTitle = current["uiParams"]["ff"]["filterFloatingTitle"] or ""
+	local beforeTitle = current["uiParams"]["ff"]["filterFloatingTitle"] or ""
 	local title = ""
-	if begoreTitle ~= "" then
-		title = begoreTitle .. " | " .. input
+	if beforeTitle ~= "" then
+		title = beforeTitle .. " | " .. input
 	else
 		title = input
 	end

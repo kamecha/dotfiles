@@ -619,13 +619,15 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	vim.fn["ddu#ui#do_action"]('updateOptions', {
 		uiParams = {
 			ff = {
-				filterFloatingTitle = { { "日本語検索", "LightBlue" } },
+				filterFloatingTitle = { { "日本語検索", "FloatBorder" } },
 				filterFloatingTitlePos = "center",
 			}
 		},
 		sources = sources
 	})
 	vim.fn["ddu#ui#do_action"]('redraw', { method = "uiRedraw" })
+	vim.fn["ddu#ui#do_action"]('closeFilterWindow')
+	vim.fn["ddu#ui#do_action"]('openFilterWindow')
 	return 0 -- Don't Redraw again
 end)
 
@@ -653,8 +655,12 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'pipe', function(args)
 		table.insert(afterSources, s)
 	end
 	local beforeTitle = current["uiParams"]["ff"]["filterFloatingTitle"] or ""
-	local title = ""
-	if beforeTitle ~= "" then
+	local title = nil
+	if type(beforeTitle) == "table" then
+		title = beforeTitle
+		table.insert(title, { " | ", "FloatBorder" })
+		table.insert(title, { input, "FloatBorder" })
+	elseif beforeTitle ~= "" then
 		title = beforeTitle .. " | " .. input
 	else
 		title = input
@@ -669,9 +675,11 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'pipe', function(args)
 			}
 		}
 	})
+	vim.fn["ddu#ui#do_action"]('redraw', { method = "uiRedraw" })
+	vim.fn["ddu#ui#do_action"]('closeFilterWindow')
+	vim.fn["ddu#ui#do_action"]('openFilterWindow')
 	return 0
 end)
-
 -- ddu key mapping
 
 vim.keymap.set('n', '[ddu]', '<Nop>')

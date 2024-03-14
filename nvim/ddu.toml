@@ -815,7 +815,7 @@ vim.keymap.set('n', '[ddu]m', function()
 	})
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "MarkList", "FloatBorder" } },
@@ -827,7 +827,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]j', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "JumpList", "FloatBorder" } },
@@ -886,7 +886,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]L', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Line", "FloatBorder" } },
@@ -1002,7 +1002,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ls', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Symbol", "FloatBorder" } },
@@ -1149,7 +1149,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]T', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_layout",
+		name = "ui_filter_preview_horizontal_top_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Floaterm", "FloatBorder" } },
@@ -1163,7 +1163,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]d', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Dein", "Black" } },
@@ -1178,7 +1177,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]v<CR>', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
 		sources = {
 			{ name = "channel_rec" },
 		}
@@ -1208,7 +1206,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]vu<CR>', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
 		sources = {
 			{ name = "channel_rec", params = { type = "unread" } },
 		}

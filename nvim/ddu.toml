@@ -201,6 +201,15 @@ vim.fn["ddu#custom#patch_global"]({
 	},
 })
 
+vim.api.nvim_create_autocmd({ "User" }, {
+	pattern = "Ddu:uiReady",
+	callback = function()
+		if vim.bo.filetype == "ddu-ff" then
+			vim.fn["ddu#ui#do_action"]("openFilterWindow")
+		end
+	end,
+})
+
 -- layout
 
 local function set_ff_layout()
@@ -248,7 +257,6 @@ local function set_ff_layout()
 	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_layout', {
 		uiParams = {
 			ff = {
-				startFilter = true,
 				filterFloatingPosition = 'bottom',
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
@@ -279,7 +287,6 @@ local function set_ff_layout()
 	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_horizontal_layout', {
 		uiParams = {
 			ff = {
-				startFilter = true,
 				filterFloatingPosition = 'bottom',
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
@@ -311,7 +318,6 @@ local function set_ff_layout()
 	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_horizontal_top_layout', {
 		uiParams = {
 			ff = {
-				startFilter = true,
 				filterFloatingPosition = 'top',
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
@@ -339,7 +345,6 @@ local function set_ff_layout()
 	vim.fn["ddu#custom#patch_local"]('ui_filter_layout', {
 		uiParams = {
 			ff = {
-				startFilter = true,
 				filterFloatingPosition = 'bottom',
 				winCol = dduCol,
 				winWidth = dduWidth,
@@ -680,7 +685,6 @@ vim.keymap.set('n', '[ddu]f', function()
 		ui = "ff",
 		uiParams = {
 			ff = {
-				startFilter = true,
 				floatingTitle = { { "Filter", "FloatBorder" } },
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
@@ -696,7 +700,6 @@ vim.keymap.set('n', '[ddu]g', function()
 		ui = "ff",
 		uiParams = {
 			ff = {
-				startFilter = true,
 				floatingTitle = { { "Files", "FloatBorder" }, { "Git", "FloatBorder" } },
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
@@ -750,7 +753,6 @@ vim.keymap.set('n', '[ddu]c', function()
 		ui = "ff",
 		uiParams = {
 			ff = {
-				startFilter = true,
 				floatingTitle = { { "Command History", "FloatBorder" } },
 				autoAction = {}
 			}
@@ -1143,7 +1145,6 @@ vim.keymap.set('n', '[ddu]T', function()
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Floaterm", "FloatBorder" } },
-				startFilter = false,
 			}
 		},
 		sources = {
@@ -1254,7 +1255,6 @@ vim.keymap.set('n', '[ddu]E', function()
 		ui = "ff",
 		uiParams = {
 			ff = {
-				startFilter = true,
 				floatingTitle = { { "File", "FloatBorder" }, { "Browser", "Directory" } },
 			}
 		},

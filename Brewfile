@@ -1,6 +1,6 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
+tap "homebrew/cask-fonts"
+tap "homebrew/services"
 brew "asdf"
 brew "tmux"
 brew "tree"

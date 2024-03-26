@@ -581,17 +581,14 @@ repo = 'tyru/open-browser.vim'
 [[plugins]]
 repo = 'kamecha/traqVimPractice'
 [plugins.ftplugin]
-traqvim = '''
-nmap <buffer><silent> <C-n> <Plug>(traqvim-next)
-nmap <buffer><silent> <C-p> <Plug>(traqvim-prev)
-nnoremap <buffer><silent> r
-			\ :TraqReload<CR>
-nnoremap <buffer><silent> o
-			\ :TraqMessageOpen<CR>
+lua_traqvim = '''
+vim.keymap.set('n', '<C-n>', '<Plug>(traqvim-next)', { remap = true, buffer = true, silent = true })
+vim.keymap.set('n', '<C-p>', '<Plug>(traqvim-prev)', { remap = true, buffer = true, silent = true })
+vim.keymap.set('n', 'r', ':TraqReload<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'o', ':TraqMessageOpen<CR>', { buffer = true, silent = true })
 '''
-traqvim-message = '''
-nnoremap <buffer><silent> s
-			\ :TraqMessageSend<CR>
+lua_traqvim-message = '''
+vim.keymap.set('n', '<LocalLeader>s', ':TraqMessageSend<CR>', { buffer = true, silent = true })
 '''
 
 # help

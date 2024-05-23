@@ -360,6 +360,19 @@ vim.fn["skkeleton#config"]({
 	},
 	registerConvertResult = true,
 })
+vim.g["skkeleton#mapped_keys"] = vim.fn.extend(vim.g["skkeleton#mapped_keys"], {"<C-l>"})
+vim.fn["skkeleton#register_keymap"]("input", "<C-l>", "disable")
+vim.fn["skkeleton#register_kanatable"]("rom", {
+	l = false,
+	la = { "ぁ" },
+	li = { "ぃ" },
+	lu = { "ぅ" },
+	le = { "ぇ" },
+	lo = { "ぉ" },
+	lya = { "ゃ" },
+	lyu = { "ゅ" },
+	lyo = { "ょ" },
+})
 vim.api.nvim_create_autocmd({ "User" }, {
 	group = "MyAutoCmd",
 	pattern = "skkeleton-enable-pre",

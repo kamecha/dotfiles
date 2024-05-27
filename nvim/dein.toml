@@ -137,30 +137,6 @@ nvim_lsp["denols"].setup(opts)
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
 
-# LSPのラッパー
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-lua_source = '''
--- settting for null-ls to use textlint
-local null_ls = require("null-ls")
-null_ls.setup({
-	sources = {
-		null_ls.builtins.diagnostics.textlint.with({
-			filetypes = { "markdown", "text", "tex" },
-			condition = function(utils)
-				return utils.root_has_file({
-					".textlintrc",
-					".textlintrc.json",
-					".textlintrc.yaml",
-					".textlintrc.yml",
-					".textlintrc.js",
-				})
-			end,
-		})
-	},
-})
-'''
-
 # Debugger
 [[plugins]]
 repo = 'mfussenegger/nvim-dap'
@@ -340,15 +316,7 @@ navic.setup({
 local lsp_names = function()
 	local clients = {}
 	for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
-		if client.name == 'null-ls' then
-			local sources = {}
-			for _, source in ipairs(require('null-ls.sources').get_available(vim.bo.filetype)) do
-				table.insert(sources, source.name)
-			end
-			table.insert(clients, 'null-ls(' .. table.concat(sources, ', ') .. ')')
-		else
 			table.insert(clients, client.name)
-		end
 	end
 	local denops_status = vim.fn['denops#server#status']()
 	if denops_status ~= '' then

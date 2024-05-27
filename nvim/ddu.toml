@@ -539,8 +539,11 @@ vim.fn["ddu#custom#action"]('kind', 'file', 'grep', function(args)
 			{
 				name = "rg",
 				params = {
-					path = directory,
-					input = vim.fn.input("Pattern: ")
+					paths = { directory },
+				},
+				options = {
+					matchers = {},
+					volatile = true,
 				}
 			}
 		}

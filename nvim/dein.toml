@@ -366,6 +366,19 @@ require('lualine').setup({
 			}
 		}
 	},
+	tabline = {
+		lualine_a = {
+			{
+				"tabs",
+				mode = 2
+			}
+		},
+		lualine_z = {
+			{
+				"windows"
+			}
+		},
+	},
 	sections = {
 		lualine_c = {
 			{
@@ -390,78 +403,40 @@ require('lualine').setup({
 		}
 	},
 })
-'''
 
-# タブライン
-[[plugins]]
-repo = 'nanozuki/tabby.nvim'
-lua_add = '''
-vim.opt.showtabline = 2
-'''
-lua_source = '''
-local theme = {
-	fill = 'TabLineFill',
-	head = 'TabLine',
-	current_tab = 'TabLineSel',
-	tab = 'TabLine',
-	win = 'TabLine',
-	tail = 'TabLine',
-}
+-- filetypeがtraqvimの時にfilenameのpathを2(Absolute path)にする
+vim.api.nvim_create_autocmd({ "WinEnter" }, {
+	callback = function()
+		if vim.bo.filetype == "traqvim" then
+			require('lualine').setup({
+				sections = {
+					lualine_c = {
+						{
+							"filename",
+							path = 2
+						}
+					}
+				}
+			})
+		end
+	end
+})
 
-require('tabby.tabline').set(function(line)
-	return {
-		{
-			{ '  ', hl = theme.head },
-			line.sep('', theme.head, theme.fill),
-		},
-		line.tabs().foreach(function(tab)
-			if tab.is_current() then
-				return {
-					line.sep('', theme.fill, theme.current_tab),
-				tab.is_current() and '' or '',
-					tab.number(),
-					tab.name(),
-					tab.close_btn(''),
-					line.sep('', theme.current_tab, theme.fill),
-					hl = theme.current_tab,
-					margin = ' ',
+vim.api.nvim_create_autocmd({ "WinLeave" }, {
+	callback = function()
+		if vim.bo.filetype == "traqvim" then
+			require('lualine').setup({
+				sections = {
+					lualine_c = {
+						{
+							"filename",
+							path = 0
+						}
+					}
 				}
-			else
-				return {
-					line.sep('', theme.fill, theme.tab),
-				tab.is_current() and '' or '',
-					tab.number(),
-					tab.name(),
-					tab.close_btn(''),
-					line.sep('', theme.tab, theme.fill),
-					hl = theme.tab,
-					margin = ' ',
-				}
-			end
-		end),
-		line.spacer(),
-		line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
-			return {
-				line.sep('', theme.win, theme.fill),
-				win.is_current() and '' or '',
-				win.buf_name(),
-				line.sep('', theme.fill, theme.win),
-				hl = theme.win,
-				margin = ' ',
-			}
-		end),
-		{
-			line.sep('', theme.tail, theme.fill),
-			{ '  ', hl = theme.tail },
-		},
-		hl = theme.fill,
-	}
-end, {
-		tab_name = {
-			name_fallback = function(tabid)
-				return ""
-			end
-		}
+			})
+		end
+	end
 })
 '''
 

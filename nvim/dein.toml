@@ -702,3 +702,6 @@ repo = 'Shougo/vinarise.vim'
 
 [[plugins]]
 repo = 'kshenoy/vim-signature'
+
+[[plugins]]
+repo = 'lambdalisue/vim-mr'

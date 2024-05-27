@@ -740,6 +740,57 @@ vim.keymap.set('n', '[ddu]r', function()
 		}
 	})
 end, { remap = true })
+vim.keymap.set('n', '[ddu]M', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "MR", "FloatBorder" } }
+			}
+		},
+		sources = {
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Red" } }
+					}
+				},
+				params = { display = ">>Most Recently Used files<<" }
+			},
+			{
+				name = "mr",
+				params = { kind = "mru" }
+			},
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Red" } }
+					}
+				},
+				params = { display = ">>Most Recently Written files<<" }
+			},
+			{
+				name = "mr",
+				params = { kind = "mrw" }
+			},
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Red" } }
+					}
+				},
+				params = { display = ">>Most Recent git Repositories<<" }
+			},
+			{
+				name = "mr",
+				params = { kind = "mrr" }
+			},
+		}
+	})
+end, { remap = true })
 
 -- vim周り
 vim.keymap.set('n', '[ddu]b', function()
@@ -1545,6 +1596,11 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = '4513ECHO/ddu-source-colorscheme'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kuuote/ddu-source-mr'
+depends = ['vim-mr']
 on_source = 'ddu.vim'
 
 # 補完Filter

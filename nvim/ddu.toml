@@ -1492,6 +1492,18 @@ on_source = 'ddu.vim'
 repo = '4513ECHO/ddu-source-colorscheme'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'kuuote/ddu-source-git_status'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kyoh86/ddu-source-git_log'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'peacock0803sz/ddu-source-git_stash'
+on_source = 'ddu.vim'
+
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'

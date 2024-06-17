@@ -156,14 +156,6 @@ end)
 vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
 	require('dap.ui.widgets').preview()
 end)
-vim.keymap.set('n', '<Leader>df', function()
-	local widgets = require('dap.ui.widgets')
-	widgets.centered_float(widgets.frames)
-end)
-vim.keymap.set('n', '<Leader>ds', function()
-	local widgets = require('dap.ui.widgets')
-	widgets.centered_float(widgets.scopes)
-end)
 '''
 lua_source = '''
 local dap = require('dap')
@@ -196,13 +188,6 @@ dap.configurations = {
 
 '''
 
-[[plugins]]
-repo = 'rcarriga/nvim-dap-ui'
-lua_source = '''
-require('dapui').setup()
-'''
-
-# null-lsで使うらしい
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
 

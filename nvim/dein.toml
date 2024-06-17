@@ -290,6 +290,7 @@ require('barbecue').setup({
 repo = 'nvim-lualine/lualine.nvim'
 lua_add = '''
 vim.opt.laststatus = 3
+vim.opt.cmdheight = 0
 '''
 lua_source = '''
 local navic = require("nvim-navic")
@@ -301,11 +302,11 @@ navic.setup({
 local lsp_names = function()
 	local clients = {}
 	for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
-			table.insert(clients, client.name)
-	end
-	local denops_status = vim.fn['denops#server#status']()
-	if denops_status ~= '' then
-		table.insert(clients, "D:" .. denops_status)
+			if client.name == 'GitHub Copilot' then
+				table.insert(clients, 'copilot')
+			else
+				table.insert(clients, client.name)
+			end
 	end
 	return ' ' .. table.concat(clients, ', ')
 end
@@ -323,12 +324,12 @@ require('lualine').setup({
 		lualine_a = {
 			{
 				"tabs",
-				mode = 2
 			}
 		},
 		lualine_z = {
 			{
-				"windows"
+				"windows",
+				disabled_buftypes = { "ddu-ff", "ddu-filer" }
 			}
 		},
 	},
@@ -339,7 +340,8 @@ require('lualine').setup({
 			}
 		},
 		lualine_x = {
-			lsp_names
+			lsp_names,
+			{'denops#server#status'}
 		},
 		lualine_y = {
 			'encoding',

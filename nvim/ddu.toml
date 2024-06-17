@@ -526,8 +526,11 @@ vim.fn["ddu#custom#action"]('kind', 'file', 'grep', function(args)
 			{
 				name = "rg",
 				params = {
-					path = directory,
-					input = vim.fn.input("Pattern: ")
+					paths = { directory },
+				},
+				options = {
+					matchers = {},
+					volatile = true,
 				}
 			}
 		}
@@ -708,6 +711,57 @@ vim.keymap.set('n', '[ddu]r', function()
 				name = "rg",
 				options = { matchers = {}, volatile = true }
 			}
+		}
+	})
+end, { remap = true })
+vim.keymap.set('n', '[ddu]M', function()
+	vim.fn["ddu#start"]({
+		ui = "ff",
+		uiParams = {
+			ff = {
+				floatingTitle = { { "MR", "FloatBorder" } }
+			}
+		},
+		sources = {
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Red" } }
+					}
+				},
+				params = { display = ">>Most Recently Used files<<" }
+			},
+			{
+				name = "mr",
+				params = { kind = "mru" }
+			},
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Red" } }
+					}
+				},
+				params = { display = ">>Most Recently Written files<<" }
+			},
+			{
+				name = "mr",
+				params = { kind = "mrw" }
+			},
+			{
+				name = "dummy",
+				options = {
+					converters = {
+						{ name = "converter_highlight", params = { hl_group = "Red" } }
+					}
+				},
+				params = { display = ">>Most Recent git Repositories<<" }
+			},
+			{
+				name = "mr",
+				params = { kind = "mrr" }
+			},
 		}
 	})
 end, { remap = true })
@@ -1504,6 +1558,10 @@ on_source = 'ddu.vim'
 repo = 'peacock0803sz/ddu-source-git_stash'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'kuuote/ddu-source-mr'
+depends = ['vim-mr']
+on_source = 'ddu.vim'
 # 補完Filter
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'

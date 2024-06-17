@@ -16,7 +16,6 @@ vim.fn["ddu#custom#patch_global"]({
 	uiParams = {
 		ff = {
 			prompt = "> ",
-			filterSplitDirection = "floating",
 			split = "floating",
 			floatingBorder = "rounded",
 			floatingTitlePos = "center",
@@ -231,38 +230,6 @@ local function set_ff_layout()
 		}
 	})
 
-	-- ┌────────────────┐┌────────────────┐
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- │  source        ││                │
-	-- │                ││                │
-	-- │                ││   preview      │
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- └────────────────┘│                │
-	-- ┌────────────────┐│                │
-	-- │   filter       ││                │
-	-- └────────────────┘└────────────────┘
-	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_layout', {
-		uiParams = {
-			ff = {
-				filterFloatingPosition = 'bottom',
-				autoAction = { name = 'preview' },
-				startAutoAction = true,
-				winCol = dduCol,
-				winRow = dduRow,
-				winWidth = dduWidth .. "/ 2",
-				winHeight = dduHeight,
-				previewCol = dduCol .. " + " .. dduWidth .. "/ 2" .. " + 2",
-				previewRow = dduRow .. " + " .. dduHeight .. " + 5",
-				previewWidth = dduWidth .. "/ 2",
-				previewHeight = dduHeight .. " + 3",
-			}
-		}
-	})
-
 	-- ┌────────────────┐
 	-- │                │
 	-- │   preview      │
@@ -272,13 +239,9 @@ local function set_ff_layout()
 	-- │   source       │
 	-- │                │
 	-- └────────────────┘
-	-- ┌────────────────┐
-	-- │   filter       │
-	-- └────────────────┘
 	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_horizontal_layout', {
 		uiParams = {
 			ff = {
-				filterFloatingPosition = 'bottom',
 				autoAction = { name = 'preview' },
 				startAutoAction = true,
 				previewSplit = 'horizontal',
@@ -290,57 +253,6 @@ local function set_ff_layout()
 				previewRow = 0,
 				previewWidth = dduWidth,
 				previewHeight = dduHeight .. " / 2",
-			}
-		}
-	})
-
-	-- ┌────────────────┐
-	-- │                │
-	-- │   preview      │
-	-- │                │
-	-- └────────────────┘
-	-- ┌────────────────┐
-	-- │   filter       │
-	-- └────────────────┘
-	-- ┌────────────────┐
-	-- │   source       │
-	-- │                │
-	-- └────────────────┘
-	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_horizontal_top_layout', {
-		uiParams = {
-			ff = {
-				filterFloatingPosition = 'top',
-				autoAction = { name = 'preview' },
-				startAutoAction = true,
-				previewSplit = 'horizontal',
-				winCol = dduCol,
-				winRow = "&lines / 2 + 1",
-				winWidth = dduWidth,
-				winHeight = dduHeight .. " / 2",
-				-- previewCol = WinCol,
-				previewRow = "&lines / 2 + 1 - 3",
-				previewWidth = dduWidth,
-				previewHeight = dduHeight .. " / 2",
-			}
-		}
-	})
-
-	-- ┌────────────────┐
-	-- │                │
-	-- │   source       │
-	-- │                │
-	-- └────────────────┘
-	-- ┌────────────────┐
-	-- │   filter       │
-	-- └────────────────┘
-	vim.fn["ddu#custom#patch_local"]('ui_filter_layout', {
-		uiParams = {
-			ff = {
-				filterFloatingPosition = 'bottom',
-				winCol = dduCol,
-				winWidth = dduWidth,
-				winRow = dduRow,
-				winHeight = dduHeight,
 			}
 		}
 	})
@@ -698,7 +610,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]r', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				ignoreEmpty = false,
@@ -770,7 +682,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]b', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Buffers", "Blue" } },
@@ -798,7 +709,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]h', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Help", "FloatBorder" } },
@@ -812,7 +723,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]q', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "QuickFix", "FloatBorder" } },
@@ -840,7 +751,7 @@ vim.keymap.set('n', '[ddu]m', function()
 	})
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "MarkList", "FloatBorder" } },
@@ -852,7 +763,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]j', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "JumpList", "FloatBorder" } },
@@ -883,7 +794,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]w', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Window", "FloatBorder" } },
@@ -911,7 +822,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]L', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Line", "FloatBorder" } },
@@ -929,7 +840,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]lr', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp References", "FloatBorder" } },
@@ -946,7 +857,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ld', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Definition", "FloatBorder" } },
@@ -1027,7 +938,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ls', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Symbol", "FloatBorder" } },
@@ -1174,7 +1085,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]T', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_top_layout",
+		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Floaterm", "FloatBorder" } },

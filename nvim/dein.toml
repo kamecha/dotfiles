@@ -311,8 +311,114 @@ local lsp_names = function()
 	return ' ' .. table.concat(clients, ', ')
 end
 
+local ddu_header = function()
+	return "Ddu"
+end
+
+local ddu_search_count = function()
+	if vim.fn["denops#server#status"]() ~= "running" then
+		return ''
+	end
+	local header = ""
+	local current_options = vim.fn["ddu#custom#get_current"]()
+	local context = vim.fn["ddu#get_context"](current_options["name"])
+	local items = vim.fn["ddu#ui#get_items"]()
+	if #items ~= context["maxItems"] then
+		header = header .. #items .. "/" .. context["maxItems"]
+	end
+	if not context["done"] then
+		header = header .. " (async)"
+	end
+	return header
+end
+
+-- itemのsourceとかmatcherとかを表示
+local ddu_item_info = function()
+	if vim.fn["denops#server#status"]() ~= "running" then
+		return ''
+	end
+	local item = vim.fn["ddu#ui#get_item"]()
+	local itemInfo = {
+		source = item["__sourceName"],
+		matchers = nil,
+		sorters = nil,
+		converters = nil,
+	}
+	local itemView = itemInfo["source"]
+	-- for gloval options
+	local globalOptions = vim.fn["ddu#custom#get_global"]()
+	local globalSourceDefaultOptions = globalOptions["sourceOptions"]["_"]
+	local globalSourceOptions = globalOptions["sourceOptions"][item["__sourceName"]] or globalSourceDefaultOptions
+	itemInfo["matchers"] = globalSourceOptions["matchers"]
+	itemInfo["sorters"] = globalSourceOptions["sorters"]
+	itemInfo["converters"] = globalSourceOptions["converters"]
+	-- for current options
+	local current_options = vim.fn["ddu#custom#get_current"]()
+	local sources = current_options["sources"]
+	local sourceInfo = vim.tbl_filter(function(source)
+		return source["name"] == item["__sourceName"]
+	end, sources)[1]
+	local sourceOptions = sourceInfo["options"] or {}
+	itemInfo["matchers"] = sourceOptions["matchers"] or itemInfo["matchers"]
+	itemInfo["sorters"] = sourceOptions["sorters"] or itemInfo["sorters"]
+	itemInfo["converters"] = sourceOptions["converters"] or itemInfo["converters"]
+	-- for matchers
+	local itemMathcers = vim.tbl_get(itemInfo, "matchers")
+	if itemMathcers ~= nil then
+		for _, matcher in ipairs(itemMathcers) do
+			-- lualineの仕切りっぽく分ける
+			itemView = itemView .. "  " .. matcher
+		end
+	end
+	-- for sorters
+	local itemSorters = vim.tbl_get(itemInfo, "sorters")
+	if itemSorters ~= nil then
+		for _, sorter in ipairs(itemSorters) do
+			itemView = itemView .. "  " .. sorter
+		end
+	end
+	-- for converters
+	local itemConverters = vim.tbl_get(itemInfo, "converters")
+	if itemConverters ~= nil then
+		for _, converter in ipairs(itemConverters) do
+			itemView = itemView .. "  " .. converter
+		end
+	end
+	return itemView
+end
+
+-- windowの行数と現在のカーソル位置の行数を表示
+local progress = function()
+	local current_line = vim.fn.line(".")
+	local total_line = vim.fn.line("$")
+	return string.format("%d/%d", current_line, total_line)
+end
+
+local ddu_extension = {
+	sections = {
+		lualine_a = {
+			ddu_header,
+		},
+		lualine_b = {
+			ddu_item_info,
+		},
+		lualine_y = {
+			"filetype"
+		},
+		lualine_z = {
+			{
+				progress,
+			},
+			{
+				ddu_search_count,
+			}
+		}
+	},
+	filetypes = { "ddu-ff", "ddu-filer" },
+}
+
 require('lualine').setup({
-	extensions = { 'quickfix' },
+	extensions = { 'quickfix', ddu_extension },
 	options = {
 		globalstatus = true,
 		disabled_filetypes = {

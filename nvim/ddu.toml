@@ -398,6 +398,15 @@ vim.api.nvim_create_autocmd("VimResized", {
 	end
 })
 
+vim.api.nvim_create_autocmd("User", {
+	pattern = "Ddu:ui:ff:openFilterWindow",
+	command = "set cmdheight=1",
+})
+vim.api.nvim_create_autocmd("User", {
+	pattern = "Ddu:ui:ff:closeFilterWindow",
+	command = "set cmdheight=0",
+})
+
 -- custom action
 
 vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function(args)

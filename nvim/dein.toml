@@ -302,16 +302,17 @@ navic.setup({
 local lsp_names = function()
 	local clients = {}
 	for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
-			if client.name == 'GitHub Copilot' then
-				table.insert(clients, 'copilot')
-			else
-				table.insert(clients, client.name)
-			end
+		if client.name == 'GitHub Copilot' then
+			table.insert(clients, 'copilot')
+		else
+			table.insert(clients, client.name)
+		end
 	end
 	return ' ' .. table.concat(clients, ', ')
 end
 
 require('lualine').setup({
+	extensions = { 'quickfix' },
 	options = {
 		globalstatus = true,
 		disabled_filetypes = {
@@ -341,7 +342,7 @@ require('lualine').setup({
 		},
 		lualine_x = {
 			lsp_names,
-			{'denops#server#status'}
+			{ 'denops#server#status' }
 		},
 		lualine_y = {
 			'encoding',

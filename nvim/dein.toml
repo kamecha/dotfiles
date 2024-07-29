@@ -584,13 +584,30 @@ repo = 'tyru/open-browser.vim'
 repo = 'kamecha/traqVimPractice'
 [plugins.ftplugin]
 lua_traqvim = '''
-vim.keymap.set('n', '<C-n>', '<Plug>(traqvim-next)', { remap = true, buffer = true, silent = true })
-vim.keymap.set('n', '<C-p>', '<Plug>(traqvim-prev)', { remap = true, buffer = true, silent = true })
-vim.keymap.set('n', 'r', ':TraqReload<CR>', { buffer = true, silent = true })
-vim.keymap.set('n', 'o', ':TraqMessageOpen<CR>', { buffer = true, silent = true })
+vim.keymap.set('o', 'im', '<Plug>(traqvim-motion-message)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', '<C-n>', '<Plug>(traqvim-next)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', '<C-p>', '<Plug>(traqvim-prev)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', 'gd', '<Plug>(traqvim-goto)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', '<LocalLeader>y', '<Plug>(traqvim-operator-message-yank-link)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', '<LocalLeader>Y', '<Plug>(traqvim-operator-message-yank-markdown)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', '<LocalLeader>d', '<Plug>(traqvim-operator-message-delete)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', '<LocalLeader>p', '<Plug>(traqvim-operator-pin-toggle)',
+	{ remap = true, buffer = true, silent = true })
+vim.keymap.set('n', 'r', ':Traq channel reload<CR>',
+	{ buffer = true, silent = true })
+vim.keymap.set('n', 'o', ':Traq message open<CR>',
+	{ buffer = true, silent = true })
 '''
 lua_traqvim-message = '''
-vim.keymap.set('n', '<LocalLeader>s', ':TraqMessageSend<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', '<LocalLeader>s', ':Traq message send',
+	{ buffer = true, silent = true })
 '''
 
 # help

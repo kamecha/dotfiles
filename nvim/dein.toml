@@ -606,7 +606,7 @@ vim.keymap.set('n', 'o', ':Traq message open<CR>',
 	{ buffer = true, silent = true })
 '''
 lua_traqvim-message = '''
-vim.keymap.set('n', '<LocalLeader>s', ':Traq message send',
+vim.keymap.set('n', '<LocalLeader>s', ':Traq message send<CR>',
 	{ buffer = true, silent = true })
 '''
 

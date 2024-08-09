@@ -50,7 +50,7 @@ vim.fn["ddc#custom#patch_global"]({
 		input = { mark = "in", isVolatile = true },
 		skkeleton = {
 			mark = "skkeleton",
-			matchers = { "skkeleton" },
+			matchers = {},
 			sorters = {},
 			minAutoCompleteLength = 0,
 			isVolatile = true

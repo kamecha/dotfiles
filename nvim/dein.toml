@@ -624,6 +624,7 @@ vim.keymap.set('n', '[Gina]s', ':Gina status<CR>', { remap = true, silent = true
 vim.keymap.set('n', '[Gina]c', ':Gina commit<CR>', { remap = true, silent = true })
 vim.keymap.set('n', '[Gina]l', ':Gina log --graph --all<CR>', { remap = true, silent = true })
 vim.keymap.set('n', '[Gina]b', ':Gina branch --all<CR>', { remap = true, silent = true })
+vim.fn["gina#custom#command#option"]('show', '--oneline')
 '''
 [plugins.ftplugin]
 gina-log = '''

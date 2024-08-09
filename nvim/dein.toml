@@ -431,12 +431,12 @@ require('lualine').setup({
 		lualine_a = {
 			{
 				"tabs",
+				mode = 2,
 			}
 		},
 		lualine_z = {
 			{
 				"windows",
-				disabled_buftypes = { "ddu-ff", "ddu-filer" }
 			}
 		},
 	},

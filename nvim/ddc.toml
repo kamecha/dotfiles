@@ -361,18 +361,12 @@ vim.fn["skkeleton#config"]({
 	registerConvertResult = true,
 })
 vim.g["skkeleton#mapped_keys"] = vim.fn.extend(vim.g["skkeleton#mapped_keys"], {"<C-l>"})
+-- `l`で変換モードの変化を無効化
 vim.fn["skkeleton#register_keymap"]("input", "<C-l>", "disable")
 vim.fn["skkeleton#register_kanatable"]("rom", {
 	l = false,
-	la = { "ぁ" },
-	li = { "ぃ" },
-	lu = { "ぅ" },
-	le = { "ぇ" },
-	lo = { "ぉ" },
-	lya = { "ゃ" },
-	lyu = { "ゅ" },
-	lyo = { "ょ" },
 })
+-- シャ・チャ行の入力
 vim.fn["skkeleton#register_kanatable"]("rom", {
 	xa = { "しゃ" },
 	xu = { "しゅ" },
@@ -400,6 +394,17 @@ vim.fn["skkeleton#register_kanatable"]("rom", {
 	ch = { "ちゅう" },
 	cw = { "ちぇい" },
 	cp = { "ちょう" },
+})
+-- 特殊な拗音の入力
+vim.fn["skkeleton#register_kanatable"]("rom", {
+	la = { "ぁ" },
+	li = { "ぃ" },
+	lu = { "ぅ" },
+	le = { "ぇ" },
+	lo = { "ぉ" },
+	lya = { "ゃ" },
+	lyu = { "ゅ" },
+	lyo = { "ょ" },
 })
 vim.api.nvim_create_autocmd({ "User" }, {
 	group = "MyAutoCmd",

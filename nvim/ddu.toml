@@ -1478,6 +1478,10 @@ repo = 'kyoh86/ddu-source-git_log'
 on_source = 'ddu.vim'
 
 [[plugins]]
+repo = 'kyoh86/ddu-source-git_branch'
+on_source = 'ddu.vim'
+
+[[plugins]]
 repo = 'peacock0803sz/ddu-source-git_stash'
 on_source = 'ddu.vim'
 

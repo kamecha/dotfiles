@@ -360,8 +360,8 @@ vim.fn["skkeleton#config"]({
 	},
 	registerConvertResult = true,
 })
-vim.g["skkeleton#mapped_keys"] = vim.fn.extend(vim.g["skkeleton#mapped_keys"], {"<C-l>"})
 -- `l`で変換モードの変化を無効化
+vim.g["skkeleton#mapped_keys"] = vim.fn.extend(vim.g["skkeleton#mapped_keys"], {"<C-l>"})
 vim.fn["skkeleton#register_keymap"]("input", "<C-l>", "disable")
 vim.fn["skkeleton#register_kanatable"]("rom", {
 	l = false,

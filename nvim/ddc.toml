@@ -399,6 +399,10 @@ vim.fn["skkeleton#register_kanatable"]("rom", {
 	cw = { "ちぇい" },
 	cp = { "ちょう" },
 })
+-- 「ん」の入力
+vim.fn["skkeleton#register_kanatable"]("rom", {
+	Q = { "ん" },
+})
 -- 特殊な拗音の入力
 vim.fn["skkeleton#register_kanatable"]("rom", {
 	la = { "ぁ" },

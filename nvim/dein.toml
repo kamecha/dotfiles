@@ -604,6 +604,32 @@ vim.keymap.set('n', 'r', ':Traq channel reload<CR>',
 	{ buffer = true, silent = true })
 vim.keymap.set('n', 'o', ':Traq message open<CR>',
 	{ buffer = true, silent = true })
+vim.keymap.set('n', 'K', function()
+		local cursor_url = vim.fn.getline('.')
+		local fileId = vim.fn.matchstr(cursor_url, 'https://q.trap.jp/files/\\zs.*')
+		if fileId == '' then
+			return
+		end
+		local font_height = 12
+		local font_width = font_height / 2
+		local retina_scale = 2
+		local sixel = vim.fn["denops#request"]("traqvim", "getFile", {
+			fileId,
+			{
+				maxWidth = vim.fn.winwidth(".") * font_width / 2 * retina_scale,
+				maxHeight = vim.fn.winheight(".") * font_height / 2 * retina_scale,
+			}
+		})
+		vim.fn["sixel_view#view_sixel"](sixel["data"], 0, 0)
+		vim.api.nvim_create_autocmd({ "CursorMoved", "BufLeave" }, {
+			callback = function()
+				vim.fn["sixel_view#clear"]()
+			end,
+			buffer = vim.api.nvim_get_current_buf(),
+			once = true,
+		})
+	end,
+	{ buffer = true, silent = true })
 '''
 lua_traqvim-message = '''
 vim.keymap.set('n', '<LocalLeader>s', ':Traq message send<CR>',

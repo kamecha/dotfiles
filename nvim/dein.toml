@@ -834,3 +834,7 @@ repo = 'kshenoy/vim-signature'
 
 [[plugins]]
 repo = 'lambdalisue/vim-mr'
+
+[[plugins]]
+repo = 'gw31415/denops-sixel-view.vim'
+

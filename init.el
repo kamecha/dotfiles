@@ -22,6 +22,11 @@
   (skk-large-jisyo "~/.cache/dein/nvim/repos/github.com/skk-dev/dict/SKK-JISYO.L")
   :bind (("C-x C-j" . skk-mode)))
 
+;; magitの設定
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)))
+
 ; delete by <C-h>
 (keyboard-translate ?\C-h ?\C-?)
 

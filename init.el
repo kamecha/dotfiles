@@ -14,6 +14,14 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; skkの設定
+(use-package ddskk
+  :ensure t
+  :custom
+  (skk-sticky-key ";")
+  (skk-large-jisyo "~/.cache/dein/nvim/repos/github.com/skk-dev/dict/SKK-JISYO.L")
+  :bind (("C-x C-j" . skk-mode)))
+
 ; delete by <C-h>
 (keyboard-translate ?\C-h ?\C-?)
 

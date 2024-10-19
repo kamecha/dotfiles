@@ -70,6 +70,7 @@ cd dotfiles
 ln -sfv "$(pwd)/nvim" "$HOME/.config/"
 ln -sfv "$(pwd)/.vimrc" "$HOME/.vimrc"
 ln -sfv "$(pwd)/.vim" "$HOME/"
+ln -sfv "$(pwd)/init.el" "$HOME/.emacs.d/init.el"
 # for each shell
 ln -sfv "$(pwd)/.bashrc" "$HOME/.bashrc"
 ln -sfv "$(pwd)/.zshrc" "$HOME/.zshrc"

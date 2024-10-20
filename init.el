@@ -39,6 +39,13 @@
   :custom
   (completion-styles '(orderless basic)))
 
+;; 補完エンジンの導入
+(use-package corfu
+  :custom
+  ((corfu-auto t))
+  :init
+  (global-corfu-mode t))
+
 ; delete by <C-h>
 (keyboard-translate ?\C-h ?\C-?)
 

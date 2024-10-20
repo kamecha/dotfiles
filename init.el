@@ -27,6 +27,18 @@
   :ensure t
   :bind (("C-x g" . magit-status)))
 
+;; fuzzy finder設定 †vertico†
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+;; verticoであいまい検索
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic)))
+
 ; delete by <C-h>
 (keyboard-translate ?\C-h ?\C-?)
 

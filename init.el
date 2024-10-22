@@ -30,8 +30,9 @@
 ;; fuzzy finder設定 †vertico†
 (use-package vertico
   :ensure t
-  :init
-  (vertico-mode))
+  :custom
+  (vertico-mode t)
+  :pin gnu)
 
 ;; verticoであいまい検索
 (use-package orderless
@@ -41,10 +42,11 @@
 
 ;; 補完エンジンの導入
 (use-package corfu
+  :ensure t
   :custom
-  ((corfu-auto t))
-  :init
-  (global-corfu-mode t))
+  (corfu-auto t)
+  (global-corfu-mode t)
+  :pin gnu)
 
 ; delete by <C-h>
 (keyboard-translate ?\C-h ?\C-?)

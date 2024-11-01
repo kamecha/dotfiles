@@ -51,3 +51,8 @@
 ; delete by <C-h>
 (keyboard-translate ?\C-h ?\C-?)
 
+
+(setq custom-file "~/.emacs.d/emacs-custom.el")
+(unless (file-exists-p custom-file)
+  (with-temp-buffer (write-file custom-file)))
+(load custom-file)

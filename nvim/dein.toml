@@ -658,6 +658,20 @@ setlocal cursorline
 '''
 
 [[plugins]]
+repo = 'lambdalisue/vim-gin'
+depends = 'denops.vim'
+lua_add = '''
+vim.keymap.set('n', '[Gin]', '<Nop>')
+vim.keymap.set('n', '<space>G', '[Gin]', { remap = true })
+vim.keymap.set('n', '[Gin]s', ':GinStatus<CR>', { remap = true, silent = true })
+vim.keymap.set('n', '[Gin]l', ':GinLog --oneline --graph --all<CR>', { remap = true, silent = true })
+'''
+[plugins.ftplugin]
+gin-log = '''
+setlocal nonumber
+'''
+
+[[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
 lua_source = '''
 require('gitsigns').setup({

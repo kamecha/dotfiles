@@ -718,11 +718,6 @@ require('gitsigns').setup({
 })
 '''
 
-# GitHub
-[[plugins]]
-repo = 'skanehira/denops-gh.vim'
-depends = 'denops.vim'
-
 # QuickFixを一括置換
 [[plugins]]
 repo = 'thinca/vim-qfreplace'

@@ -850,5 +850,11 @@ repo = 'kshenoy/vim-signature'
 repo = 'lambdalisue/vim-mr'
 
 [[plugins]]
+repo = 'thinca/vim-prettyprint'
+
+[[plugins]]
+repo = 'tyru/capture.vim'
+
+[[plugins]]
 repo = 'gw31415/denops-sixel-view.vim'
 

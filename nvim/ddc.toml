@@ -1,7 +1,7 @@
 # 補完plugin
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-depends = ['denops.vim', 'pum.vim']
+depends = ['denops.vim']
 on_event = ['InsertEnter', 'CmdlineEnter']
 lua_source = '''
 if vim.fn.has('wsl') == 1 then
@@ -21,7 +21,7 @@ if vim.fn.has('wsl') == 1 then
 end
 
 vim.fn["ddc#custom#patch_global"]({
-	ui = "pum",
+	ui = "native",
 	sources = { "around", "lsp", "vsnip", "file", "dictionary" },
 	sourceOptions = {
 		around = { mark = "A" },
@@ -165,88 +165,6 @@ vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
 # 補完UI
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
-on_source = 'ddc.vim'
-
-# 独自ポップアップwindow
-[[plugins]]
-repo = 'Shougo/pum.vim'
-lua_source = '''
-vim.keymap.set('i', '<C-n>', function()
-	vim.fn["pum#map#select_relative"](1)
-end)
-vim.keymap.set('i', '<C-p>', function()
-	vim.fn["pum#map#select_relative"](-1)
-end)
-vim.keymap.set('i', '<C-y>', function()
-	vim.fn["pum#map#confirm"]()
-end)
-vim.keymap.set('i', '<C-e>', function()
-	vim.fn["pum#map#cancel"]()
-end)
-vim.keymap.set('c', '<C-n>', function()
-	if vim.fn["pum#visible"]() then
-		return "<Cmd>call pum#map#select_relative(+1)<CR>"
-	else
-		return "<C-n>"
-	end
-end, { expr = true })
-vim.keymap.set('c', '<C-p>', function()
-	if vim.fn["pum#visible"]() then
-		return "<Cmd>call pum#map#select_relative(-1)<CR>"
-	else
-		return "<C-p>"
-	end
-end, { expr = true })
-vim.keymap.set('c', '<CR>', function()
-	if vim.fn["pum#visible"]() then
-		return "<Cmd>call pum#map#confirm()<CR><CR>"
-	else
-		return "<CR>"
-	end
-end, { expr = true })
-vim.keymap.set('c', '<C-y>', function()
-	vim.fn["pum#map#confirm"]()
-end)
-
-vim.opt.cedit = "<C-f>"
-
-vim.fn["pum#set_option"]({
-	max_height = 10,
-	max_width = 50,
-	padding = true,
-})
-
--- leximaの影響を受けちゃうので、insertEnterでマッピングを上書きする
-vim.api.nvim_create_autocmd({ "InsertEnter" }, {
-	pattern = "*",
-	callback = function()
-		vim.keymap.set('i', '<CR>', function()
-			if vim.fn["pum#visible"]() then
-				return "<Cmd>call pum#map#confirm()<CR>"
-			else
-				return vim.fn["lexima#expand"]('<LT>CR>', 'i')
-			end
-		end, { remap = true, expr = true })
-		vim.keymap.set('i', '<C-n>', function()
-			if vim.fn["pum#visible"]() then
-				vim.fn['pum#map#select_relative'](1)
-			else
-				vim.fn["ddc#map#manual_complete"]()
-			end
-		end, { remap = true })
-		vim.keymap.set('i', '<C-p>', function()
-			if vim.fn["pum#visible"]() then
-				return "<Cmd>call pum#map#select_relative(-1)<CR>"
-			else
-				return "<Cmd>call ddc#map#manual_complete()<CR>"
-			end
-		end, { remap = true, expr = true })
-	end
-})
-'''
-
-[[plugins]]
-repo = 'Shougo/ddc-ui-pum'
 on_source = 'ddc.vim'
 
 # 補完source
@@ -630,7 +548,6 @@ vim.api.nvim_create_autocmd({ "User" }, {
 	callback = function()
 		vim.b.prev_buffer_config = vim.fn["ddc#custom#get_buffer"]()
 		vim.fn["ddc#custom#patch_buffer"]({
-			ui = "pum",
 			sources = {
 				"around",
 				{

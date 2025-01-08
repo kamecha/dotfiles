@@ -2,7 +2,7 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 depends = ['denops.vim']
-on_event = ['InsertEnter', 'CmdlineEnter']
+on_event = ['InsertEnter']
 lua_source = '''
 if vim.fn.has('wsl') == 1 then
 	vim.opt_local.dictionary:append('/usr/share/dict/american-english')
@@ -128,12 +128,7 @@ vim.fn["ddc#custom#patch_global"]({
 	autoCompleteEvents = {
 		"InsertEnter",
 		"TextChangedI", "TextChangedP",
-		"CmdlineChanged", "CmdlineEnter"
 	},
-	cmdlineSources = {
-		[":"] = { "cmdline", "cmdline-history" },
-		["@"] = { "input", "around" }
-	}
 })
 
 vim.fn["ddc#custom#patch_filetype"]("gina-commit", {
@@ -152,14 +147,6 @@ vim.fn["ddc#custom#patch_filetype"]("traqvim-message", {
 })
 
 vim.fn["ddc#enable"]()
-
--- use pum
-vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
-	pattern = "*",
-	callback = function()
-		vim.fn["ddc#enable_cmdline_completion"]()
-	end
-})
 '''
 
 # 補完UI

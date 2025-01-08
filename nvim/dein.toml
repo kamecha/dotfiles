@@ -448,7 +448,8 @@ require('lualine').setup({
 		},
 		lualine_x = {
 			lsp_names,
-			{ 'denops#server#status' }
+			{ 'denops#server#status' },
+			{ 'reg_recording' }
 		},
 		lualine_y = {
 			'encoding',

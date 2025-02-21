@@ -409,6 +409,13 @@ vim.api.nvim_create_autocmd("User", {
 
 -- custom action
 
+vim.fn["ddu#custom#action"]('kind', 'file', 'echo', function(args)
+	for _, item in ipairs(args["items"]) do
+		vim.fn["denops#_internal#echo#info"](vim.inspect(item))
+	end
+	return 4 -- Persist
+end)
+
 vim.fn["ddu#custom#action"]('kind', 'file', 'setcdo', function(args)
 	local qflist = {}
 	for _, item in ipairs(args["items"]) do
@@ -468,6 +475,13 @@ vim.fn["ddu#custom#action"]('source', 'file', 'file_rec', function(args)
 		}
 	})
 	return 0
+end)
+
+vim.fn["ddu#custom#action"]('kind', 'lsp', 'echo', function(args)
+	for _, item in ipairs(args["items"]) do
+		vim.fn["denops#_internal#echo#info"](vim.inspect(item))
+	end
+	return 4 -- Persist
 end)
 
 vim.fn["ddu#custom#action"]('kind', 'lsp', 'setBreakPoint', function(args)

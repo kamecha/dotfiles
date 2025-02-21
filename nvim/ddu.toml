@@ -399,11 +399,11 @@ vim.api.nvim_create_autocmd("VimResized", {
 })
 
 vim.api.nvim_create_autocmd("User", {
-	pattern = "Ddu:ui:ff:openFilterWindow",
+	pattern = "Ddu:uiOpenFilterWindow",
 	command = "set cmdheight=1",
 })
 vim.api.nvim_create_autocmd("User", {
-	pattern = "Ddu:ui:ff:closeFilterWindow",
+	pattern = "Ddu:uiCloseFilterWindow",
 	command = "set cmdheight=0",
 })
 
@@ -1240,9 +1240,9 @@ repo = 'Shougo/ddu-ui-ff'
 on_source = 'ddu.vim'
 lua_source = '''
 vim.api.nvim_create_autocmd({ "User" }, {
-	pattern = "Ddu:ui:ff:openFilterWindow",
+	pattern = "Ddu:uiOpenFilterWindow",
 	callback = function()
-		vim.fn["ddu#ui#ff#save_cmaps"]({
+		vim.fn["ddu#ui#save_cmaps"]({
 			"<C-n>", "<C-p>", "<C-q>",
 		})
 		vim.keymap.set('c', '<C-n>', function()
@@ -1255,9 +1255,9 @@ vim.api.nvim_create_autocmd({ "User" }, {
 	end,
 })
 vim.api.nvim_create_autocmd({ "User" }, {
-	pattern = "Ddu:ui:ff:closeFilterWindow",
+	pattern = "Ddu:uiCloseFilterWindow",
 	callback = function()
-		vim.fn["ddu#ui#ff#restore_cmaps"]()
+		vim.fn["ddu#ui#restore_cmaps"]()
 	end,
 })
 '''

@@ -1222,6 +1222,7 @@ vim.keymap.set('n', '[ddu]e', function()
 			{
 				name = "file",
 				options = {
+					sorters = { "sorter_alpha", "sorter_reversed" },
 					columns = { "icon_filename", "file_git_status", "file_buf_modified" }
 				}
 			}
@@ -1531,6 +1532,14 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-filter-matcher_regex'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-sorter_alpha'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-sorter_reversed'
 on_source = 'ddu.vim'
 
 [[plugins]]

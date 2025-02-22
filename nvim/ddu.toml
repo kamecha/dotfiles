@@ -272,34 +272,6 @@ local function set_ff_layout()
 			}
 		}
 	})
-
-	-- ┌────────────────┐┌────────────────┐
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- │  source        ││   preview      │
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- └────────────────┘└────────────────┘
-	vim.fn["ddu#custom#patch_local"]('ui_preview_layout', {
-		uiParams = {
-			ff = {
-				autoAction = { name = 'preview' },
-				startAutoAction = true,
-				previewSplit = 'vertical',
-				winCol = dduCol,
-				winWidth = dduWidth .. "/ 2",
-				winRow = dduRow,
-				winHeight = dduHeight,
-				previewCol = dduCol .. " + " .. dduWidth .. "/ 2" .. " + 2",
-				previewWidth = dduWidth .. "/ 2",
-				previewRow = dduRow,
-				previewHeight = dduHeight,
-			}
-		}
-	})
 end
 
 local function set_filer_layout()
@@ -326,62 +298,6 @@ local function set_filer_layout()
 				previewRow = dduRow .. "+" .. dduHeight .. "+ 1",
 				previewWidth = "(" .. dduWidth .. "- 1)" .. "/ 2",
 				previewHeight = dduHeight .. "- 2",
-			}
-		}
-	})
-
-	-- ┌────────────────┐┌────────────────┐
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- │  source        ││   preview      │
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- │                ││                │
-	-- └────────────────┘└────────────────┘
-	vim.fn["ddu#custom#patch_local"]('ui_filer_preview_layout', {
-		uiParams = {
-			filer = {
-				autoAction = { name = 'preview' },
-				startAutoAction = true,
-				previewSplit = 'vertical',
-				winCol = dduCol,
-				winWidth = dduWidth .. "/ 2",
-				winRow = dduRow,
-				winHeight = dduHeight,
-				previewCol = dduCol .. " + " .. dduWidth .. "/ 2" .. " + 2",
-				previewWidth = dduWidth .. "/ 2",
-				previewRow = dduRow,
-				previewHeight = dduHeight,
-			}
-		}
-	})
-
-	-- ┌────────────────┐
-	-- │                │
-	-- │   preview      │
-	-- │                │
-	-- └────────────────┘
-	-- ┌────────────────┐
-	-- │                │
-	-- │   source       │
-	-- │                │
-	-- └────────────────┘
-	vim.fn["ddu#custom#patch_local"]('ui_filer_preview_horizontal_layout', {
-		uiParams = {
-			filer = {
-				autoAction = { name = 'preview' },
-				startAutoAction = true,
-				previewSplit = 'horizontal',
-				winCol = dduCol,
-				winWidth = dduWidth,
-				winRow = dduRow .. "+" .. dduHeight .. "/ 2",
-				winHeight = dduHeight .. "/ 2",
-				-- previewCol = WinCol,
-				previewWidth = dduWidth,
-				-- previewRow = WinRow + math.floor(WinHeight / 2),
-				previewHeight = dduHeight .. "/ 2",
 			}
 		}
 	})

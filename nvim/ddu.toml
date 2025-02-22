@@ -3,6 +3,7 @@ repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
 on_source = 'denops.vim'
 lua_source = '''
+vim.fn["ddu#custom#alias"]('default', 'source', 'live_grep', 'rg')
 vim.fn["ddu#custom#alias"]('default', 'column', 'tab_column', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'lsp_hierarchy_filter', 'custom')
 
@@ -43,8 +44,9 @@ vim.fn["ddu#custom#patch_global"]({
 		}
 	},
 	sourceOptions = {
-		rg = {
-			matchers = { "converter_display_word", "matcher_fzf" }
+		live_grep = {
+			matchers = {},
+			volatile = true
 		},
 		file_rec = {
 			matchers = { "matcher_fzf" },
@@ -648,7 +650,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]r', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				ignoreEmpty = false,
@@ -656,12 +657,7 @@ vim.keymap.set('n', '[ddu]r', function()
 				floatingTitle = { { "Live Grep", "String" } }
 			}
 		},
-		sources = {
-			{
-				name = "rg",
-				options = { matchers = {}, volatile = true }
-			}
-		}
+		sources = { "live_grep" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]M', function()

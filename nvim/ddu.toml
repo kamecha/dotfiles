@@ -684,6 +684,10 @@ vim.keymap.set('n', '[ddu]M', function()
 			},
 			{
 				name = "mr",
+				options = {
+					matchers = { "converter_relativepath", "matcher_fzf" },
+					converters = { "converter_hl_dir" }
+				},
 				params = { kind = "mru" }
 			},
 			{
@@ -697,6 +701,10 @@ vim.keymap.set('n', '[ddu]M', function()
 			},
 			{
 				name = "mr",
+				options = {
+					matchers = { "converter_relativepath", "matcher_fzf" },
+					converters = { "converter_hl_dir" }
+				},
 				params = { kind = "mrw" }
 			},
 			{
@@ -710,6 +718,10 @@ vim.keymap.set('n', '[ddu]M', function()
 			},
 			{
 				name = "mr",
+				options = {
+					matchers = { "converter_relativepath", "matcher_fzf" },
+					converters = { "converter_hl_dir" }
+				},
 				params = { kind = "mrr" }
 			},
 		}
@@ -1556,6 +1568,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-filter-custom'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'gamoutatsumi/ddu-filter-converter_relativepath'
 on_source = 'ddu.vim'
 
 [[plugins]]

@@ -53,10 +53,12 @@ vim.fn["ddu#custom#patch_global"]({
 		},
 		file_rec = {
 			matchers = { "matcher_fzf" },
+			sorters = { "sorter_mtime" },
 			converters = { "converter_hl_dir", "converter_file_icon" }
 		},
 		file_external = {
 			matchers = { "matcher_fzf" },
+			sorters = { "sorter_mtime" },
 			converters = { "converter_hl_dir", "converter_file_icon" }
 		},
 		dummy = {
@@ -1501,6 +1503,10 @@ on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'kamecha/ddu-filter-matcher_regex'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kuuote/ddu-filter-sorter_mtime'
 on_source = 'ddu.vim'
 
 [[plugins]]

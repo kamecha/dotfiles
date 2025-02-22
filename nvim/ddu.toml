@@ -398,13 +398,28 @@ vim.api.nvim_create_autocmd("VimResized", {
 	end
 })
 
-vim.api.nvim_create_autocmd("User", {
+vim.api.nvim_create_autocmd({ "User" }, {
 	pattern = "Ddu:uiOpenFilterWindow",
-	command = "set cmdheight=1",
+	callback = function()
+		vim.opt.cmdheight = 1
+		vim.fn["ddu#ui#save_cmaps"]({
+			"<C-n>", "<C-p>", "<C-q>",
+		})
+		vim.keymap.set('c', '<C-n>', function()
+			vim.fn["ddu#ui#do_action"]("cursorNext")
+		end)
+		vim.keymap.set('c', '<C-p>', function()
+			vim.fn["ddu#ui#do_action"]("cursorPrevious")
+		end)
+		vim.keymap.set('c', '<C-q>', '<Esc><Cmd>call ddu#ui#do_action("quit")<CR>')
+	end,
 })
-vim.api.nvim_create_autocmd("User", {
+vim.api.nvim_create_autocmd({ "User" }, {
 	pattern = "Ddu:uiCloseFilterWindow",
-	command = "set cmdheight=0",
+	callback = function()
+		vim.fn["ddu#ui#restore_cmaps"]()
+		vim.opt.cmdheight = 0
+	end,
 })
 
 -- custom action
@@ -1238,29 +1253,6 @@ end, { remap = true })
 [[plugins]]
 repo = 'Shougo/ddu-ui-ff'
 on_source = 'ddu.vim'
-lua_source = '''
-vim.api.nvim_create_autocmd({ "User" }, {
-	pattern = "Ddu:uiOpenFilterWindow",
-	callback = function()
-		vim.fn["ddu#ui#save_cmaps"]({
-			"<C-n>", "<C-p>", "<C-q>",
-		})
-		vim.keymap.set('c', '<C-n>', function()
-			vim.fn["ddu#ui#do_action"]("cursorNext")
-		end)
-		vim.keymap.set('c', '<C-p>', function()
-			vim.fn["ddu#ui#do_action"]("cursorPrevious")
-		end)
-		vim.keymap.set('c', '<C-q>', '<Esc><Cmd>call ddu#ui#do_action("quit")<CR>')
-	end,
-})
-vim.api.nvim_create_autocmd({ "User" }, {
-	pattern = "Ddu:uiCloseFilterWindow",
-	callback = function()
-		vim.fn["ddu#ui#restore_cmaps"]()
-	end,
-})
-'''
 [plugins.ftplugin]
 lua_ddu-ff = '''
 vim.opt_local.cursorline = true

@@ -20,6 +20,8 @@ vim.fn["ddu#custom#patch_global"]({
 	},
 	uiParams = {
 		ff = {
+			autoAction = { name = 'preview' },
+			startAutoAction = true,
 			split = "floating",
 			floatingBorder = "rounded",
 			floatingTitlePos = "center",
@@ -288,8 +290,6 @@ local function set_ff_layout()
 	vim.fn["ddu#custom#patch_local"]('ui_filter_preview_horizontal_layout', {
 		uiParams = {
 			ff = {
-				autoAction = { name = 'preview' },
-				startAutoAction = true,
 				previewSplit = 'horizontal',
 				winCol = dduCol,
 				winRow = "&lines / 2",

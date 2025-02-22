@@ -545,7 +545,6 @@ vim.keymap.set('n', '<Space>u', '[ddu]', { remap = true })
 -- file周り
 vim.keymap.set('n', '[ddu]f', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Filter", "FloatBorder" } },
@@ -558,7 +557,6 @@ vim.keymap.set('n', '[ddu]f', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]g', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Files", "FloatBorder" }, { "Git", "FloatBorder" } },
@@ -576,7 +574,6 @@ vim.keymap.set('n', '[ddu]g', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]r', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				ignoreEmpty = false,
@@ -589,7 +586,6 @@ vim.keymap.set('n', '[ddu]r', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]M', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "MR", "FloatBorder" } }
@@ -633,7 +629,6 @@ end, { remap = true })
 -- vim周り
 vim.keymap.set('n', '[ddu]b', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Buffers", "Blue" } },
@@ -644,7 +639,6 @@ vim.keymap.set('n', '[ddu]b', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]c', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Command History", "FloatBorder" } },
@@ -656,7 +650,6 @@ vim.keymap.set('n', '[ddu]c', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]h', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Help", "FloatBorder" } },
@@ -667,7 +660,6 @@ vim.keymap.set('n', '[ddu]h', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]q', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
@@ -695,7 +687,6 @@ vim.keymap.set('n', '[ddu]m', function()
 		options = { converters = { "converter_hl_dir" } }
 	})
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
@@ -707,7 +698,6 @@ vim.keymap.set('n', '[ddu]m', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]j', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
@@ -719,7 +709,6 @@ vim.keymap.set('n', '[ddu]j', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]t', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Tab", "FloatBorder" } },
@@ -736,7 +725,6 @@ vim.keymap.set('n', '[ddu]t', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]w', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
@@ -764,7 +752,6 @@ vim.keymap.set('n', '[ddu]w', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]L', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
@@ -780,7 +767,6 @@ end, { remap = true })
 -- lsp
 vim.keymap.set('n', '[ddu]lr', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp References", "FloatBorder" } },
@@ -796,7 +782,6 @@ vim.keymap.set('n', '[ddu]lr', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]ld', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Definition", "FloatBorder" } },
@@ -858,7 +843,6 @@ vim.keymap.set('n', '[ddu]ld', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]lD', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Diagnostic", "FloatBorder" } },
@@ -876,7 +860,6 @@ vim.keymap.set('n', '[ddu]lD', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]ls', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Symbol", "FloatBorder" } },
@@ -898,7 +881,6 @@ vim.keymap.set('n', '[ddu]ls', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]lh', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Hierarchy", "FloatBorder" } },
@@ -988,7 +970,6 @@ end, { remap = true })
 -- 他プラグインとの連携
 vim.keymap.set('n', '[ddu]T', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Floaterm", "FloatBorder" } },
@@ -999,7 +980,6 @@ vim.keymap.set('n', '[ddu]T', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]d', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Dein", "Black" } },
@@ -1011,7 +991,6 @@ vim.keymap.set('n', '[ddu]d', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]v<CR>', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		sources = { "channel_rec" }
 	})
 end, { remap = true })
@@ -1038,7 +1017,6 @@ vim.keymap.set('n', '[ddu]ve<CR>', function()
 end, { remap = true })
 vim.keymap.set('n', '[ddu]vu<CR>', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		sources = {
 			{ name = "channel_rec", params = { type = "unread" } },
 		}
@@ -1090,7 +1068,6 @@ end, { remap = true })
 
 vim.keymap.set('n', '[ddu]E', function()
 	vim.fn["ddu#start"]({
-		ui = "ff",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "File", "FloatBorder" }, { "Browser", "Directory" } },

@@ -3,8 +3,8 @@ repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
 on_source = 'denops.vim'
 lua_source = '''
-vim.fn["ddu#custom#alias"]('column', 'tab_column', 'custom')
-vim.fn["ddu#custom#alias"]('filter', 'lsp_hierarchy_filter', 'custom')
+vim.fn["ddu#custom#alias"]('default', 'column', 'tab_column', 'custom')
+vim.fn["ddu#custom#alias"]('default', 'filter', 'lsp_hierarchy_filter', 'custom')
 
 vim.fn["ddu#custom#patch_global"]({
 	ui = "ff",

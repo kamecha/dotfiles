@@ -431,16 +431,6 @@ vim.fn["ddu#custom#action"]('kind', 'lsp', 'echo', function(args)
 	return 4 -- Persist
 end)
 
-vim.fn["ddu#custom#action"]('kind', 'lsp', 'setBreakPoint', function(args)
-	for _, item in ipairs(args["items"]) do
-		local action = item["action"]
-		local lnum = action["lnum"]
-		vim.fn.execute(lnum)
-		require("dap").set_breakpoint()
-	end
-	return 0
-end)
-
 vim.fn["ddu#custom#action"]('source', 'buffer', 'delete', function(args)
 	for _, item in ipairs(args["items"]) do
 		local action = item["action"]
@@ -448,28 +438,6 @@ vim.fn["ddu#custom#action"]('source', 'buffer', 'delete', function(args)
 		vim.fn.execute("bdelete " .. bufNr)
 	end
 	return 0
-end)
-
-vim.fn["ddu#custom#action"]('source', 'dein', 'gh view', function(args)
-	for _, item in ipairs(args["items"]) do
-		local action = item["action"]
-		local path = action["path"]
-		local repoPath = vim.fn.split(path, "/")
-		local repo = repoPath[#repoPath - 1] .. "/" .. repoPath[#repoPath]
-		vim.system({ "gh", "repo", "view", repo, "--web" })
-	end
-	return 0
-end)
-
-vim.fn["ddu#custom#action"]('source', 'register', 'trimCRLF', function(args)
-	for _, item in ipairs(args["items"]) do
-		local regName = item["word"][0]
-		local action = item["action"]
-		-- local regType = action["regType"]
-		local regText = action["text"]
-		vim.fn.setreg(regName, vim.fn.substitute(regText, "\r", "", "g"))
-	end
-	return 1
 end)
 
 vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)

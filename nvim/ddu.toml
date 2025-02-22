@@ -470,6 +470,66 @@ vim.fn["ddu#custom#action"]('source', 'buffer', 'delete', function(args)
 	return 0
 end)
 
+vim.fn["ddu#custom#action"]('ui', 'ff', 'cursorSourceNext', function()
+	local items = vim.fn["ddu#ui#get_items"]()
+	local cursor_item = vim.fn["ddu#ui#get_item"]()
+	local cursor_line = vim.fn.getpos(".")[2]
+	local next_cursor = #items
+	for i = cursor_line, #items do
+		if items[i]["__sourceName"] ~= cursor_item["__sourceName"] then
+			next_cursor = i
+			break
+		end
+	end
+	vim.fn.cursor(next_cursor, 1)
+	return 4 -- Persist
+end)
+
+vim.fn["ddu#custom#action"]('ui', 'ff', 'cursorSourcePrev', function()
+	local items = vim.fn["ddu#ui#get_items"]()
+	local cursor_item = vim.fn["ddu#ui#get_item"]()
+	local cursor_line = vim.fn.getpos(".")[2]
+	local prev_cursor = 1
+	for i = cursor_line, 1, -1 do
+		if items[i]["__sourceName"] ~= cursor_item["__sourceName"] then
+			prev_cursor = i
+			break
+		end
+	end
+	vim.fn.cursor(prev_cursor, 1)
+	return 4 -- Persist
+end)
+
+vim.fn["ddu#custom#action"]('ui', 'filer', 'cursorSourceNext', function()
+	local items = vim.fn["ddu#ui#get_items"]()
+	local cursor_item = vim.fn["ddu#ui#get_item"]()
+	local cursor_line = vim.fn.getpos(".")[2]
+	local next_cursor = #items
+	for i = cursor_line, #items do
+		if items[i]["__sourceName"] ~= cursor_item["__sourceName"] then
+			next_cursor = i
+			break
+		end
+	end
+	vim.fn.cursor(next_cursor, 1)
+	return 4 -- Persist
+end)
+
+vim.fn["ddu#custom#action"]('ui', 'filer', 'cursorSourcePrev', function()
+	local items = vim.fn["ddu#ui#get_items"]()
+	local cursor_item = vim.fn["ddu#ui#get_item"]()
+	local cursor_line = vim.fn.getpos(".")[2]
+	local prev_cursor = 1
+	for i = cursor_line, 1, -1 do
+		if items[i]["__sourceName"] ~= cursor_item["__sourceName"] then
+			prev_cursor = i
+			break
+		end
+	end
+	vim.fn.cursor(prev_cursor, 1)
+	return 4 -- Persist
+end)
+
 vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	local sources = args["options"]["sources"]
 	for _, source in ipairs(sources) do
@@ -1121,6 +1181,12 @@ end, { buffer = true })
 vim.keymap.set('n', 'S', function()
 	vim.fn["ddu#ui#do_action"]('toggleAllItems')
 end, { buffer = true })
+vim.keymap.set('n', '}', function()
+	vim.fn["ddu#ui#do_action"]('cursorSourceNext')
+end, { buffer = true })
+vim.keymap.set('n', '{', function()
+	vim.fn["ddu#ui#do_action"]('cursorSourcePrev')
+end, { buffer = true })
 vim.keymap.set('n', '<C-j>', function()
 	vim.fn["ddu#ui#do_action"]('kensaku')
 end, { buffer = true })
@@ -1188,6 +1254,12 @@ vim.keymap.set('n', '(', function()
 end, { buffer = true })
 vim.keymap.set('n', ')', function()
 	vim.fn["ddu#ui#do_action"]('cursorTreeBottom')
+end, { buffer = true })
+vim.keymap.set('n', '}', function()
+	vim.fn["ddu#ui#do_action"]('cursorSourceNext')
+end, { buffer = true })
+vim.keymap.set('n', '{', function()
+	vim.fn["ddu#ui#do_action"]('cursorSourcePrev')
 end, { buffer = true })
 vim.keymap.set('n', 'p', function()
 	vim.fn["ddu#ui#do_action"]('togglePreview')

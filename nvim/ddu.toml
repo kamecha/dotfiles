@@ -560,7 +560,6 @@ vim.fn["ddu#custom#action"]('ui', 'ff', 'kensaku', function(args)
 	vim.fn["ddu#ui#do_action"]('updateOptions', {
 		sources = sources
 	})
-	print("kensaku")
 	return 1 -- Don't Redraw again
 end)
 

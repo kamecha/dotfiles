@@ -20,7 +20,6 @@ vim.fn["ddu#custom#patch_global"]({
 	},
 	uiParams = {
 		ff = {
-			prompt = "> ",
 			split = "floating",
 			floatingBorder = "rounded",
 			floatingTitlePos = "center",

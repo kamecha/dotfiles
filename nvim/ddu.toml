@@ -553,9 +553,7 @@ vim.keymap.set('n', '[ddu]f', function()
 				startAutoAction = true,
 			}
 		},
-		sources = {
-			{ name = "file_rec", params = {} }
-		}
+		sources = { "file_rec" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]g', function()
@@ -641,9 +639,7 @@ vim.keymap.set('n', '[ddu]b', function()
 				floatingTitle = { { "Buffers", "Blue" } },
 			}
 		},
-		sources = {
-			{ name = "buffer" }
-		}
+		sources = { "buffer" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]c', function()
@@ -655,9 +651,7 @@ vim.keymap.set('n', '[ddu]c', function()
 				autoAction = {}
 			}
 		},
-		sources = {
-			{ name = "command_history" }
-		}
+		sources = { "command_history" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]h', function()
@@ -669,9 +663,7 @@ vim.keymap.set('n', '[ddu]h', function()
 				floatingTitle = { { "Help", "FloatBorder" } },
 			}
 		},
-		sources = {
-			{ name = "help" }
-		}
+		sources = { "help" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]q', function()
@@ -723,9 +715,7 @@ vim.keymap.set('n', '[ddu]j', function()
 				floatingTitle = { { "JumpList", "FloatBorder" } },
 			}
 		},
-		sources = {
-			{ name = "jumplist" }
-		}
+		sources = { "jumplist" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]t', function()
@@ -784,9 +774,7 @@ vim.keymap.set('n', '[ddu]L', function()
 					{ "&relativenumber", 1 } }
 			}
 		},
-		sources = {
-			{ name = "line" }
-		}
+		sources = { "line" }
 	})
 end, { remap = true })
 
@@ -802,9 +790,9 @@ vim.keymap.set('n', '[ddu]lr', function()
 		},
 		sources = {
 			{ name = "dummy",            params = { display = ">>lsp references<<" } },
-			{ name = "lsp_references" },
+			"lsp_references",
 			{ name = "dummy",            params = { display = ">>anyjump<<" } },
-			{ name = "anyjump_reference" }
+			"anyjump_reference",
 		}
 	})
 end, { remap = true })
@@ -867,7 +855,7 @@ vim.keymap.set('n', '[ddu]ld', function()
 				},
 				params = { display = ">>any jump<<" }
 			},
-			{ name = "anyjump_definition" },
+			"anyjump_definition",
 		}
 	})
 end, { remap = true })
@@ -907,7 +895,7 @@ vim.keymap.set('n', '[ddu]ls', function()
 				}
 			},
 			{ name = "dummy",              params = { display = "workspaceSymbol" } },
-			{ name = "lsp_workspaceSymbol" },
+			"lsp_workspaceSymbol",
 		}
 	})
 end, { remap = true })
@@ -1010,9 +998,7 @@ vim.keymap.set('n', '[ddu]T', function()
 				floatingTitle = { { "Floaterm", "FloatBorder" } },
 			}
 		},
-		sources = {
-			{ name = "floaterm" },
-		}
+		sources = { "floaterm" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]d', function()
@@ -1024,17 +1010,13 @@ vim.keymap.set('n', '[ddu]d', function()
 				autoAction = {}
 			}
 		},
-		sources = {
-			{ name = "dein" },
-		}
+		sources = { "dein" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]v<CR>', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		sources = {
-			{ name = "channel_rec" },
-		}
+		sources = { "channel_rec" }
 	})
 end, { remap = true })
 vim.keymap.set('n', '[ddu]ve<CR>', function()

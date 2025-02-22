@@ -861,7 +861,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ls', function()
 	vim.fn["ddu#start"]({
 		ui = "ff",
-		name = "ui_filter_preview_horizontal_layout",
 		uiParams = {
 			ff = {
 				floatingTitle = { { "Lsp Symbol", "FloatBorder" } },

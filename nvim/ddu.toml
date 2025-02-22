@@ -4,6 +4,9 @@ depends = ['denops.vim']
 on_source = 'denops.vim'
 lua_source = '''
 vim.fn["ddu#custom#alias"]('default', 'source', 'live_grep', 'rg')
+vim.fn["ddu#custom#alias"]('default', 'source', 'mru', 'mr')
+vim.fn["ddu#custom#alias"]('default', 'source', 'mrw', 'mr')
+vim.fn["ddu#custom#alias"]('default', 'source', 'mrr', 'mr')
 vim.fn["ddu#custom#alias"]('default', 'column', 'tab_column', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'lsp_hierarchy_filter', 'custom')
 
@@ -68,6 +71,15 @@ vim.fn["ddu#custom#patch_global"]({
 		}
 	},
 	sourceParams = {
+		mru = {
+			kind = "mru"
+		},
+		mrw = {
+			kind = "mrw"
+		},
+		mrr = {
+			kind = "mrr"
+		},
 		anyjump_definition = {
 			highlights = {
 				path = "Normal",
@@ -678,10 +690,7 @@ vim.keymap.set('n', '[ddu]M', function()
 				},
 				params = { display = ">>Most Recently Used files<<" }
 			},
-			{
-				name = "mr",
-				params = { kind = "mru" }
-			},
+			"mru",
 			{
 				name = "dummy",
 				options = {
@@ -691,10 +700,7 @@ vim.keymap.set('n', '[ddu]M', function()
 				},
 				params = { display = ">>Most Recently Written files<<" }
 			},
-			{
-				name = "mr",
-				params = { kind = "mrw" }
-			},
+			"mrw",
 			{
 				name = "dummy",
 				options = {
@@ -704,10 +710,7 @@ vim.keymap.set('n', '[ddu]M', function()
 				},
 				params = { display = ">>Most Recent git Repositories<<" }
 			},
-			{
-				name = "mr",
-				params = { kind = "mrr" }
-			},
+			"mrr",
 		}
 	})
 end, { remap = true })

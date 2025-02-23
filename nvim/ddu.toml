@@ -1133,6 +1133,7 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]e', function()
 	vim.fn["ddu#start"]({
 		ui = "filer",
+		searchPath = vim.fn.expand("%:p"),
 		uiParams = {
 			filer = {
 				displayRoot = false,

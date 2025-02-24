@@ -46,6 +46,7 @@ vim.fn["ddu#custom#patch_global"]({
 			floatingBorder = "rounded",
 			previewFloating = true,
 			previewFloatingBorder = "rounded",
+			displayRoot = false,
 			sortTreesFirst = true
 		}
 	},
@@ -1103,11 +1104,6 @@ end, { remap = true })
 vim.keymap.set('n', '[ddu]ve<CR>', function()
 	vim.fn["ddu#start"]({
 		ui = "filer",
-		uiParams = {
-			filer = {
-				displayRoot = false,
-			},
-		},
 		sources = {
 			{ name = "dummy", params = { display = "未読チャンネル" } },
 			{ name = "channel_rec", params = { type = "unread" } },
@@ -1134,14 +1130,6 @@ vim.keymap.set('n', '[ddu]e', function()
 	vim.fn["ddu#start"]({
 		ui = "filer",
 		searchPath = vim.fn.expand("%:p"),
-		uiParams = {
-			filer = {
-				displayRoot = false,
-				split = "floating",
-				splitDirection = "topleft",
-				previewFloating = true
-			}
-		},
 		sources = {
 			{
 				name = "dummy",

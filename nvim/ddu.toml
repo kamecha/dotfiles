@@ -1231,6 +1231,23 @@ end, { buffer = true })
 vim.keymap.set('n', '<C-j>', function()
 	vim.fn["ddu#ui#do_action"]('kensaku')
 end, { buffer = true })
+vim.keymap.set('n', '<C-g>', function()
+	local current = vim.fn["ddu#custom#get_current"](vim.b.ddu_ui_name)
+	local sourceParams = current.sourceParams
+	local prevGlobs = sourceParams.live_grep.globs or {}
+	local globs = vim.fn.input('Globs (space separated): ', table.concat(prevGlobs, ' '))
+	globs = vim.split(globs, '%s+')
+	vim.fn["ddu#ui#multi_actions"]({
+		{ 'updateOptions', {
+			 sourceParams = {
+				live_grep = {
+					globs = globs,
+				}
+			}
+		} },
+		{ 'redraw', { method = 'refreshItems' } }
+	})
+end, { buffer = true })
 vim.keymap.set('n', '|', function()
 	vim.fn["ddu#ui#do_action"]('pipe')
 end, { buffer = true })

@@ -39,7 +39,13 @@ vim.fn["ddu#custom#patch_global"]({
 				{ "&wrap",       0 },
 				{ "&number",     0 },
 				{ "&foldenable", 0 }
-			}
+			},
+			checkPreview = vim.fn["denops#callback#register"](function(args)
+				local action = args.item.action
+				-- gin系のバッファの時はプレビューを無効にする
+				local flag = string.match(action.path, "ginblame.*://.*") ~= nil
+				return flag
+			end),
 		},
 		filer = {
 			split = "floating",

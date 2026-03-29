@@ -10,6 +10,7 @@ vim.fn["ddu#custom#alias"]('default', 'source', 'mrr', 'mr')
 vim.fn["ddu#custom#alias"]('default', 'column', 'tab_column', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'lsp_hierarchy_filter', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'converter_tag_filename', 'custom')
+vim.fn["ddu#custom#alias"]('default', 'filter', 'converter_lsp_uri_line', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'converter_lsp_vscode_icon_symbol', 'converter_lsp_symbol')
 
 vim.fn["ddu#custom#patch_global"]({
@@ -70,6 +71,9 @@ vim.fn["ddu#custom#patch_global"]({
 			matchers = { "matcher_fzf" },
 			sorters = { "sorter_mtime" },
 			converters = { "converter_hl_dir", "converter_file_icon" }
+		},
+		lsp_references = {
+			matchers = { "converter_lsp_uri_line", "converter_display_word", "matcher_fzf" },
 		},
 		dummy = {
 			matchers = {}
@@ -187,7 +191,24 @@ vim.fn["ddu#custom#patch_global"]({
 				end
 				return items
 			end)
-
+		},
+		converter_lsp_uri_line = {
+			filterCallbackId = vim.fn["denops#callback#register"](function(args)
+				local items = {}
+				for _, item in ipairs(args.items) do
+					local newItem = vim.deepcopy(item)
+					local action = newItem["action"]
+					local uri = action["path"]
+					local range = action["range"]
+					if vim.uv.fs_stat(uri) and range ~= nil then
+						local line = range.start.line
+						local lines = vim.fn.readfile(uri)
+						newItem["display"] = newItem["display"] .. "\t" .. lines[line + 1]
+					end
+					table.insert(items, newItem)
+				end
+				return items
+			end)
 		},
 	},
 	columnParams = {

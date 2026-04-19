@@ -822,3 +822,11 @@ repo = 'tyru/capture.vim'
 [[plugins]]
 repo = 'gw31415/denops-sixel-view.vim'
 
+[[plugins]]
+repo = 'Bakudankun/BackAndForward.vim'
+lua_add = '''
+vim.g.backandforward_config = { define_commands = false, auto_map = false }
+vim.keymap.set('n', '<C-\\><C-o>', '<Plug>(backandforward-back)')
+vim.keymap.set('n', '<C-\\><C-i>', '<Plug>(backandforward-forward)')
+'''
+

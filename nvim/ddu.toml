@@ -44,8 +44,12 @@ vim.fn["ddu#custom#patch_global"]({
 			},
 			checkPreview = vim.fn["denops#callback#register"](function(args)
 				local action = args.item.action
+				local path = action.path
+				if path == nil then
+					return false
+				end
 				-- gin系のバッファの時はプレビューを無効にする
-				local flag = string.match(action.path, "ginblame.*://.*") ~= nil
+				local flag = string.match(action.path, "gin.*://.*") ~= nil
 				return flag
 			end),
 		},

@@ -22,6 +22,7 @@ vim.fn["ddu#custom#patch_global"]({
 	},
 	uiParams = {
 		ff = {
+			overwriteStatusline = false,
 			autoAction = { name = 'preview' },
 			startAutoAction = true,
 			split = "floating",

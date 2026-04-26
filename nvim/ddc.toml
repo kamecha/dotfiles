@@ -32,7 +32,7 @@ vim.fn["ddc#custom#patch_global"]({
 			forceCompletionPattern = "\\.\\w*|::",
 			matchers = { "matcher_fuzzy" },
 			sorters = { "sorter_fuzzy" },
-			converters = { "converter_fuzzy", "converter_kind_labels" }
+			converters = { "converter_fuzzy" }
 		},
 		dictionary = {
 			mark = "Dic",
@@ -80,6 +80,7 @@ vim.fn["ddc#custom#patch_global"]({
 		},
 		-- lspのkindのVSCode-likeなアイコンを表示する
 		-- https://code.visualstudio.com/docs/editor/intellisense#_types-of-completions
+		-- いつからか、ddc-source-lsp に converter_kind_labels が同梱されなくなったぽい
 		converter_kind_labels = {
 			kindLabels = {
 				Text = "",

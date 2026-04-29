@@ -398,8 +398,17 @@ require('lualine').setup({
 	tabline = {
 		lualine_a = {
 			{
+				-- 通常はタブ番号で、名前を付けた時だけ名前を表示
 				"tabs",
-				mode = 2,
+				mode = 1,
+				fmt = function(name, context)
+					local tab_name = vim.fn.gettabvar(context.tabnr, "tabname")
+					if tab_name ~= "" then
+						return tab_name
+					else
+						return context.tabnr
+					end
+				end,
 			}
 		},
 		lualine_z = {

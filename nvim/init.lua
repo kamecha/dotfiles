@@ -7,6 +7,10 @@ vim.cmd.highlight({ "DduCursor", "guibg=#38507a" })
 vim.cmd.highlight({ "Search", "ctermfg=NONE", "ctermbg=94", "guifg=NONE", "guibg=#773800" })
 vim.cmd.highlight({ "JpSpace", "guibg=#404455" })
 
+vim.cmd.highlight({ "link", "BimoveHigh", "Search" })
+vim.cmd.highlight({ "link", "BimoveCursor", "Visual" })
+vim.cmd.highlight({ "link", "BimoveLow", "Visual" })
+
 -- for options
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4

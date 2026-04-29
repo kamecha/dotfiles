@@ -831,3 +831,19 @@ repo = 'tyru/capture.vim'
 [[plugins]]
 repo = 'gw31415/denops-sixel-view.vim'
 
+[[plugins]]
+repo = 'Bakudankun/BackAndForward.vim'
+lua_add = '''
+vim.g.backandforward_config = { define_commands = false, auto_map = false }
+vim.keymap.set('n', '<C-\\><C-o>', '<Plug>(backandforward-back)')
+vim.keymap.set('n', '<C-\\><C-i>', '<Plug>(backandforward-forward)')
+'''
+
+[[plugins]]
+repo = 'kamecha/bimove'
+lua_add = '''
+vim.keymap.set('n', 'M', '<Plug>(bimove-enter)<Plug>(bimove)')
+vim.keymap.set('n', '<Plug>(bimove)H', '<Plug>(bimove-high)<Plug>(bimove)')
+vim.keymap.set('n', '<Plug>(bimove)L', '<Plug>(bimove-low)<Plug>(bimove)')
+'''
+

@@ -10,6 +10,7 @@ vim.fn["ddu#custom#alias"]('default', 'source', 'mrr', 'mr')
 vim.fn["ddu#custom#alias"]('default', 'column', 'tab_column', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'lsp_hierarchy_filter', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'converter_tag_filename', 'custom')
+vim.fn["ddu#custom#alias"]('default', 'filter', 'converter_lsp_uri_line', 'custom')
 vim.fn["ddu#custom#alias"]('default', 'filter', 'converter_lsp_vscode_icon_symbol', 'converter_lsp_symbol')
 
 vim.fn["ddu#custom#patch_global"]({
@@ -21,6 +22,7 @@ vim.fn["ddu#custom#patch_global"]({
 	},
 	uiParams = {
 		ff = {
+			overwriteStatusline = false,
 			autoAction = { name = 'preview' },
 			startAutoAction = true,
 			split = "floating",
@@ -39,7 +41,17 @@ vim.fn["ddu#custom#patch_global"]({
 				{ "&wrap",       0 },
 				{ "&number",     0 },
 				{ "&foldenable", 0 }
-			}
+			},
+			checkPreview = vim.fn["denops#callback#register"](function(args)
+				local action = args.item.action
+				local path = action.path
+				if path == nil then
+					return false
+				end
+				-- gin系のバッファの時はプレビューを無効にする
+				local flag = string.match(action.path, "gin.*://.*") ~= nil
+				return flag
+			end),
 		},
 		filer = {
 			split = "floating",
@@ -64,6 +76,9 @@ vim.fn["ddu#custom#patch_global"]({
 			matchers = { "matcher_fzf" },
 			sorters = { "sorter_mtime" },
 			converters = { "converter_hl_dir", "converter_file_icon" }
+		},
+		lsp_references = {
+			matchers = { "converter_lsp_uri_line", "converter_display_word", "matcher_fzf" },
 		},
 		dummy = {
 			matchers = {}
@@ -181,7 +196,24 @@ vim.fn["ddu#custom#patch_global"]({
 				end
 				return items
 			end)
-
+		},
+		converter_lsp_uri_line = {
+			filterCallbackId = vim.fn["denops#callback#register"](function(args)
+				local items = {}
+				for _, item in ipairs(args.items) do
+					local newItem = vim.deepcopy(item)
+					local action = newItem["action"]
+					local uri = action["path"]
+					local range = action["range"]
+					if vim.uv.fs_stat(uri) and range ~= nil then
+						local line = range.start.line
+						local lines = vim.fn.readfile(uri)
+						newItem["display"] = newItem["display"] .. "\t" .. lines[line + 1]
+					end
+					table.insert(items, newItem)
+				end
+				return items
+			end)
 		},
 	},
 	columnParams = {
@@ -1230,6 +1262,23 @@ vim.keymap.set('n', '{', function()
 end, { buffer = true })
 vim.keymap.set('n', '<C-j>', function()
 	vim.fn["ddu#ui#do_action"]('kensaku')
+end, { buffer = true })
+vim.keymap.set('n', '<C-g>', function()
+	local current = vim.fn["ddu#custom#get_current"](vim.b.ddu_ui_name)
+	local sourceParams = current.sourceParams
+	local prevGlobs = sourceParams.live_grep.globs or {}
+	local globs = vim.fn.input('Globs (space separated): ', table.concat(prevGlobs, ' '))
+	globs = vim.split(globs, '%s+')
+	vim.fn["ddu#ui#multi_actions"]({
+		{ 'updateOptions', {
+			 sourceParams = {
+				live_grep = {
+					globs = globs,
+				}
+			}
+		} },
+		{ 'redraw', { method = 'refreshItems' } }
+	})
 end, { buffer = true })
 vim.keymap.set('n', '|', function()
 	vim.fn["ddu#ui#do_action"]('pipe')

@@ -32,13 +32,16 @@ vim.keymap.set('i', '<Left>', '<C-G>U<Left>')
 vim.keymap.set('i', '<Right>', '<C-G>U<Right>')
 vim.keymap.set('i', '<C-f>', '<Right>', { remap = true })
 vim.keymap.set('i', '<C-b>', '<Left>', { remap = true })
+
 vim.keymap.set('n', '<ESC><ESC>', ':nohlsearch<CR>', { silent = true })
+
+-- cmdwin を開けるようにキーマップを変更しておく
+vim.opt.cedit='<C-d>'
 vim.keymap.set('c', '<C-a>', '<Home>')
 vim.keymap.set('c', '<C-e>', '<End>')
-vim.keymap.set('c', '<C-n>', '<Down>')
-vim.keymap.set('c', '<C-p>', '<Up>')
-vim.keymap.set('c', '<C-Left>', '<S-Left>')
-vim.keymap.set('c', '<C-Right>', '<S-Right>')
+vim.keymap.set('c', '<C-b>', '<Left>')
+vim.keymap.set('c', '<C-f>', '<Right>')
+
 -- *で検索したときにカーソル位置を元に戻す
 vim.keymap.set('n', '*', function()
 	if vim.v.count > 0 then
